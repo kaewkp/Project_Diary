@@ -2,6 +2,8 @@ package com.example.kaew_pc.diary_project.PasswordManagement;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +14,7 @@ import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.R;
 import com.example.kaew_pc.diary_project.Login;
 import com.example.kaew_pc.diary_project.main;
+import com.example.kaew_pc.diary_project.splash_screen;
 
 public class SettingPassword extends AppCompatActivity {
 
@@ -61,6 +64,13 @@ public class SettingPassword extends AppCompatActivity {
         pass2 = (EditText) findViewById(R.id.password2);
 
         intent = getIntent();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(SettingPassword.this, main.class);
+        startActivity(intent);
+        finish();
     }
 
 }
