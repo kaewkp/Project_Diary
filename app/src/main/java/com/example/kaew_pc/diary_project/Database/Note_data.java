@@ -32,6 +32,10 @@ public class Note_data {
     private String Note_date;
     private String Noti_id;
 
+    //Default Constructor
+    public Note_data(){
+    }
+
     //Constructor
     public Note_data(String Note_id, String Note_title, String Note_desc, String Note_date, String Noti_id){
         this.Note_id = Note_id;
@@ -57,5 +61,25 @@ public class Note_data {
 
     public String getNoti_id(){
         return Noti_id;
+    }
+
+    public void setNote_id(String Note_id){
+        this.Note_id = Note_id;
+    }
+
+    public void setNote_title( String Note_title) {
+        this.Note_title = Note_title;
+    }
+
+    public void setNote_desc(String Note_desc) {
+        this.Note_desc = Note_desc;
+    }
+
+    public void setNote_date(String Note_date) {
+        this.Note_date = Note_date;
+    }
+
+    public void setNoti_id(String Noti_id){
+        this.Noti_id = Noti_id;
     }
 }
