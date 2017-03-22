@@ -22,8 +22,7 @@ public class splash_screen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        dbHelper = new DBHelper(this);
-        Log.d("go set pass", dbHelper.getPassword());
+        dbHelper = DBHelper.getInstance(this);
         checkPassword();
 
 
@@ -43,6 +42,7 @@ public class splash_screen extends AppCompatActivity {
     }
 
     private void checkPassword() {
+//        dbHelper.getReadableDatabase();
         if(dbHelper.getPassword() == ""){
             havePass = false;
         }

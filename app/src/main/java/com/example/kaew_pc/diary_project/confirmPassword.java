@@ -23,7 +23,7 @@ public class confirmPassword extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_password_manager);
+        setContentView(R.layout.login);
 
         init();
 

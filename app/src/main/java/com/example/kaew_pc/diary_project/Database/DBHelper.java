@@ -13,18 +13,32 @@ import java.util.List;
 import java.util.Map;
 
 public class DBHelper extends SQLiteOpenHelper {
+    private static DBHelper dbHelper = null;
+
     private static final String TAG = "DBHelper";
     private static final String DBName = "Database.db";
+    private static final int DATABASE_VERSION = 1;
 
-    private SQLiteDatabase db;
     private Context context;
+
+    public static synchronized DBHelper getInstance(Context context) {
+
+        // Use the application context, which will ensure that you
+        // don't accidentally leak an Activity's context.
+        // See this article for more information: http://bit.ly/6LRzfx
+        if (dbHelper == null) {
+            dbHelper = new DBHelper(context.getApplicationContext());
+        }
+        return dbHelper;
+    }
 
 
     public DBHelper(Context context) {
-        super(context, DBName, null, 1);
+        super(context, DBName, null, DATABASE_VERSION);
         this.context = context;
-//        this.getWritableDatabase();
     }
+
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -126,7 +140,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.d("Search", "query in Note Data");
         List<Map.Entry<String,String>> list = new ArrayList<>();
 
-        db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor cursor = db.query(Note_data.TABLE, null, null, null, null, null, null); //(table, column, where, where arg, groupby, having, orderby)
         if(cursor.getCount() < 1){
