@@ -17,7 +17,7 @@
         android:layout_marginTop="59dp"
         android:text="Log-In"
         android:textColor="@android:color/black"
-        android:textSize="50sp"
+        android:textSize="40sp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -30,16 +30,22 @@
         android:ems="10"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/password" />
+        android:id="@+id/password"
+        android:textColorLink="#ff8800"
+        android:hint="password"
+        android:textSize="20dp" />
 
     <Button
-        android:text="Submit"
-        android:layout_width="wrap_content"
+        android:text="LOGIN"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/password"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="97dp"
-        android:id="@+id/submit" />
+        android:id="@+id/submit"
+        android:background="#ff8800"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
 
 
 </RelativeLayout>
