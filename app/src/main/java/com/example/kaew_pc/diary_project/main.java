@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.kaew_pc.diary_project.NoteManagement.NoteMainPage;
 import com.example.kaew_pc.diary_project.PasswordManagement.SettingPassword;
+import com.example.kaew_pc.diary_project.PaymentManagement.PaymentMainPage;
 
 public class main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -98,11 +99,9 @@ public class main extends AppCompatActivity
             finish();
 
         } else if (id == R.id.nav_payment) {
-            Toast.makeText(getApplicationContext(), "Not Available",
-                    Toast.LENGTH_LONG).show();
-//            intent = new Intent(getApplicationContext(), PaymentShow.class);
-//            startActivity(intent);
-//            finish();
+            intent = new Intent(getApplicationContext(), PaymentMainPage.class);
+            startActivity(intent);
+            finish();
 
         } else if (id == R.id.nav_calendar) {
                 Toast.makeText(getApplicationContext(), "Not Available",

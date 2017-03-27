@@ -39,6 +39,10 @@
             android:name=".NoteManagement.NoteCreatePage"
             android:label="บันทึกใหม่" />
 
+        <activity
+            android:name=".PaymentManagement.PaymentMainPage"
+            android:label="รายการทั้งหมด" />
+
 
     </application>
 
