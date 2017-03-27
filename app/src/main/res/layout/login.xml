@@ -15,9 +15,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="59dp"
-        android:text="Log-In"
+        android:text="เข้าสู่ระบบ"
         android:textColor="@android:color/black"
-        android:textSize="40sp"
+        android:textSize="30sp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -36,7 +36,7 @@
         android:textSize="20dp" />
 
     <Button
-        android:text="LOGIN"
+        android:text="ตกลง"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/password"
@@ -46,6 +46,16 @@
         android:background="#ff8800"
         android:textColor="@android:color/white"
         android:textSize="20sp" />
+
+    <Button
+        android:text="    ลืมรหัสผ่าน ?   "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button3"
+        android:textSize="15dp"
+        android:background="@android:color/transparent"
+        android:layout_below="@+id/submit"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>
