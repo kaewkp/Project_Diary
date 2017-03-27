@@ -1,23 +1,27 @@
-package com.example.kaew_pc.diary_project;
+package com.example.kaew_pc.diary_project.PasswordManagement;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.kaew_pc.diary_project.Database.DBHelper;
+import com.example.kaew_pc.diary_project.R;
+import com.example.kaew_pc.diary_project.Login;
+import com.example.kaew_pc.diary_project.main;
+import com.example.kaew_pc.diary_project.splash_screen;
 
-public class passwordManager extends AppCompatActivity {
+public class SettingPassword extends AppCompatActivity {
 
     private Button submit;
     private EditText pass, pass2;
     private DBHelper db;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +36,22 @@ public class passwordManager extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(pass.getText().toString().equalsIgnoreCase(pass2.getText().toString())){
+
+                    Intent go;
                     db.setPassword(db.getWritableDatabase(), pass.getText().toString());
-                    Intent intent = new Intent(passwordManager.this, confirmPassword.class);
-                    startActivity(intent);
+
+                    if(intent.getExtras().getBoolean("Setting")) { //call setting from main
+                        go = new Intent(SettingPassword.this, main.class);
+                    }
+                    else { //call after install (first run)
+                        go = new Intent(SettingPassword.this, Login.class);
+                    }
+
+                    startActivity(go);
                     finish();
                 }
                 else{
-                    Toast.makeText(passwordManager.this, "Password not match", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SettingPassword.this, "Password not match", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -49,6 +62,15 @@ public class passwordManager extends AppCompatActivity {
         submit = (Button) findViewById(R.id.submit);
         pass = (EditText) findViewById(R.id.password);
         pass2 = (EditText) findViewById(R.id.password2);
+
+        intent = getIntent();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(SettingPassword.this, main.class);
+        startActivity(intent);
+        finish();
     }
 
 }

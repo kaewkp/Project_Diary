@@ -3,33 +3,33 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_note"
+            android:icon="@drawable/ic_menu_border"
+            android:title="บันทึก" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_payment"
+            android:icon="@drawable/ic_menu_wallet"
+            android:title="ชำระค่าบริการ" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/nav_calendar"
+            android:icon="@drawable/ic_menu_invitation"
+            android:title="ปฏิทินนัดหมาย" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_bin"
+            android:icon="@drawable/ic_menu_delete"
+            android:title="ถังขยะ" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="การตั้งค่า">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_pin"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="ตั้งรหัสผ่าน" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_setup"
+                android:icon="@drawable/ic_menu_setup"
+                android:title="ตั้งค่าระบบ" />
         </menu>
     </item>
 

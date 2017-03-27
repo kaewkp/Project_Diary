@@ -22,14 +22,24 @@
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".passwordManager"
+            android:name=".PasswordManagement.SettingPassword"
             android:label="@string/title_activity_password_manager"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".confirmPassword"
+            android:name=".Login"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".NoteManagement.NoteMainPage"
+            android:label="บันทึกทั้งหมด" />
+
+        <activity
+            android:name=".NoteManagement.NoteCreatePage"
+            android:label="บันทึกใหม่" />
+
+
     </application>
 
 </manifest>

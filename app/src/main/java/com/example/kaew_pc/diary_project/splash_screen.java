@@ -4,10 +4,9 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Window;
 
 import com.example.kaew_pc.diary_project.Database.DBHelper;
+import com.example.kaew_pc.diary_project.PasswordManagement.SettingPassword;
 
 public class splash_screen extends AppCompatActivity {
 
@@ -31,9 +30,10 @@ public class splash_screen extends AppCompatActivity {
             public void run() {
                 Intent intent;
                 if(havePass) {
-                    intent = new Intent(splash_screen.this, confirmPassword.class);
+                    intent = new Intent(splash_screen.this, Login.class);
                 }else{
-                    intent = new Intent(splash_screen.this, passwordManager.class);
+                    intent = new Intent(splash_screen.this, SettingPassword.class);
+                    intent.putExtra("Setting", false);
                 }
                 startActivity(intent);
                 finish();

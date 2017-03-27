@@ -22,10 +22,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private Context context;
 
     public static synchronized DBHelper getInstance(Context context) {
-
-        // Use the application context, which will ensure that you
-        // don't accidentally leak an Activity's context.
-        // See this article for more information: http://bit.ly/6LRzfx
         if (dbHelper == null) {
             dbHelper = new DBHelper(context.getApplicationContext());
         }
@@ -37,8 +33,6 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, DBName, null, DATABASE_VERSION);
         this.context = context;
     }
-
-
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -67,13 +61,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public void setPassword(SQLiteDatabase db, String pass){
         ContentValues initialValues = new ContentValues();
         initialValues.put(Password.Column.Password, pass);
-        Log.d("Insert Note Dsta", "2 : ค้างชำระ");
+        Log.d("Set Password", "pass : " + pass);
 
         db.insert(Password.TABLE, null, initialValues);
     }
 
     public String getPassword(){
-        Log.d("Search", "query in Password");
+        Log.d("Search!!!!!", "query in Password");
         SQLiteDatabase db = this.getReadableDatabase();
         String pass = "";
 
@@ -94,6 +88,49 @@ public class DBHelper extends SQLiteOpenHelper {
         return pass;
     }
 
+    public void createNote(SQLiteDatabase db, Note_data notedata){
+        ContentValues initialValues = new ContentValues();
+        initialValues.put(Note_data.Column.Note_id, notedata.getNote_id());
+        initialValues.put(Note_data.Column.Note_title, notedata.getNote_title());
+        initialValues.put(Note_data.Column.Note_desc, notedata.getNote_desc());
+        initialValues.put(Note_data.Column.Note_date, notedata.getNote_date());
+        initialValues.put(Note_data.Column.Noti_id, notedata.getNoti_id());
+
+        Log.d("Insert Note Dsta", "title : " + notedata.getNote_title());
+
+        db.insert(Note_data.TABLE, null, initialValues);
+    }
+
+    public ArrayList<Note_data> getAllNote(){
+        Log.d("Search!!!!!!", "query in Note");
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        ArrayList<Note_data> list = new ArrayList<Note_data>();
+
+        Cursor cursor = db.query(Note_data.TABLE, null, null, null, null, null, null); //(table, column, where, where arg, groupby, having, orderby)
+        if(cursor.getCount() < 1){
+
+        }
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        while(!cursor.isAfterLast()) {
+            Log.d("Search!!!!!!", "Note id : " + cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_id)));
+
+            Note_data data = new Note_data(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_id))
+                    , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_title))
+                    , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_desc))
+                    , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_date))
+                    , cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id)));
+            list.add(data);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return list;
+    }
+
 //    private void insertPaymentStatus(SQLiteDatabase payment, String id, String name) {
 //        ContentValues initialValues = new ContentValues();
 //        initialValues.put(Payments_status.Column.PayStatus_id, id);
@@ -102,24 +139,6 @@ public class DBHelper extends SQLiteOpenHelper {
 //
 //        payment.insert(Payments_status.TABLE, null, initialValues);
 //    }
-
-    private void insertNoteData(SQLiteDatabase note) {
-        ContentValues initialValues = new ContentValues();
-        initialValues.put(Note_data.Column.Note_id, "N01");
-        initialValues.put(Note_data.Column.Note_title, "สอบFinal13พ.ค.60");
-        initialValues.put(Note_data.Column.Note_desc, "ถูกผิด เขียน เติมคำ");
-        initialValues.put(Note_data.Column.Note_date, "10/02/2017");
-        initialValues.put(Note_data.Column.Noti_id, "1");
-        initialValues.put(Note_data.Column.Note_id, "์N02");
-        initialValues.put(Note_data.Column.Note_title, "ค่าเทอม");
-        initialValues.put(Note_data.Column.Note_desc, "19000");
-        initialValues.put(Note_data.Column.Note_date, "15/03/2017");
-        initialValues.put(Note_data.Column.Noti_id, "1");
-        Log.d("Insert Note Data", "N01 : สอบSW Design Midterm : 27/03/60 : 22/03/60 : 25/03/60");
-        Log.d("Insert Note Dsta", "2 : ค้างชำระ");
-
-        note.insert(Note_data.TABLE, null, initialValues);
-    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

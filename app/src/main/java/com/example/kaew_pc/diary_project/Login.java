@@ -14,7 +14,7 @@ import com.example.kaew_pc.diary_project.Database.DBHelper;
  * Created by KAEW-PC on 21-Mar-17.
  */
 
-public class confirmPassword extends AppCompatActivity {
+public class Login extends AppCompatActivity {
 
     private Button submit;
     private EditText pass;
@@ -32,12 +32,12 @@ public class confirmPassword extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(pass.getText().toString().equalsIgnoreCase(db.getPassword())) {
-                    Intent intent = new Intent(confirmPassword.this, main.class);
+                    Intent intent = new Intent(Login.this, main.class);
                     startActivity(intent);
                     finish();
                 }
                 else{
-                    Toast.makeText(confirmPassword.this, "Incorect Password", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Login.this, "Incorect Password", Toast.LENGTH_LONG).show();
                 }
             }
         });
