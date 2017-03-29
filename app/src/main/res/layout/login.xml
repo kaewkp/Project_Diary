@@ -8,36 +8,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.kaew_pc.diary_project.splash_screen">
+    tools:context="com.example.kaew_pc.diary_project.splash_screen"
+    android:background="#FFFF99">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="59dp"
-        android:text="เข้าสู่ระบบ"
-        android:textColor="@android:color/black"
-        android:textSize="30sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberPassword"
-        android:maxLength="4"
-        android:ems="10"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/password"
-        android:textColorLink="#ff8800"
-        android:hint="password"
-        android:textSize="20dp" />
 
     <Button
         android:text="ตกลง"
-        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/password"
         android:layout_centerHorizontal="true"
@@ -45,16 +21,46 @@
         android:id="@+id/submit"
         android:background="#ff8800"
         android:textColor="@android:color/white"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_width="160dp" />
 
     <Button
         android:text="    ลืมรหัสผ่าน ?   "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button3"
-        android:textSize="15dp"
         android:background="@android:color/transparent"
         android:layout_below="@+id/submit"
+        android:textSize="18dp"
+        android:layout_alignEnd="@+id/submit"
+        android:layout_alignStart="@+id/submit" />
+
+    <EditText
+        android:inputType="numberPassword"
+        android:maxLength="4"
+        android:ems="10"
+        android:id="@+id/password"
+        android:textColorLink="#ff8800"
+        android:hint="  กรอกรหัสผ่าน ( 4 ตัว )"
+        android:textSize="20dp"
+        android:background="#FFFFFF"
+        android:textColor="#000000"
+        android:layout_height="50dp"
+        android:layout_marginTop="114dp"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_width="300dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_height="40dp"
+        android:text="     เข้าสู่ระบบ"
+        android:textColor="@android:color/black"
+        android:textSize="30sp"
+        android:background="@android:color/transparent"
+        android:layout_width="200dp"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
 

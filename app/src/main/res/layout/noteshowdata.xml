@@ -86,7 +86,7 @@
         <Button
             android:layout_width="10dp"
             android:layout_height="30dp"
-            android:text="CONFIRM"
+            android:text="บันทึก"
             android:id="@+id/saveButton"
             android:textColor="#000000"
             android:background="#ffff8800"
@@ -103,7 +103,7 @@
         <Button
             android:layout_width="10dp"
             android:layout_height="30dp"
-            android:text="cancel"
+            android:text="ยกเลิก"
             android:id="@+id/cancelButton"
             android:textColor="#000000"
             android:background="#D3D3D3"

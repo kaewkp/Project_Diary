@@ -96,9 +96,26 @@ public class DBHelper extends SQLiteOpenHelper {
         initialValues.put(Note_data.Column.Note_date, notedata.getNote_date());
         initialValues.put(Note_data.Column.Noti_id, notedata.getNoti_id());
 
-        Log.d("Insert Note Dsta", "title : " + notedata.getNote_title());
+        Log.d("Insert Note Data", "title : " + notedata.getNote_title());
 
         db.insert(Note_data.TABLE, null, initialValues);
+    }
+
+    public void createPayment(SQLiteDatabase db, Payments_data payment){
+        ContentValues initialValues = new ContentValues();
+//        initialValues.put(Note_data.Column.Note_id, notedata.getNote_id());
+        initialValues.put(Payments_data.Column.Payments_id, payment.getPayments_id());
+        initialValues.put(Payments_data.Column.Payments_title, payment.getPayments_title());
+        initialValues.put(Payments_data.Column.Payments_price, payment.getPayments_price());
+        initialValues.put(Payments_data.Column.Payments_endDate, payment.getPayments_endDate());
+        initialValues.put(Payments_data.Column.Payments_date, payment.getPayments_date());
+        initialValues.put(Payments_data.Column.Noti_id, payment.getNoti_id());
+        initialValues.put(Payments_data.Column.PayType_id, payment.getPayType_id());
+        initialValues.put(Payments_data.Column.PayStatus_id, payment.getPayStatus_id());
+
+        Log.d("Insert Payment Data", "title : " + payment.getPayments_title());
+
+        db.insert(Payments_data.TABLE, null, initialValues);
     }
 
     public void updateNote(SQLiteDatabase db, Note_data notedata){
