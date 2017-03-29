@@ -9,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Database.Note_data;
@@ -77,16 +79,26 @@ public class NoteMainPage extends AppCompatActivity {
     }
 
     private void loadNoteList() {
-        ArrayList<Note_data> data = db.getAllNote();
+        final ArrayList<Note_data> data = db.getAllNote();
 
         NoteCustomAdapter adapter = new NoteCustomAdapter(NoteMainPage.this, data);
         list = (ListView) findViewById(R.id.listview);
 
         list.setAdapter(adapter);
 
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
 
-//        Toast.makeText(getApplicationContext(), String.valueOf(data.size()),
+//                Toast.makeText(getApplicationContext(), String.valueOf(data.get(position).getNote_id()),
 //                        Toast.LENGTH_LONG).show();
+
+                intent.putExtra("id", data.get(position).getNote_id());
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void init() {
@@ -121,8 +133,6 @@ public class NoteMainPage extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case android.R.id.home:
-//                Toast.makeText(getApplicationContext(), "Here",
-//                        Toast.LENGTH_LONG).show();
                 intent = new Intent(getApplicationContext(), main.class);
                 startActivity(intent);
                 finish();
@@ -132,7 +142,5 @@ public class NoteMainPage extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
-
-
     }
 }

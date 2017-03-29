@@ -17,7 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DBHelper";
     private static final String DBName = "Database.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private Context context;
 
@@ -45,7 +45,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         // Table Note_data
         String CREATE_Note_data_TABLE = String.format("CREATE TABLE %s " +
-                        "(%s VARCHAR(5) PRIMARY KEY , %s TEXT, %s TEXT, %s TEXT, %s VARCHAR(3))",
+                        "(%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, %s TEXT, %s TEXT, %s TEXT, %s VARCHAR(3))",
                 Note_data.TABLE,
                 Note_data.Column.Note_id,
                 Note_data.Column.Note_title,
@@ -90,7 +90,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void createNote(SQLiteDatabase db, Note_data notedata){
         ContentValues initialValues = new ContentValues();
-        initialValues.put(Note_data.Column.Note_id, notedata.getNote_id());
+//        initialValues.put(Note_data.Column.Note_id, notedata.getNote_id());
         initialValues.put(Note_data.Column.Note_title, notedata.getNote_title());
         initialValues.put(Note_data.Column.Note_desc, notedata.getNote_desc());
         initialValues.put(Note_data.Column.Note_date, notedata.getNote_date());
@@ -99,6 +99,19 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.d("Insert Note Dsta", "title : " + notedata.getNote_title());
 
         db.insert(Note_data.TABLE, null, initialValues);
+    }
+
+    public void updateNote(SQLiteDatabase db, Note_data notedata){
+        ContentValues initialValues = new ContentValues();
+//        initialValues.put(Note_data.Column.Note_id, notedata.getNote_id());
+        initialValues.put(Note_data.Column.Note_title, notedata.getNote_title());
+        initialValues.put(Note_data.Column.Note_desc, notedata.getNote_desc());
+        initialValues.put(Note_data.Column.Note_date, notedata.getNote_date());
+        initialValues.put(Note_data.Column.Noti_id, notedata.getNoti_id());
+
+        Log.d("Update Note Dsta", "title : " + notedata.getNote_title());
+
+        db.update(Note_data.TABLE, initialValues, "Note_id="+notedata.getNote_id(), null);
     }
 
     public ArrayList<Note_data> getAllNote(){
@@ -118,7 +131,7 @@ public class DBHelper extends SQLiteOpenHelper {
         while(!cursor.isAfterLast()) {
             Log.d("Search!!!!!!", "Note id : " + cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_id)));
 
-            Note_data data = new Note_data(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_id))
+            Note_data data = new Note_data(cursor.getInt(cursor.getColumnIndex(Note_data.Column.Note_id))
                     , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_title))
                     , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_desc))
                     , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_date))
@@ -129,6 +142,42 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return list;
+    }
+
+    public Note_data getNoteById(String id){
+        Log.d("Search!!!!!!", "query in Note by id");
+
+        Note_data data = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(Note_data.TABLE,
+                null,
+                "Note_id = ?",
+                new String[] { id },
+                null, null, null); //(table, column, where, where arg, groupby, having, orderby)
+
+        if(cursor.getCount() < 1){
+
+        }
+
+        Log.d("Search!!!!!!", "size : " + cursor.getCount());
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        while(!cursor.isAfterLast()) {
+            data = new Note_data();
+            data.setNote_id(cursor.getInt(cursor.getColumnIndex(Note_data.Column.Note_id)));
+            data.setNote_title(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_title)));
+            data.setNote_desc(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_desc)));
+            data.setNote_date(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_date)));
+            data.setNoti_id(cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id)));
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return data;
     }
 
 //    private void insertPaymentStatus(SQLiteDatabase payment, String id, String name) {
@@ -143,9 +192,13 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        //Table Password
+        String DROP_Password_TABLE = "DROP TABLE IF EXISTS " + Password.TABLE;
+
         //Table Note_data
         String DROP_Note_data_TABLE = "DROP TABLE IF EXISTS " + Note_data.TABLE;
 
+        db.execSQL(DROP_Password_TABLE);
         db.execSQL(DROP_Note_data_TABLE);
 
         Log.i(TAG, "Upgrade Database from " + oldVersion + " to " + newVersion);
