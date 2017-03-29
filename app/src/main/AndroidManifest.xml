@@ -47,6 +47,10 @@
             android:name=".PaymentManagement.PaymentActivity"
             android:label="รายการที่ต้องชำระใหม่" />
 
+        <activity
+            android:name=".PaymentManagement.PaymentShow"
+            android:label="รายการที่ต้องชำระ" />
+
 
 
     </application>
