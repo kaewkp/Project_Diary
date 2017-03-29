@@ -43,6 +43,11 @@
             android:name=".PaymentManagement.PaymentMainPage"
             android:label="รายการทั้งหมด" />
 
+        <activity
+            android:name=".PaymentManagement.PaymentActivity"
+            android:label="รายการที่ต้องชำระใหม่" />
+
+
 
     </application>
 
