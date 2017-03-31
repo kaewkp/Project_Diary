@@ -43,6 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 Password.Column.Password);
         Log.i(TAG, CREATE_Password_TABLE);
 
+
         // Table Note_data
         String CREATE_Note_data_TABLE = String.format("CREATE TABLE %s " +
                         "(%s VARCHAR(5) PRIMARY KEY , %s TEXT, %s TEXT, %s TEXT, %s VARCHAR(3))",
@@ -54,8 +55,26 @@ public class DBHelper extends SQLiteOpenHelper {
                 Note_data.Column.Noti_id);
         Log.i(TAG, CREATE_Note_data_TABLE);
 
+
+
+        //Table Payment_data
+        String CREATE_Payment_data_TABLE = String.format("CREATE TABLE %s " +
+                        "(%s VARCHAR(5) PRIMARY KEY , %s TEXT, %s TEXT, DATE, DATE, %s VARCHAR(3))",
+                Payment_data.TABLE,
+                Payment_data.Column.Payment_id,
+                Payment_data.Column.Payment_title,
+                Payment_data.Column.Payment_price,
+                Payment_data.Column.Payment_endDate,
+                Payment_data.Column.Payment_date,
+                Payment_data.Column.PayType_id,
+                Payment_data.Column.PayStatus_id,
+                Payment_data.Column.Noti_id);
+        Log.i(TAG, CREATE_Payment_data_TABLE);
+
+
         db.execSQL(CREATE_Password_TABLE);
         db.execSQL(CREATE_Note_data_TABLE);
+        db.execSQL(CREATE_Payment_data_TABLE);
     }
 
     public void setPassword(SQLiteDatabase db, String pass){
@@ -96,11 +115,30 @@ public class DBHelper extends SQLiteOpenHelper {
         initialValues.put(Note_data.Column.Note_date, notedata.getNote_date());
         initialValues.put(Note_data.Column.Noti_id, notedata.getNoti_id());
 
-        Log.d("Insert Note Dsta", "title : " + notedata.getNote_title());
+        Log.d("Insert Note Data", "title : " + notedata.getNote_title());
 
         db.insert(Note_data.TABLE, null, initialValues);
     }
 
+
+    public void createPayment(SQLiteDatabase db, Payment_data paymentdata){
+        ContentValues initialValues = new ContentValues();
+        initialValues.put(Payment_data.Column.Payment_id, paymentdata.getPayment_id());
+        initialValues.put(Payment_data.Column.Payment_title, paymentdata.getPayment_title());
+        initialValues.put(Payment_data.Column.Payment_price, paymentdata.getPayment_price());
+        initialValues.put(Payment_data.Column.Payment_date, paymentdata.getPayment_date());
+        initialValues.put(Payment_data.Column.Payment_endDate, paymentdata.getPayment_endDate());
+        initialValues.put(Payment_data.Column.PayType_id, paymentdata.getPayType_id());
+        initialValues.put(Payment_data.Column.PayStatus_id, paymentdata.getPayStatus_id());
+        initialValues.put(Payment_data.Column.Noti_id, paymentdata.getNoti_id());
+
+        Log.d("Insert Note Data", "title : " + paymentdata.getPayment_title());
+
+        db.insert(Payment_data.TABLE, null, initialValues);
+    }
+
+
+    //Note
     public ArrayList<Note_data> getAllNote(){
         Log.d("Search!!!!!!", "query in Note");
         SQLiteDatabase db = this.getReadableDatabase();
@@ -131,6 +169,41 @@ public class DBHelper extends SQLiteOpenHelper {
         return list;
     }
 
+
+    //Payment
+    public ArrayList<Payment_data> getAllPayment(){
+        Log.d("Search!!!!!!", "query in Note");
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        ArrayList<Payment_data> list = new ArrayList<Payment_data>();
+
+        Cursor cursor = db.query(Payment_data.TABLE, null, null, null, null, null, null); //(table, column, where, where arg, groupby, having, orderby)
+        if(cursor.getCount() < 1){
+
+        }
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        while(!cursor.isAfterLast()) {
+            Log.d("Search!!!!!!", "Payment id : " + cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_id)));
+
+            Payment_data data = new Payment_data(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_id))
+                    , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_title))
+                    , cursor.getDouble(cursor.getColumnIndex(Payment_data.Column.Payment_price))
+                    , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_date))
+                    , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_endDate))
+                    , cursor.getString(cursor.getColumnIndex(Payment_data.Column.PayType_id))
+                    , cursor.getString(cursor.getColumnIndex(Payment_data.Column.PayStatus_id))
+                    , cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id)));
+            list.add(data);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return list;
+    }
+
 //    private void insertPaymentStatus(SQLiteDatabase payment, String id, String name) {
 //        ContentValues initialValues = new ContentValues();
 //        initialValues.put(Payments_status.Column.PayStatus_id, id);
@@ -146,7 +219,10 @@ public class DBHelper extends SQLiteOpenHelper {
         //Table Note_data
         String DROP_Note_data_TABLE = "DROP TABLE IF EXISTS " + Note_data.TABLE;
 
+        String DROP_Payment_data_TABLE = "DROP TABLE IF EXISTS " + Payment_data.TABLE;
+
         db.execSQL(DROP_Note_data_TABLE);
+        db.execSQL(DROP_Payment_data_TABLE);
 
         Log.i(TAG, "Upgrade Database from " + oldVersion + " to " + newVersion);
 
@@ -162,6 +238,30 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor cursor = db.query(Note_data.TABLE, null, null, null, null, null, null); //(table, column, where, where arg, groupby, having, orderby)
+        if(cursor.getCount() < 1){
+
+        }
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        while(!cursor.isAfterLast()) {
+            list.add(new AbstractMap.SimpleEntry<>(cursor.getString(0), cursor.getString(1)));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return list;
+    }
+
+
+
+    public List<Map.Entry<String,String>> getPaymentData(){
+        Log.d("Search", "query in Note Data");
+        List<Map.Entry<String,String>> list = new ArrayList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.query(Payment_data.TABLE, null, null, null, null, null, null); //(table, column, where, where arg, groupby, having, orderby)
         if(cursor.getCount() < 1){
 
         }
