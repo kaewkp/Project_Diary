@@ -32,7 +32,7 @@ public class Payment_data {
 
     private String Payment_id ;
     private String Payment_title;
-    private Double Payment_price;
+    private String Payment_price;
     private String Payment_date;
     private String Payment_endDate;
     private String PayType_id;
@@ -44,7 +44,7 @@ public class Payment_data {
     }
 
     //Constructor
-    public Payment_data(String Payment_id, String Payment_title, Double Payment_price, String Payment_date, String Payment_endDate,
+    public Payment_data(String Payment_id, String Payment_title, String Payment_price, String Payment_date, String Payment_endDate,
                         String PayType_id, String PayStatus_id, String Noti_id){
         this.Payment_id = Payment_id;
         this.Payment_title = Payment_title;
@@ -64,7 +64,7 @@ public class Payment_data {
         return Payment_title;
     }
 
-    public Double getPayment_price() {
+    public String getPayment_price() {
         return Payment_price;
     }
 
@@ -90,7 +90,7 @@ public class Payment_data {
         this.Payment_title = Payment_title;
     }
 
-    public void setPayment_price(Double Payment_price) {
+    public void setPayment_price(String Payment_price) {
         this.Payment_price = Payment_price;
     }
 

@@ -59,7 +59,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //Table Payment_data
         String CREATE_Payment_data_TABLE = String.format("CREATE TABLE %s " +
-                        "(%s VARCHAR(5) PRIMARY KEY , %s TEXT, %s TEXT, DATE, DATE, %s VARCHAR(3))",
+                        "(%s VARCHAR(5) PRIMARY KEY , %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s VARCHAR(3), %s VARCHAR(3), %s VARCHAR(3))",
                 Payment_data.TABLE,
                 Payment_data.Column.Payment_id,
                 Payment_data.Column.Payment_title,
@@ -190,7 +190,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
             Payment_data data = new Payment_data(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_id))
                     , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_title))
-                    , cursor.getDouble(cursor.getColumnIndex(Payment_data.Column.Payment_price))
+                    , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_price))
                     , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_date))
                     , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_endDate))
                     , cursor.getString(cursor.getColumnIndex(Payment_data.Column.PayType_id))
@@ -276,6 +276,8 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.close();
         return list;
     }
+
+
 
 
 //    public List<Map.Entry<String,String>> getPaymentData(){
