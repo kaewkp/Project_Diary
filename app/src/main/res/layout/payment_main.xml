@@ -24,7 +24,7 @@
         android:layout_below="@+id/subject"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/listview"/>
+        android:id="@+id/paymentlist"/>
 
     <TextView
         android:text="รายการทั้งหมด"

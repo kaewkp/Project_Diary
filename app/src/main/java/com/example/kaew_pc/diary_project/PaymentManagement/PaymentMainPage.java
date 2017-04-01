@@ -9,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Login;
 import com.example.kaew_pc.diary_project.R;
 import com.example.kaew_pc.diary_project.main;
@@ -22,6 +24,8 @@ import com.example.kaew_pc.diary_project.main;
 public class PaymentMainPage extends AppCompatActivity {
 
     private FloatingActionButton fab;
+    private DBHelper db;
+    private ListView list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +33,12 @@ public class PaymentMainPage extends AppCompatActivity {
         setContentView(R.layout.payment_main);
         ActionBar action = getSupportActionBar();
         action.setDisplayHomeAsUpEnabled(true);
-
-
         init();
-
     }
 
     private void init() {
+        db = DBHelper.getInstance(this);
+        list = (ListView) findViewById(R.id.paymentlist);
 
         fab = (FloatingActionButton) findViewById(R.id.fabpayment);
         fab.setOnClickListener(new View.OnClickListener() {
