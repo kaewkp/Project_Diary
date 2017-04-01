@@ -83,8 +83,8 @@ public class PaymentMainPage extends AppCompatActivity {
 //        }
 
         if(item.getItemId() == android.R.id.home){
-            intent = new Intent(getApplicationContext(), main.class);
-            startActivity(intent);
+//            intent = new Intent(getApplicationContext(), main.class);
+//            startActivity(intent);
             finish();
         }
         return super.onOptionsItemSelected(item);

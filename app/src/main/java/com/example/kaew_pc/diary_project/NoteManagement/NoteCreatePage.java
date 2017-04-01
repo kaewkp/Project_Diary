@@ -58,11 +58,7 @@ public class NoteCreatePage extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 saveNote();
-
-                Intent i = new Intent(getApplicationContext(), NoteMainPage.class);
-                startActivity(i);
                 finish();
             }
         });
@@ -70,16 +66,12 @@ public class NoteCreatePage extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), NoteMainPage.class);
-                startActivity(i);
                 finish();
             }
         });
     }
 
     private void saveNote() {
-//        Note_data note = new Note_data();
-
         data.setNote_date(formattedDate);
         data.setNote_title(title.getText().toString());
         data.setNote_desc(desc.getText().toString());
@@ -115,15 +107,9 @@ public class NoteCreatePage extends AppCompatActivity {
 
         Intent intent;
         switch (item.getItemId()) {
-
             case android.R.id.home:
-//                Toast.makeText(getApplicationContext(), "Here",
-//                        Toast.LENGTH_LONG).show();
-                intent = new Intent(getApplicationContext(), NoteMainPage.class);
-                startActivity(intent);
                 finish();
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
 
