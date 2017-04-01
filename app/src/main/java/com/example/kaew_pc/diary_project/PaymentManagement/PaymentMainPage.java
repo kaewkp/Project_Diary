@@ -13,9 +13,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.kaew_pc.diary_project.Database.DBHelper;
-import com.example.kaew_pc.diary_project.Login;
+import com.example.kaew_pc.diary_project.Database.Payment_data;
 import com.example.kaew_pc.diary_project.R;
 import com.example.kaew_pc.diary_project.main;
+
+import java.util.ArrayList;
 
 /**
  * Created by chommchome on 27/3/2560.
@@ -34,6 +36,7 @@ public class PaymentMainPage extends AppCompatActivity {
         ActionBar action = getSupportActionBar();
         action.setDisplayHomeAsUpEnabled(true);
         init();
+        loadPaymentList();
     }
 
     private void init() {
@@ -54,6 +57,12 @@ public class PaymentMainPage extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void loadPaymentList() {
+        ArrayList<Payment_data> data = db.getAllPayment();
+        PaymentCustomAdapter adapter = new PaymentCustomAdapter(PaymentMainPage.this, data);
+        list.setAdapter(adapter);
     }
 
     @Override
