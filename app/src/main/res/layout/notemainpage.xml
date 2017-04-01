@@ -7,16 +7,18 @@
 
 
     <TextView
-        android:text="รายการทั้งหมด"
+        android:text="  รายการทั้งหมด"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:id="@+id/subject"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:textColor="@android:color/black"
         android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignParentEnd="true"
+        android:background="#D3D3D3" />
 
     <ListView
         android:layout_width="match_parent"
@@ -31,13 +33,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        app:srcCompat="@drawable/ic_plusfab"
         android:layout_marginRight="17dp"
         android:layout_marginBottom="14dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="17dp" />
+        android:layout_marginEnd="17dp"
+        app:srcCompat="@drawable/ic_plusfab" />
 
 
 </RelativeLayout>

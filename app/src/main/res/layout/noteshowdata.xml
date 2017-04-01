@@ -16,19 +16,6 @@
         android:theme="@style/AppTheme.AppBarOverlay"
         android:id="@+id/appBarLayout" />
 
-
-    <!--<ProgressBar-->
-    <!--style="?android:attr/progressBarStyleSmall"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_below="@+id/appBarLayout"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_alignParentEnd="true"-->
-    <!--android:layout_marginRight="24dp"-->
-    <!--android:layout_marginEnd="24dp"-->
-    <!--android:layout_marginTop="177dp"-->
-    <!--android:id="@+id/progressBar" />-->
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,11 +25,30 @@
         android:layout_marginTop="14dp">
 
 
-        <EditText
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/title"
+            android:textColor="#000000"
+            android:textSize="18dp"
+            android:hint="แตะเพื่อแก้ไข"
+            android:layout_below="@+id/textView2"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/desc"
-            android:hint=" แตะเพื่อแก้ไข"
+            android:hint="แตะเพื่อแก้ไข"
             android:textColor="#000000"
             android:gravity="top"
             android:visibility="visible"
@@ -67,18 +73,19 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:text="ชื่อเรื่อง"
             android:id="@+id/textView2"
             android:textSize="20dp"
             android:textColor="#000000"
+            android:layout_marginTop="12dp"
+            android:layout_alignParentTop="true"
             android:layout_alignLeft="@+id/title"
-            android:layout_alignStart="@+id/title"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true" />
+            android:layout_alignStart="@+id/title" />
 
         <Button
             android:layout_width="10dp"
+            android:layout_height="30dp"
             android:text="บันทึก"
             android:id="@+id/saveButton"
             android:textColor="#000000"
@@ -91,11 +98,11 @@
             android:layout_alignEnd="@+id/title"
             android:textAlignment="gravity"
             android:layout_toEndOf="@+id/cancelButton"
-            android:layout_toRightOf="@+id/cancelButton"
-            android:layout_height="40dp" />
+            android:layout_toRightOf="@+id/cancelButton" />
 
         <Button
             android:layout_width="10dp"
+            android:layout_height="30dp"
             android:text="ยกเลิก"
             android:id="@+id/cancelButton"
             android:textColor="#000000"
@@ -106,8 +113,7 @@
             android:layout_marginBottom="10dp"
             android:layout_alignLeft="@+id/desc"
             android:layout_alignStart="@+id/desc"
-            android:layout_toLeftOf="@+id/cameraButton"
-            android:layout_height="40dp" />
+            android:layout_toLeftOf="@+id/cameraButton" />
 
         <ImageButton
             android:layout_width="30dp"
@@ -169,24 +175,6 @@
             android:background="@drawable/attachment"
             android:layout_below="@+id/saveButton"
             android:layout_centerHorizontal="true" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/title"
-            android:textColor="#000000"
-            android:textSize="18dp"
-            android:hint=" แตะเพื่อแก้ไข"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_below="@+id/textView2"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentStart="true"
-            android:maxLines="3"
-            android:lines="1"
-            android:scrollHorizontally="false" />
     </RelativeLayout>
 
 
