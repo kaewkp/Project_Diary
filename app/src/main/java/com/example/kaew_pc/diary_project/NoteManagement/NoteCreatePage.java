@@ -42,7 +42,8 @@ public class NoteCreatePage extends AppCompatActivity {
         action.setHomeButtonEnabled(true);
 
         int id = getIntent().getIntExtra("id", 0);
-        if(id != 0){
+
+        if(id != 0){ //When click from listview
             data = db.getNoteById(String.valueOf(id));
             title.setText(data.getNote_title());
             desc.setText(data.getNote_desc());
