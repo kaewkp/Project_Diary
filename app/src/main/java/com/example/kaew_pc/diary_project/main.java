@@ -96,12 +96,12 @@ public class main extends AppCompatActivity
         if (id == R.id.nav_note) {
             intent = new Intent(getApplicationContext(), NoteMainPage.class);
             startActivity(intent);
-            finish();
+//            finish();
 
         } else if (id == R.id.nav_payment) {
             intent = new Intent(getApplicationContext(), PaymentMainPage.class);
             startActivity(intent);
-            finish();
+//            finish();
 
         } else if (id == R.id.nav_calendar) {
                 Toast.makeText(getApplicationContext(), "Not Available",
@@ -115,7 +115,7 @@ public class main extends AppCompatActivity
             intent = new Intent(getApplicationContext(), SettingPassword.class);
             intent.putExtra("Setting", true);
             startActivity(intent);
-            finish();
+//            finish();
         } else if (id == R.id.nav_setup) {
             Toast.makeText(getApplicationContext(), "Not Available",
                     Toast.LENGTH_LONG).show();

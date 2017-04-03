@@ -46,7 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         // Table Note_data
         String CREATE_Note_data_TABLE = String.format("CREATE TABLE %s " +
-                        "(%s VARCHAR(5) PRIMARY KEY , %s TEXT, %s TEXT, %s TEXT, %s VARCHAR(3))",
+                        "(%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, %s TEXT, %s TEXT, %s TEXT, %s VARCHAR(3))",
                 Note_data.TABLE,
                 Note_data.Column.Note_id,
                 Note_data.Column.Note_title,
@@ -109,7 +109,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void createNote(SQLiteDatabase db, Note_data notedata){
         ContentValues initialValues = new ContentValues();
-        initialValues.put(Note_data.Column.Note_id, notedata.getNote_id());
+//        initialValues.put(Note_data.Column.Note_id, notedata.getNote_id());
         initialValues.put(Note_data.Column.Note_title, notedata.getNote_title());
         initialValues.put(Note_data.Column.Note_desc, notedata.getNote_desc());
         initialValues.put(Note_data.Column.Note_date, notedata.getNote_date());
@@ -119,7 +119,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.insert(Note_data.TABLE, null, initialValues);
     }
-
 
     public void createPayment(SQLiteDatabase db, Payment_data paymentdata){
         ContentValues initialValues = new ContentValues();
@@ -137,8 +136,19 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert(Payment_data.TABLE, null, initialValues);
     }
 
+    public void updateNote(SQLiteDatabase db, Note_data notedata){
+        ContentValues initialValues = new ContentValues();
+//        initialValues.put(Note_data.Column.Note_id, notedata.getNote_id());
+        initialValues.put(Note_data.Column.Note_title, notedata.getNote_title());
+        initialValues.put(Note_data.Column.Note_desc, notedata.getNote_desc());
+        initialValues.put(Note_data.Column.Note_date, notedata.getNote_date());
+        initialValues.put(Note_data.Column.Noti_id, notedata.getNoti_id());
 
-    //Note
+        Log.d("Update Note Dsta", "title : " + notedata.getNote_title());
+
+        db.update(Note_data.TABLE, initialValues, "Note_id="+notedata.getNote_id(), null);
+    }
+
     public ArrayList<Note_data> getAllNote(){
         Log.d("Search!!!!!!", "query in Note");
         SQLiteDatabase db = this.getReadableDatabase();
@@ -156,7 +166,7 @@ public class DBHelper extends SQLiteOpenHelper {
         while(!cursor.isAfterLast()) {
             Log.d("Search!!!!!!", "Note id : " + cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_id)));
 
-            Note_data data = new Note_data(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_id))
+            Note_data data = new Note_data(cursor.getInt(cursor.getColumnIndex(Note_data.Column.Note_id))
                     , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_title))
                     , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_desc))
                     , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_date))
@@ -169,37 +179,81 @@ public class DBHelper extends SQLiteOpenHelper {
         return list;
     }
 
+    public Note_data getNoteById(String id){
+        Log.d("Search!!!!!!", "query in Note by id");
 
-    //Payment
-    public ArrayList<Payment_data> getAllPayment(){
-        Log.d("Search!!!!!!", "query in Note");
+        Note_data data = null;
         SQLiteDatabase db = this.getReadableDatabase();
 
-        ArrayList<Payment_data> list = new ArrayList<Payment_data>();
+        Cursor cursor = db.query(Note_data.TABLE,
+                null,
+                "Note_id = ?",
+                new String[] { id },
+                null, null, null); //(table, column, where, where arg, groupby, having, orderby)
 
-        Cursor cursor = db.query(Payment_data.TABLE, null, null, null, null, null, null); //(table, column, where, where arg, groupby, having, orderby)
         if(cursor.getCount() < 1){
 
         }
+
+        Log.d("Search!!!!!!", "size : " + cursor.getCount());
+
         if (cursor != null) {
             cursor.moveToFirst();
         }
 
         while(!cursor.isAfterLast()) {
-            Log.d("Search!!!!!!", "Payment id : " + cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_id)));
-
-            Payment_data data = new Payment_data(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_id))
-                    , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_title))
-                    , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_price))
-                    , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_date))
-                    , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_endDate))
-                    , cursor.getString(cursor.getColumnIndex(Payment_data.Column.PayType_id))
-                    , cursor.getString(cursor.getColumnIndex(Payment_data.Column.PayStatus_id))
-                    , cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id)));
-            list.add(data);
+            data = new Note_data();
+            data.setNote_id(cursor.getInt(cursor.getColumnIndex(Note_data.Column.Note_id)));
+            data.setNote_title(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_title)));
+            data.setNote_desc(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_desc)));
+            data.setNote_date(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_date)));
+            data.setNoti_id(cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id)));
             cursor.moveToNext();
         }
         cursor.close();
+
+        return data;
+    }
+
+
+    //Payment
+    public ArrayList<Payment_data> getAllPayment(){
+        Log.d("Payment", "select * from Payment");
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<Payment_data> list = new ArrayList<Payment_data>();
+        Cursor cursor = null;
+
+        try {
+            cursor = db.query(Payment_data.TABLE, null, null, null, null, null, null); //(table, column, where, where arg, groupby, having, orderby)
+
+            if (cursor.getCount() < 1) {
+                return list;
+            }
+            else {
+                cursor.moveToFirst();
+            }
+
+            while (!cursor.isAfterLast()) {
+                Log.d("Payment", "Payment id : " + cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_id)));
+
+                Payment_data data = new Payment_data(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_id))
+                        , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_title))
+                        , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_price))
+                        , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_date))
+                        , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_endDate))
+                        , cursor.getString(cursor.getColumnIndex(Payment_data.Column.PayType_id))
+                        , cursor.getString(cursor.getColumnIndex(Payment_data.Column.PayStatus_id))
+                        , cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id)));
+                list.add(data);
+                cursor.moveToNext();
+            }
+        }
+        catch (Exception ex){
+            Log.e("Payment", ex.toString());
+        }
+        finally {
+            cursor.close();
+        }
 
         return list;
     }
@@ -216,6 +270,9 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        //Table Password
+        String DROP_Password_TABLE = "DROP TABLE IF EXISTS " + Password.TABLE;
+
         //Table Note_data
         String DROP_Note_data_TABLE = "DROP TABLE IF EXISTS " + Note_data.TABLE;
 
@@ -223,148 +280,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL(DROP_Note_data_TABLE);
         db.execSQL(DROP_Payment_data_TABLE);
+        db.execSQL(DROP_Password_TABLE);
 
         Log.i(TAG, "Upgrade Database from " + oldVersion + " to " + newVersion);
 
         onCreate(db);
 
     }
-
-
-    public List<Map.Entry<String,String>> getNoteData(){
-        Log.d("Search", "query in Note Data");
-        List<Map.Entry<String,String>> list = new ArrayList<>();
-
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        Cursor cursor = db.query(Note_data.TABLE, null, null, null, null, null, null); //(table, column, where, where arg, groupby, having, orderby)
-        if(cursor.getCount() < 1){
-
-        }
-        if (cursor != null) {
-            cursor.moveToFirst();
-        }
-
-        while(!cursor.isAfterLast()) {
-            list.add(new AbstractMap.SimpleEntry<>(cursor.getString(0), cursor.getString(1)));
-            cursor.moveToNext();
-        }
-        cursor.close();
-        return list;
-    }
-
-
-
-    public List<Map.Entry<String,String>> getPaymentData(){
-        Log.d("Search", "query in Note Data");
-        List<Map.Entry<String,String>> list = new ArrayList<>();
-
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        Cursor cursor = db.query(Payment_data.TABLE, null, null, null, null, null, null); //(table, column, where, where arg, groupby, having, orderby)
-        if(cursor.getCount() < 1){
-
-        }
-        if (cursor != null) {
-            cursor.moveToFirst();
-        }
-
-        while(!cursor.isAfterLast()) {
-            list.add(new AbstractMap.SimpleEntry<>(cursor.getString(0), cursor.getString(1)));
-            cursor.moveToNext();
-        }
-        cursor.close();
-        return list;
-    }
-
-
-
-
-//    public List<Map.Entry<String,String>> getPaymentData(){
-//        Log.d("Search", "query in payment Data");
-//        List<Map.Entry<String,String>> list = new ArrayList<>();
-//
-//        db = this.getWritableDatabase();
-//
-//        Cursor cursor = db.query(Payments_data.TABLE, null, null, null, null, null, null); //(table, column, where, where arg, groupby, having, orderby)
-//        if(cursor.getCount() < 1){
-//
-//        }
-//        if (cursor != null) {
-//            cursor.moveToFirst();
-//        }
-//
-//        while(!cursor.isAfterLast()) {
-//            list.add(new AbstractMap.SimpleEntry<>(cursor.getString(0), cursor.getString(1)));
-//            cursor.moveToNext();
-//        }
-//        cursor.close();
-//        return list;
-//    }
-//
-//
-//    public List<Map.Entry<String,String>> getPaymentType(){
-//        Log.d("Search", "query in payment Type");
-//        List<Map.Entry<String,String>> list = new ArrayList<>();
-//
-//        db = this.getWritableDatabase();
-//
-//        Cursor cursor = db.query(Payments_type.TABLE, null, null, null, null, null, null); //(table, column, where, where arg, groupby, having, orderby)
-//        if(cursor.getCount() < 1){
-//
-//        }
-//        if (cursor != null) {
-//            cursor.moveToFirst();
-//        }
-//
-//        while(!cursor.isAfterLast()) {
-//            list.add(new AbstractMap.SimpleEntry<>(cursor.getString(0), cursor.getString(1)));
-//            cursor.moveToNext();
-//        }
-//        cursor.close();
-//        return list;
-//    }
-//
-//    public List<Map.Entry<String,String>> getPaymentStatus(){
-//        Log.d("Search", "query in payment Status");
-//        List<Map.Entry<String,String>> list = new ArrayList<>();
-//
-//        db = this.getWritableDatabase();
-//
-//        Cursor cursor = db.query(Payments_status.TABLE, null, null, null, null, null, null); //(table, column, where, where arg, groupby, having, orderby)
-//        if(cursor.getCount() < 1){
-//
-//        }
-//        if (cursor != null) {
-//            cursor.moveToFirst();
-//        }
-//
-//        while(!cursor.isAfterLast()) {
-//            list.add(new AbstractMap.SimpleEntry<>(cursor.getString(0), cursor.getString(1)));
-//            cursor.moveToNext();
-//        }
-//        cursor.close();
-//        return list;
-//    }
-//    public Payments_data getNote_data(String Note_id) {
-//
-//        db = this.getReadableDatabase();
-//
-//        Cursor cursor = db.query(Payments_data.TABLE,
-//                null,
-//                Payments_data.Column.Note_id + " = ? ",
-//                new String[]{Note_id},
-//                null,
-//                null,
-//                null,
-//                null);
-//
-//        if (cursor != null && cursor.getCount() > 0) {
-//            cursor.moveToFirst();
-//        }else{
-//            return null;
-//        }
-//    }
-
 }
 

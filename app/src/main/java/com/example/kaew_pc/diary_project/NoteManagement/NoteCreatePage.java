@@ -29,6 +29,8 @@ public class NoteCreatePage extends AppCompatActivity {
     private DBHelper db;
     private String formattedDate;
     private EditText title, desc;
+    private Boolean isEdit = false;
+    private Note_data data = new Note_data();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,16 +41,24 @@ public class NoteCreatePage extends AppCompatActivity {
         action.setDisplayHomeAsUpEnabled(true);
         action.setHomeButtonEnabled(true);
 
+        int id = getIntent().getIntExtra("id", 0);
+
+        if(id != 0){ //When click from listview
+            data = db.getNoteById(String.valueOf(id));
+            title.setText(data.getNote_title());
+            desc.setText(data.getNote_desc());
+            date.setText(data.getNote_date());
+            isEdit = true;
+        }
+
+
+
         Button cancel = (Button)findViewById(R.id.cancelButton);
         Button save = (Button)findViewById(R.id.saveButton);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 saveNote();
-
-                Intent i = new Intent(getApplicationContext(), NoteMainPage.class);
-                startActivity(i);
                 finish();
             }
         });
@@ -56,20 +66,20 @@ public class NoteCreatePage extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), NoteMainPage.class);
-                startActivity(i);
                 finish();
             }
         });
     }
 
     private void saveNote() {
-        Note_data note = new Note_data();
-        note.setNote_date(formattedDate);
-        note.setNote_title(title.getText().toString());
-        note.setNote_desc(desc.getText().toString());
+        data.setNote_date(formattedDate);
+        data.setNote_title(title.getText().toString());
+        data.setNote_desc(desc.getText().toString());
 
-        db.createNote(db.getWritableDatabase(), note);
+        if(!isEdit)
+            db.createNote(db.getWritableDatabase(), data);
+        else
+            db.updateNote(db.getWritableDatabase(), data);
     }
 
     private void init() {
@@ -97,15 +107,9 @@ public class NoteCreatePage extends AppCompatActivity {
 
         Intent intent;
         switch (item.getItemId()) {
-
             case android.R.id.home:
-//                Toast.makeText(getApplicationContext(), "Here",
-//                        Toast.LENGTH_LONG).show();
-                intent = new Intent(getApplicationContext(), main.class);
-                startActivity(intent);
                 finish();
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
 

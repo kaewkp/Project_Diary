@@ -51,7 +51,9 @@
             android:name=".PaymentManagement.PaymentShow"
             android:label="รายการที่ต้องชำระ" />
 
-
+        <activity
+            android:name=".NoteManagement.NoteShowData"
+            android:label="......" />
 
     </application>
 

@@ -9,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Database.Note_data;
@@ -45,52 +47,42 @@ public class NoteMainPage extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                Intent intent;
-                intent = new Intent(getApplicationContext(), NoteCreatePage.class);
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
                 startActivity(intent);
-                finish();
+//                finish();
             }
         });
 
         loadNoteList();
-
-//        Button cancel = (Button)findViewById(R.id.cancelButton);
-//        Button save = (Button)findViewById(R.id.saveButton);
-//        save.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(getApplicationContext(), MainMenu.class);
-//                startActivity(i);
-//                finish();
-//            }
-//        });
-//        cancel.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(getApplicationContext(), MainMenu.class);
-//                startActivity(i);
-//                finish();
-//            }
-//        });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadNoteList();
+    }
+
+
     private void loadNoteList() {
-        ArrayList<Note_data> data = db.getAllNote();
-
+        final ArrayList<Note_data> data = db.getAllNote();
         NoteCustomAdapter adapter = new NoteCustomAdapter(NoteMainPage.this, data);
-        list = (ListView) findViewById(R.id.listview);
-
         list.setAdapter(adapter);
-
-
-//        Toast.makeText(getApplicationContext(), String.valueOf(data.size()),
-//                        Toast.LENGTH_LONG).show();
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
+                intent.putExtra("id", data.get(position).getNote_id());
+                startActivity(intent);
+            }
+        });
     }
 
     private void init() {
 //        date = (TextView) findViewById(R.id.showdate);
+
+        list = (ListView) findViewById(R.id.listview);
 
         Date time = Calendar.getInstance().getTime();
 
@@ -121,10 +113,8 @@ public class NoteMainPage extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case android.R.id.home:
-//                Toast.makeText(getApplicationContext(), "Here",
-//                        Toast.LENGTH_LONG).show();
-                intent = new Intent(getApplicationContext(), main.class);
-                startActivity(intent);
+//                intent = new Intent(getApplicationContext(), main.class);
+//                startActivity(intent);
                 finish();
                 return true;
 
@@ -132,7 +122,5 @@ public class NoteMainPage extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
-
-
     }
 }
