@@ -5,18 +5,7 @@
     android:layout_height="match_parent">
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabpayment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        app:srcCompat="@drawable/ic_plusfab"
-        android:layout_marginRight="17dp"
-        android:layout_marginBottom="14dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="17dp" />
+
 
     <ListView
         android:layout_width="match_parent"
@@ -37,5 +26,18 @@
         android:textColor="@android:color/black"
         android:textSize="20dp"
         android:textStyle="bold" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabpayment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="17dp"
+        android:layout_marginBottom="14dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="17dp"
+        app:srcCompat="@drawable/ic_plusfab" />
 
 </RelativeLayout>

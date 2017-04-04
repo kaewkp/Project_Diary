@@ -89,7 +89,7 @@ public class NoteCreatePage extends AppCompatActivity {
 
         Date time = Calendar.getInstance().getTime();
 
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         formattedDate = df.format(time);
 
         android.util.Log.i("Time Class ", " Time value in milliseconds "+time.getYear());
