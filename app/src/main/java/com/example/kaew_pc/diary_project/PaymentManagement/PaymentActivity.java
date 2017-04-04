@@ -32,7 +32,7 @@ import java.util.Calendar;
 public class PaymentActivity extends AppCompatActivity {
 
     static final int dialogID = 0;
-    private Spinner paymentTypeSpinner, deptSpinner;
+    private Spinner paymentTypeSpinner;
     private AlertDialog.Builder builder, timealertbuilder;
     private TextView bankname;
     private String[] banks = new String[]{ "SCB (ไทยพาณิชย์)", "KBANK (กสิกรไทย)","GSB (ออมสิน)","KTC (กรุงไทย)","UOB (ยูโอบี)","KRUNGSRI (กรุงศรี)",
@@ -166,6 +166,7 @@ public class PaymentActivity extends AppCompatActivity {
 
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
