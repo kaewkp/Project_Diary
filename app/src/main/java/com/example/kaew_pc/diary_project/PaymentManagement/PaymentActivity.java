@@ -20,6 +20,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kaew_pc.diary_project.Database.DBHelper;
+import com.example.kaew_pc.diary_project.Database.Payment_data;
 import com.example.kaew_pc.diary_project.R;
 
 import java.util.ArrayList;
@@ -48,6 +50,8 @@ public class PaymentActivity extends AppCompatActivity {
     private Button start;
 
     private ArrayList<String> paymentType = new ArrayList<String>();
+    private Payment_data data;
+    private DBHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +74,9 @@ public class PaymentActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                
+                savePayment();
+                
                 Intent i = new Intent(getApplicationContext(), PaymentMainPage.class);
                 startActivity(i);
                 finish();
@@ -81,11 +88,20 @@ public class PaymentActivity extends AppCompatActivity {
 
     }
 
-        private void init() {
+    private void savePayment() {
+        data.setPayment_title("Here");
+
+        db.createPayment(db.getWritableDatabase(), data);
+    }
+
+    private void init() {
             bankname = (TextView) findViewById(R.id.bankname);
             debt = (TextView) findViewById(R.id.debt);
             date = (TextView) findViewById(R.id.showdatetime);
             start = (Button)findViewById(R.id.start);
+
+            data = new Payment_data();
+            db = DBHelper.getInstance(this);
 
             initAlertDialog();
         }

@@ -59,7 +59,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //Table Payment_data
         String CREATE_Payment_data_TABLE = String.format("CREATE TABLE %s " +
-                        "(%s VARCHAR(5) PRIMARY KEY , %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s VARCHAR(3), %s VARCHAR(3), %s VARCHAR(3))",
+                        "(%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, %s TEXT, %s REAL, %s TEXT, %s TEXT, %s VARCHAR(3), %s VARCHAR(3), %s VARCHAR(3))",
                 Payment_data.TABLE,
                 Payment_data.Column.Payment_id,
                 Payment_data.Column.Payment_title,
@@ -122,7 +122,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void createPayment(SQLiteDatabase db, Payment_data paymentdata){
         ContentValues initialValues = new ContentValues();
-        initialValues.put(Payment_data.Column.Payment_id, paymentdata.getPayment_id());
+//        initialValues.put(Payment_data.Column.Payment_id, paymentdata.getPayment_id());
         initialValues.put(Payment_data.Column.Payment_title, paymentdata.getPayment_title());
         initialValues.put(Payment_data.Column.Payment_price, paymentdata.getPayment_price());
         initialValues.put(Payment_data.Column.Payment_date, paymentdata.getPayment_date());
@@ -236,9 +236,9 @@ public class DBHelper extends SQLiteOpenHelper {
             while (!cursor.isAfterLast()) {
                 Log.d("Payment", "Payment id : " + cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_id)));
 
-                Payment_data data = new Payment_data(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_id))
+                Payment_data data = new Payment_data(cursor.getInt(cursor.getColumnIndex(Payment_data.Column.Payment_id))
                         , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_title))
-                        , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_price))
+                        , cursor.getDouble(cursor.getColumnIndex(Payment_data.Column.Payment_price))
                         , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_date))
                         , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_endDate))
                         , cursor.getString(cursor.getColumnIndex(Payment_data.Column.PayType_id))
@@ -257,6 +257,47 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return list;
     }
+
+
+    public Payment_data getPaymentById(String id){
+        Log.d("Search!!!!!!", "query in Note by id");
+
+        Payment_data data = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(Payment_data.TABLE,
+                null,
+                "Payment_id = ?",
+                new String[] { id },
+                null, null, null); //(table, column, where, where arg, groupby, having, orderby)
+
+        if(cursor.getCount() < 1){
+
+        }
+
+        Log.d("Search!!!!!!", "size : " + cursor.getCount());
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        while(!cursor.isAfterLast()) {
+            data = new Payment_data();
+            data.setPayment_id(cursor.getInt(cursor.getColumnIndex(Payment_data.Column.Payment_id)));
+            data.setPayment_title(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_title)));
+            data.setPayment_price(cursor.getDouble(cursor.getColumnIndex(Payment_data.Column.Payment_price)));
+            data.setPayment_date(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_date)));
+            data.setPayment_endDate(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_endDate)));
+            data.setPayType_id(cursor.getString(cursor.getColumnIndex(Payment_data.Column.PayType_id)));
+            data.setPayStatus_id(cursor.getString(cursor.getColumnIndex(Payment_data.Column.PayStatus_id)));
+            data.setNoti_id(cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id)));
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return data;
+    }
+
 
 //    private void insertPaymentStatus(SQLiteDatabase payment, String id, String name) {
 //        ContentValues initialValues = new ContentValues();
