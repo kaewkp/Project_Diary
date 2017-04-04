@@ -24,19 +24,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-    compile ('com.github.orangegangsters:lollipin:2.0.0@aar') {
-        transitive = true
-    }
-
-    //Lollipop dialogs https://github.com/lewisjdeane/L-Dialogs and buttons, animations etc...
-    compile 'uk.me.lewisdeane.ldialogs:ldialogs:1.2.0@aar'
-
-    //RippleView
-    compile 'com.github.traex.rippleeffect:ripple:1.3.1-OG'
-    //TypefaceView
-    compile 'com.github.omadahealth.typefaceview:typefaceview:1.5.0@aar' //TypefaceTextView
-
     compile 'com.android.support:appcompat-v7:25.1.1'
     compile 'com.android.support:design:25.1.1'
     testCompile 'junit:junit:4.12'
