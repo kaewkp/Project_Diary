@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,11 @@ public class PaymentActivity extends AppCompatActivity {
     private String[] timealert = new String[]{ "ล่วงหน้า 1 วัน", "ล่วงหน้า 3 วัน", "ล่วงหน้า 5 วัน", "ล่วงหน้า 1 สัปดาห์", "ล่วงหน้า 2 สัปดาห์"};
 
     private TextView date;
+
+    private EditText priceEdit;
+    private Boolean isEdit = false;
+
+    private String items;//type of payment
 
     private int y,d,m ;
     private Button click;
@@ -74,9 +80,9 @@ public class PaymentActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
                 savePayment();
-                
+
                 Intent i = new Intent(getApplicationContext(), PaymentMainPage.class);
                 startActivity(i);
                 finish();
@@ -86,12 +92,29 @@ public class PaymentActivity extends AppCompatActivity {
         onSpinnerClick();
         showCalendar();
 
+        int id = getIntent().getIntExtra("id", 0);
+
+        if (id != 0) { //When click from listview
+            data = db.getPaymentById(String.valueOf(id));
+//            paymentTypeSpinner.setText(data.getPayment_title());
+//            priceEdit.setText(data.getPayment_price());
+            date.setText(data.getPayment_endDate());
+
+            isEdit = true;
+
+        }
     }
 
     private void savePayment() {
-        data.setPayment_title("Here");
+        data.setPayment_title(items);
+//        data.setPayment_price(priceEdit.Double().parseDouble());
+        data.setPayment_endDate(date.getText().toString());
 
-        db.createPayment(db.getWritableDatabase(), data);
+
+        if(!isEdit)
+            db.createPayment(db.getWritableDatabase(), data);
+        else
+            db.updatePayment(db.getWritableDatabase(), data);
     }
 
     private void init() {
@@ -99,6 +122,7 @@ public class PaymentActivity extends AppCompatActivity {
             debt = (TextView) findViewById(R.id.debt);
             date = (TextView) findViewById(R.id.showdatetime);
             start = (Button)findViewById(R.id.start);
+            priceEdit = (EditText)findViewById(R.id.editprice);
 
             data = new Payment_data();
             db = DBHelper.getInstance(this);
@@ -160,7 +184,7 @@ public class PaymentActivity extends AppCompatActivity {
                 debt.setVisibility(View.INVISIBLE);
                 bankname.setVisibility(View.INVISIBLE);
 
-                String items = paymentTypeSpinner.getSelectedItem().toString();
+                items = paymentTypeSpinner.getSelectedItem().toString();
                 Log.i("Selected item : ", items);
 
                 if(items.equalsIgnoreCase("ค่าบัตรเครดิต")){

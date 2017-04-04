@@ -149,6 +149,23 @@ public class DBHelper extends SQLiteOpenHelper {
         db.update(Note_data.TABLE, initialValues, "Note_id="+notedata.getNote_id(), null);
     }
 
+
+    public void updatePayment(SQLiteDatabase db, Payment_data paymentdata){
+        ContentValues initialValues = new ContentValues();
+//        initialValues.put(Note_data.Column.Note_id, notedata.getNote_id());
+        initialValues.put(Payment_data.Column.Payment_title, paymentdata.getPayment_title());
+        initialValues.put(Payment_data.Column.Payment_price, paymentdata.getPayment_price());
+        initialValues.put(Payment_data.Column.Payment_date, paymentdata.getPayment_date());
+        initialValues.put(Payment_data.Column.Payment_endDate, paymentdata.getPayment_endDate());
+        initialValues.put(Payment_data.Column.PayType_id, paymentdata.getPayType_id());
+        initialValues.put(Payment_data.Column.PayStatus_id, paymentdata.getPayStatus_id());
+        initialValues.put(Note_data.Column.Noti_id, paymentdata.getNoti_id());
+
+        Log.d("Update Payment data", "title : " + paymentdata.getPayment_title());
+
+        db.update(Payment_data.TABLE, initialValues, "Payment_data="+paymentdata.getPayment_id(), null);
+    }
+
     public ArrayList<Note_data> getAllNote(){
         Log.d("Search!!!!!!", "query in Note");
         SQLiteDatabase db = this.getReadableDatabase();

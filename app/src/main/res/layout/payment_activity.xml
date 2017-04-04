@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:ems="10"
-            android:id="@+id/editText"
+            android:id="@+id/editprice"
             android:textAlignment="textEnd"
             android:textSize="25sp"
             android:layout_below="@+id/textView3"
@@ -69,7 +69,7 @@
             android:textColor="@android:color/holo_orange_dark"
             android:textSize="18sp"
             android:layout_marginTop="17dp"
-            android:layout_below="@+id/editText"
+            android:layout_below="@+id/editprice"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
