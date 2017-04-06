@@ -59,10 +59,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //Table Payment_data
         String CREATE_Payment_data_TABLE = String.format("CREATE TABLE %s " +
-                        "(%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, %s TEXT, %s REAL, %s TEXT, %s TEXT, %s VARCHAR(3), %s VARCHAR(3), %s VARCHAR(3))",
+                        "(%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, %s TEXT, %s TEXT, %s REAL, %s TEXT, %s TEXT, %s VARCHAR(3), %s VARCHAR(3), %s VARCHAR(3))",
                 Payment_data.TABLE,
                 Payment_data.Column.Payment_id,
                 Payment_data.Column.Payment_title,
+                Payment_data.Column.Payment_desc,
                 Payment_data.Column.Payment_price,
                 Payment_data.Column.Payment_endDate,
                 Payment_data.Column.Payment_date,
@@ -124,6 +125,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues initialValues = new ContentValues();
 //        initialValues.put(Payment_data.Column.Payment_id, paymentdata.getPayment_id());
         initialValues.put(Payment_data.Column.Payment_title, paymentdata.getPayment_title());
+        initialValues.put(Payment_data.Column.Payment_desc, paymentdata.getPayment_desc());
         initialValues.put(Payment_data.Column.Payment_price, paymentdata.getPayment_price());
         initialValues.put(Payment_data.Column.Payment_date, paymentdata.getPayment_date());
         initialValues.put(Payment_data.Column.Payment_endDate, paymentdata.getPayment_endDate());
@@ -131,7 +133,7 @@ public class DBHelper extends SQLiteOpenHelper {
         initialValues.put(Payment_data.Column.PayStatus_id, paymentdata.getPayStatus_id());
         initialValues.put(Payment_data.Column.Noti_id, paymentdata.getNoti_id());
 
-        Log.d("Insert Note Data", "title : " + paymentdata.getPayment_title());
+        int d = Log.d("Insert Note Data", "title : " + paymentdata.getPayment_title());
 
         db.insert(Payment_data.TABLE, null, initialValues);
     }
@@ -154,6 +156,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues initialValues = new ContentValues();
 //        initialValues.put(Note_data.Column.Note_id, notedata.getNote_id());
         initialValues.put(Payment_data.Column.Payment_title, paymentdata.getPayment_title());
+        initialValues.put(Payment_data.Column.Payment_desc, paymentdata.getPayment_desc());
         initialValues.put(Payment_data.Column.Payment_price, paymentdata.getPayment_price());
         initialValues.put(Payment_data.Column.Payment_date, paymentdata.getPayment_date());
         initialValues.put(Payment_data.Column.Payment_endDate, paymentdata.getPayment_endDate());
@@ -255,6 +258,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
                 Payment_data data = new Payment_data(cursor.getInt(cursor.getColumnIndex(Payment_data.Column.Payment_id))
                         , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_title))
+                        , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_desc))
                         , cursor.getDouble(cursor.getColumnIndex(Payment_data.Column.Payment_price))
                         , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_date))
                         , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_endDate))
@@ -302,6 +306,7 @@ public class DBHelper extends SQLiteOpenHelper {
             data = new Payment_data();
             data.setPayment_id(cursor.getInt(cursor.getColumnIndex(Payment_data.Column.Payment_id)));
             data.setPayment_title(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_title)));
+            data.setPayment_title(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_desc)));
             data.setPayment_price(cursor.getDouble(cursor.getColumnIndex(Payment_data.Column.Payment_price)));
             data.setPayment_date(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_date)));
             data.setPayment_endDate(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_endDate)));

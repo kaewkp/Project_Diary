@@ -24,7 +24,7 @@ public class PaymentCustomAdapter extends ArrayAdapter<Payment_data> {
     private View row;
 
     public PaymentCustomAdapter(Activity mContext, ArrayList<Payment_data> data) {
-        super(mContext, R.layout.listview_note, data);
+        super(mContext, R.layout.listview_payment, data);
         this.mContext = mContext;
         this.data = data;
     }
@@ -33,7 +33,7 @@ public class PaymentCustomAdapter extends ArrayAdapter<Payment_data> {
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater mInflater = mContext.getLayoutInflater();
 
-        row = mInflater.inflate(R.layout.listview_note, null, true);
+        row = mInflater.inflate(R.layout.listview_payment, null, true);
 
         TextView textView1 = (TextView) row.findViewById(R.id.title);
         textView1.setText(data.get(position).getPayment_title());

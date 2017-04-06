@@ -22,6 +22,7 @@ public class Payment_data {
     public class Column{
         public static final String Payment_id = "Payment_id";
         public static final String Payment_title = "Payment_title";
+        public static final String Payment_desc = "Payment_desc";
         public static final String Payment_price = "Payment_price";
         public static final String Payment_endDate = "Payment_endDate";
         public static final String Payment_date = "Payment_date";
@@ -32,6 +33,7 @@ public class Payment_data {
 
     private int Payment_id ;
     private String Payment_title;
+    private String Payment_desc;
     private double Payment_price;
     private String Payment_date;
     private String Payment_endDate;
@@ -44,10 +46,11 @@ public class Payment_data {
     }
 
     //Constructor
-    public Payment_data(int Payment_id, String Payment_title, double Payment_price, String Payment_date, String Payment_endDate,
+    public Payment_data(int Payment_id, String Payment_title, String Payment_desc, double Payment_price, String Payment_date, String Payment_endDate,
                         String PayType_id, String PayStatus_id, String Noti_id){
         this.Payment_id = Payment_id;
         this.Payment_title = Payment_title;
+        this.Payment_desc = Payment_desc;
         this.Payment_price = Payment_price;
         this.Payment_date = Payment_date;
         this.Payment_endDate = Payment_endDate;
@@ -62,6 +65,10 @@ public class Payment_data {
 
     public String getPayment_title() {
         return Payment_title;
+    }
+
+    public String getPayment_desc() {
+        return Payment_desc;
     }
 
     public double getPayment_price() {
@@ -88,6 +95,10 @@ public class Payment_data {
 
     public void setPayment_title( String Payment_title) {
         this.Payment_title = Payment_title;
+    }
+
+    public void setPayment_desc( String Payment_desc) {
+        this.Payment_desc = Payment_desc;
     }
 
     public void setPayment_price(double Payment_price) {

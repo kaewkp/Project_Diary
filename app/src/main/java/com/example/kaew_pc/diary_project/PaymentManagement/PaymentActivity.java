@@ -47,6 +47,7 @@ public class PaymentActivity extends AppCompatActivity {
     private TextView date;
 
     private EditText priceEdit;
+    private EditText descpayment;
     private Boolean isEdit = false;
 
     private String items;//type of payment
@@ -108,6 +109,7 @@ public class PaymentActivity extends AppCompatActivity {
     private void savePayment() {
         data.setPayment_title(items);
 //        data.setPayment_price(priceEdit.Double().parseDouble());
+//        data.setPayment_desc(descpayment.getText().toString());
         data.setPayment_endDate(date.getText().toString());
 
 
@@ -123,6 +125,7 @@ public class PaymentActivity extends AppCompatActivity {
             date = (TextView) findViewById(R.id.showdatetime);
             start = (Button)findViewById(R.id.start);
             priceEdit = (EditText)findViewById(R.id.editprice);
+            descpayment = (EditText)findViewById(R.id.descpayment);
 
             data = new Payment_data();
             db = DBHelper.getInstance(this);
