@@ -5,36 +5,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/b1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/red" />
-
-    <ImageButton
-        android:id="@+id/b2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/b1"
-        android:layout_toEndOf="@+id/b1"
-        app:srcCompat="@drawable/red" />
-
-    <ImageButton
-        android:id="@+id/b3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/b2"
-        android:layout_toEndOf="@+id/b2"
-        app:srcCompat="@drawable/red" />
-
-    <ImageButton
-        android:id="@+id/b4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/b3"
-        android:layout_toEndOf="@+id/b3"
-        app:srcCompat="@drawable/red" />
-
     <Button
         android:id="@+id/n1"
         android:layout_width="wrap_content"
@@ -140,4 +110,40 @@
         android:layout_alignParentBottom="true"
         android:text="del"
         tools:text="del" />
+
+    <ImageView
+        android:id="@+id/i1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        app:srcCompat="@drawable/red"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/n1" />
+
+    <ImageView
+        android:id="@+id/i2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/red"
+        android:layout_alignTop="@+id/i1"
+        android:layout_toEndOf="@+id/n1" />
+
+    <ImageView
+        android:id="@+id/i3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/i2"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/i2"
+        app:srcCompat="@drawable/red" />
+
+    <ImageView
+        android:id="@+id/i4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/i3"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/red" />
+
+
 </RelativeLayout>

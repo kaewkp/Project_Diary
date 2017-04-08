@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.PasswordManagement.SettingPassword;
-import com.github.orangegangsters.lollipin.lib.PinActivity;
 
 public class splash_screen extends AppCompatActivity {
 
