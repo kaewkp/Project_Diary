@@ -22,9 +22,7 @@ import com.example.kaew_pc.diary_project.Database.DBHelper;
 public class Login extends AppCompatActivity {
 
     private DBHelper db;
-
     private ImageView[] imageSet;
-    private Button n1,n2,n3,n4,n5,n6,n7,n8,n9,n0,del;
     private String inputPass = "", realPass;
     private int count = 0;
 
@@ -32,9 +30,7 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pass);
-
         init();
-
     }
 
     private void init() {
