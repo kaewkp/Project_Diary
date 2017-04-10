@@ -1,10 +1,15 @@
 package com.example.kaew_pc.diary_project.NoteManagement;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +21,7 @@ import android.widget.TextView;
 import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Database.Note_data;
 import com.example.kaew_pc.diary_project.R;
+import com.example.kaew_pc.diary_project.UserPicture;
 import com.example.kaew_pc.diary_project.main;
 
 import java.io.FileNotFoundException;
@@ -24,6 +30,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import android.provider.MediaStore.Images.Media;
+import android.widget.Toast;
+
 import static android.R.attr.bitmap;
 import static com.example.kaew_pc.diary_project.R.id.imageView;
 import static com.example.kaew_pc.diary_project.main.REQUEST_GALLERY;
@@ -41,6 +49,16 @@ public class NoteCreatePage extends AppCompatActivity {
     private Boolean isEdit = false;
     private Note_data data = new Note_data();
     private ImageView img;
+
+
+    // this is the action code we use in our intent,
+    // this way we know we're looking at the response from our own action
+    private static final int SELECT_SINGLE_PICTURE = 101;
+
+    private static final int SELECT_MULTIPLE_PICTURE = 201;
+
+    public static final String IMAGE_TYPE = "image/*";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +85,9 @@ public class NoteCreatePage extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
                 startActivityForResult(Intent.createChooser(intent
-                        , "Select Picture"), REQUEST_GALLERY);
+                        , "Select Picture"), SELECT_SINGLE_PICTURE);
             }
         });
-
-       img = (ImageView)findViewById(R.id.picShow);
 
         Button cancel = (Button)findViewById(R.id.cancelButton);
         Button save = (Button)findViewById(R.id.saveButton);
@@ -97,6 +113,26 @@ public class NoteCreatePage extends AppCompatActivity {
         });
     }
 
+//    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+//        @Override
+//        public void onClick(DialogInterface dialog, int which) {
+//            switch (which){
+//                case DialogInterface.BUTTON_POSITIVE:
+//                    //Yes button clicked
+//                    break;
+//
+//                case DialogInterface.BUTTON_NEGATIVE:
+//                    //No button clicked
+//                    break;
+//            }
+//        }
+//    };
+//
+//    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//    builder.setMessage("คุณยังไม่ได้ทำการบันทึก คุณแน่ใจหรือว่าต้องการละทิ้งการเปลี่ยนแปลงนี้").setPositiveButton("Yes", dialogClickListener)
+//    .setNegativeButton("No", dialogClickListener).show();
+
+
     private void saveNote() {
 //        Note_data note = new Note_data();
 
@@ -121,23 +157,56 @@ public class NoteCreatePage extends AppCompatActivity {
 
         android.util.Log.i("Time Class ", " Time value in milliseconds "+time.getYear());
         date.setText(formattedDate);
+        img = (ImageView)findViewById(R.id.picShow);
 
         db = DBHelper.getInstance(this);
     }
 
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//       if (requestCode == REQUEST_GALLERY && resultCode == RESULT_OK) {
-//            Uri uri = data.getData();
-//           try {
-//               bitmap = Media.getBitmap(this.getContentResolver(), uri);
-//                img.setImageBitmap(bitmap);
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//           } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_SINGLE_PICTURE) {
+
+                Uri selectedImageUri = data.getData();
+                try {
+                    img.setImageBitmap(new UserPicture(selectedImageUri, getContentResolver()).getBitmap());
+                } catch (IOException e) {
+                    Log.e(NoteCreatePage.class.getSimpleName(), "Failed to load image", e);
+                }
+                // original code
+//                String selectedImagePath = getPath(selectedImageUri);
+//                selectedImagePreview.setImageURI(selectedImageUri);
+            }
+        } else {
+            // report failure
+            Toast.makeText(getApplicationContext(), "Fail to get intent data", Toast.LENGTH_LONG).show();
+            Log.d(NoteCreatePage.class.getSimpleName(), "Failed to get intent data, result code is " + resultCode);
+        }
+    }
+
+    public String getPath(Uri uri) {
+
+        // just some safety built in
+        if( uri == null ) {
+            // perform some logging or show user feedback
+            Toast.makeText(getApplicationContext(), "Fail to get picture", Toast.LENGTH_LONG).show();
+            Log.d(NoteCreatePage.class.getSimpleName(), "Failed to parse image path from image URI " + uri);
+            return null;
+        }
+
+        // try to retrieve the image from the media store first
+        // this will only work for images selected from gallery
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        if( cursor != null ){
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
+        // this is our fallback here, thanks to the answer from @mad indicating this is needed for
+        // working code based on images selected using other file managers
+        return uri.getPath();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
