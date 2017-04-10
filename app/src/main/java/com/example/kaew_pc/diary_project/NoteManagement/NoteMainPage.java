@@ -58,24 +58,6 @@ public class NoteMainPage extends AppCompatActivity {
 
         loadNoteList();
 
-//        Button cancel = (Button)findViewById(R.id.cancelButton);
-//        Button save = (Button)findViewById(R.id.saveButton);
-//        save.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(getApplicationContext(), MainMenu.class);
-//                startActivity(i);
-//                finish();
-//            }
-//        });
-//        cancel.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(getApplicationContext(), MainMenu.class);
-//                startActivity(i);
-//                finish();
-//            }
-//        });
     }
 
     private void loadNoteList() {
@@ -90,10 +72,6 @@ public class NoteMainPage extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
-
-//                Toast.makeText(getApplicationContext(), String.valueOf(data.get(position).getNote_id()),
-//                        Toast.LENGTH_LONG).show();
-
                 intent.putExtra("id", data.get(position).getNote_id());
                 startActivity(intent);
                 finish();
@@ -106,7 +84,7 @@ public class NoteMainPage extends AppCompatActivity {
 
         Date time = Calendar.getInstance().getTime();
 
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 //        String formattedDate = df.format(time);
 
         android.util.Log.i("Time Class ", " Time value in milliseconds "+time.getYear());

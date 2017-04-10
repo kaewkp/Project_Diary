@@ -47,12 +47,12 @@
             android:gravity="top"
             android:visibility="visible"
             android:textSize="18dp"
-            android:layout_below="@+id/textView"
             android:layout_alignLeft="@+id/title"
             android:layout_alignStart="@+id/title"
-            android:layout_above="@+id/cancelButton"
             android:layout_alignRight="@+id/title"
-            android:layout_alignEnd="@+id/title" />
+            android:layout_alignEnd="@+id/title"
+            android:layout_below="@+id/textView"
+            android:layout_above="@+id/picShow" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -187,6 +187,21 @@
             android:maxLines="3"
             android:lines="1"
             android:scrollHorizontally="false" />
+
+        <!--<ImageView-->
+            <!--android:id="@+id/picShow"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_alignBottom="@+id/listButton"-->
+            <!--android:layout_alignEnd="@+id/desc" />-->
+
+        <ImageView
+            android:id="@+id/picShow"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_above="@+id/saveButton"
+            android:layout_alignParentStart="true" />
+
     </RelativeLayout>
 
 

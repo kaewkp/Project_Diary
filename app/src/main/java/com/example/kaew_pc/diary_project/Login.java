@@ -17,6 +17,7 @@ import com.example.kaew_pc.diary_project.Database.DBHelper;
 public class Login extends AppCompatActivity {
 
     private Button submit;
+    private Button forgotPass;
     private EditText pass;
     private DBHelper db;
 
@@ -41,6 +42,22 @@ public class Login extends AppCompatActivity {
                 }
             }
         });
+
+//        forgotPass.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(Intent.ACTION_SEND);
+//                i.setType("password (4 digits) : ");
+//                i.putExtra(Intent.EXTRA_EMAIL, new String[]{"com.example.kaew_pc.diary_project"});
+//                i.putExtra(Intent.EXTRA_SUBJECT, "forgot password");
+//                i.putExtra(Intent.EXTRA_TEXT, "password : ");
+//                try {
+//                    startActivity(Intent.createChooser(i, "Send mail..."));
+//                } catch (android.content.ActivityNotFoundException ex) {
+//                    Toast.makeText(Login.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
     }
 
     private void init() {
