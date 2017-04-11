@@ -43,9 +43,10 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_toRightOf="@+id/textView"
-            android:layout_toEndOf="@+id/textView">
-            android:hint="เลือกประเภทชำระค่าบริการ" />
+            android:layout_toEndOf="@+id/textView"
+            android:hint="เลือกประเภทชำระค่าบริการ">
         </Spinner>
+
 
         <EditText
             android:layout_width="180dp"
@@ -96,18 +97,6 @@
             android:layout_marginTop="30dp"/>
 
         <TextView
-            android:text="จำนวนเงิน"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView3"
-            android:textSize="18sp"
-            android:textColor="@android:color/holo_orange_dark"
-            android:layout_marginTop="15dp"
-            android:layout_below="@+id/bankname"
-            android:layout_toRightOf="@+id/textView"
-            android:layout_toEndOf="@+id/textView" />
-
-        <TextView
             android:text="ยังไม่ได้เลือก"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -145,6 +134,58 @@
             android:layout_alignParentStart="true"
             android:layout_marginTop="25dp"
             android:id="@+id/textViewTimer" />
+
+        <TextView
+            android:text="รายละเอียด"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bankname"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="14dp"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="18sp"
+            android:id="@+id/titledesc" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint=" แตะเพื่อแก้ไข"
+            android:textColor="#000000"
+            android:ems="10"
+            android:id="@+id/descpayment"
+            android:layout_below="@+id/titledesc"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="จำนวนเงิน"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            android:textSize="18sp"
+            android:textColor="@android:color/holo_orange_dark"
+            android:layout_marginTop="11dp"
+            android:layout_below="@+id/descpayment"
+            android:layout_toEndOf="@+id/textView" />
+
+        <!--<TextView-->
+            <!--android:text="วันที่แจ้งเตือน : "-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignBottom="@+id/textViewTimer"-->
+            <!--android:textColor="@android:color/holo_orange_dark"-->
+            <!--android:layout_toEndOf="@+id/textViewTimer"-->
+            <!--android:textSize="18sp"-->
+            <!--android:id="@+id/alertTitle" />-->
+
+        <!--<TextView-->
+            <!--android:text="ยังไม่ได้เลือก"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignBottom="@+id/alertTitle"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:id="@+id/showalert" />-->
+
 
         <!--<Button-->
             <!--android:text="start"-->

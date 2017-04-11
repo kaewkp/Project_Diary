@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static junit.runner.Version.id;
+
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper dbHelper = null;
 
@@ -73,9 +75,21 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.i(TAG, CREATE_Payment_data_TABLE);
 
 
+        //Table PayType
+        String CREATE_PayType_TABLE = String.format("CREATE TABLE %s " +
+                        "(%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, %s TEXT)",
+                PayType.TABLE,
+                PayType.Column.PayType_id,
+                PayType.Column.PayType_name);
+
+        Log.i(TAG, CREATE_PayType_TABLE);
+
+
         db.execSQL(CREATE_Password_TABLE);
         db.execSQL(CREATE_Note_data_TABLE);
         db.execSQL(CREATE_Payment_data_TABLE);
+        db.execSQL(CREATE_PayType_TABLE);
+        insertPayType(db);
     }
 
     public void setPassword(SQLiteDatabase db, String pass){
@@ -133,9 +147,21 @@ public class DBHelper extends SQLiteOpenHelper {
         initialValues.put(Payment_data.Column.PayStatus_id, paymentdata.getPayStatus_id());
         initialValues.put(Payment_data.Column.Noti_id, paymentdata.getNoti_id());
 
-        int d = Log.d("Insert Note Data", "title : " + paymentdata.getPayment_title());
+        int d = Log.d("Insert Payment Data", "title : " + paymentdata.getPayment_title());
 
         db.insert(Payment_data.TABLE, null, initialValues);
+    }
+
+
+    public void createPayType(SQLiteDatabase db, String id, String name){
+        ContentValues initialValues = new ContentValues();
+        initialValues.put(PayType.Column.PayType_id, id);
+        initialValues.put(PayType.Column.PayType_name, name);
+
+
+        int d = Log.d("Insert PayType Data", "title : " + name);
+
+        db.insert(PayType.TABLE, null, initialValues);
     }
 
     public void updateNote(SQLiteDatabase db, Note_data notedata){
@@ -280,6 +306,43 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
+    //Payment
+    public ArrayList<PayType> getAllPayType(){
+        Log.d("PayType", "select * from PayType");
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<PayType> list = new ArrayList<PayType>();
+        Cursor cursor = null;
+
+        try {
+            cursor = db.query(PayType.TABLE, null, null, null, null, null, null); //(table, column, where, where arg, groupby, having, orderby)
+
+            if (cursor.getCount() < 1) {
+                return list;
+            }
+            else {
+                cursor.moveToFirst();
+            }
+
+            while (!cursor.isAfterLast()) {
+                Log.d("PayType", "PayType id : " + cursor.getString(cursor.getColumnIndex(PayType.Column.PayType_id)));
+
+                PayType data = new PayType(cursor.getString(cursor.getColumnIndex(PayType.Column.PayType_id))
+                        , cursor.getString(cursor.getColumnIndex(PayType.Column.PayType_name)));
+                list.add(data);
+                cursor.moveToNext();
+            }
+        }
+        catch (Exception ex){
+            Log.e("PayType", ex.toString());
+        }
+        finally {
+            cursor.close();
+        }
+
+        return list;
+    }
+
+
     public Payment_data getPaymentById(String id){
         Log.d("Search!!!!!!", "query in Note by id");
 
@@ -348,6 +411,16 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.i(TAG, "Upgrade Database from " + oldVersion + " to " + newVersion);
 
         onCreate(db);
+
+    }
+
+
+    public void insertPayType(SQLiteDatabase db) {
+        createPayType(db, "pt1","ค่าน้ำ");
+        createPayType(db, "pt2","ค่าไฟ");
+        createPayType(db, "pt3","ค่าโทรศัพท์");
+        createPayType(db, "pt4","ค่าบัตรเครดิต");
+        createPayType(db, "pt5","ค่าผ่อนชำระ");
 
     }
 }

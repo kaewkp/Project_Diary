@@ -20,12 +20,10 @@
         android:id="@+id/desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/title"
-        android:layout_alignBottom="@+id/title"
-        android:layout_marginStart="61dp"
-        android:layout_toEndOf="@+id/title"
         android:text="TextView"
         android:textColor="@android:color/holo_orange_light"
-        android:textSize="16dp" />
+        android:textSize="16dp"
+        android:layout_alignBottom="@+id/title"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
