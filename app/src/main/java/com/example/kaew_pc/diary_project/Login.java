@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.kaew_pc.diary_project.Database.DBHelper;
 
+
 /**
  * Created by KAEW-PC on 21-Mar-17.
  */
@@ -71,7 +72,7 @@ public class Login extends AppCompatActivity {
         }
         else{
             Toast.makeText(Login.this, "Incorect Password" , Toast.LENGTH_SHORT).show();
-            setImage( new int[]{ R.drawable.red, R.drawable.red, R.drawable.red, R.drawable.red}, 0);
+            setImage( new int[]{ R.drawable.green, R.drawable.green, R.drawable.green, R.drawable.green}, 0);
             count = 0;
             inputPass = "";
         }
@@ -80,16 +81,16 @@ public class Login extends AppCompatActivity {
     private void changeImg(){
         switch (count) {
             case 0:
-                setImage( new int[]{ R.drawable.red, R.drawable.red, R.drawable.red, R.drawable.red}, 0);
+                setImage( new int[]{ R.drawable.green, R.drawable.green, R.drawable.green, R.drawable.green}, 0);
                 break;
             case 1:
-                setImage( new int[]{ R.drawable.yellow, R.drawable.red, R.drawable.red, R.drawable.red}, 0);
+                setImage( new int[]{ R.drawable.yellow, R.drawable.green, R.drawable.green, R.drawable.green}, 0);
                 break;
             case 2:
-                setImage( new int[]{ R.drawable.yellow, R.drawable.red, R.drawable.red }, 1);
+                setImage( new int[]{ R.drawable.yellow, R.drawable.green, R.drawable.green }, 1);
                 break;
             case 3:
-                setImage( new int[]{ R.drawable.yellow, R.drawable.red }, 2);
+                setImage( new int[]{ R.drawable.yellow, R.drawable.green }, 2);
                 break;
             case 4:
                 setImage( new int[]{ R.drawable.yellow }, 3);
