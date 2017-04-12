@@ -43,7 +43,15 @@ public class PayType {
         return PayType_id;
     }
 
+    public void setPayType_id(String id){
+        this.PayType_id = id;
+    }
+
     public String getPayType_name() {
         return PayType_name;
+    }
+
+    public void setPayType_name(String name){
+        this.PayType_name = name;
     }
 }
