@@ -20,6 +20,7 @@ public class SettingPassword extends AppCompatActivity {
 
     private Button submit;
     private EditText pass, pass2;
+    private EditText email;
     private DBHelper db;
     private Intent intent;
 
@@ -35,6 +36,9 @@ public class SettingPassword extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
                 if(pass.getText().toString().equalsIgnoreCase(pass2.getText().toString())){
 
                     Intent go;
@@ -62,6 +66,7 @@ public class SettingPassword extends AppCompatActivity {
         submit = (Button) findViewById(R.id.submit);
         pass = (EditText) findViewById(R.id.password);
         pass2 = (EditText) findViewById(R.id.password2);
+        email = (EditText) findViewById(R.id.email);
 
         intent = getIntent();
     }
