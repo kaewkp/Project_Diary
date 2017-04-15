@@ -1,5 +1,7 @@
 package com.example.kaew_pc.diary_project.NoteManagement;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -26,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import static android.R.attr.data;
+
 /**
  * Created by Ekachart-PC on 23/3/2560.
  */
@@ -35,10 +39,11 @@ public class NoteMainPage extends AppCompatActivity {
     private TextView date;
     private DBHelper db;
     private ListView list;
-    private FloatingActionButton fab;
+    private FloatingActionButton fab, fab2;
     private float historicX, historicY;
     static final int DELTA = 50;
     private boolean isResume = false;
+    private ArrayList<Note_data> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +59,7 @@ public class NoteMainPage extends AppCompatActivity {
     }
 
     private void loadNoteList() {
-        final ArrayList<Note_data> data = db.getAllNote();
+        data = db.getAllNote();
 
         final NoteCustomAdapter adapter = new NoteCustomAdapter(NoteMainPage.this, data);
 
@@ -72,12 +77,18 @@ public class NoteMainPage extends AppCompatActivity {
 
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long id) {
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view,final int pos, long id) {
 //                Toast.makeText(NoteMainPage.this, "POS : " + pos, Toast.LENGTH_SHORT).show();
-//                db.deleteNote(db.getWritableDatabase(), data.get(pos).getNote_id());
                 adapter.toggleCheckbox(pos);
-//                loadNoteList();
+                fab2.setVisibility(View.VISIBLE);
                 return true;
+            }
+        });
+
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteDialog(adapter.isChecked());
             }
         });
 
@@ -112,6 +123,26 @@ public class NoteMainPage extends AppCompatActivity {
 //        });
     }
 
+    private void deleteDialog(final ArrayList<Integer> idList){
+        final AlertDialog.Builder exitDialog = new AlertDialog.Builder(this);
+        exitDialog.setTitle("Confirm Delete");
+        exitDialog.setPositiveButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        exitDialog.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                for ( int id : idList ) {
+                    db.deleteNote(db.getWritableDatabase(), id);
+                }
+                fab2.setVisibility(View.GONE);
+                loadNoteList();
+            }
+        }).show();
+    }
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
@@ -139,6 +170,8 @@ public class NoteMainPage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        fab2 = (FloatingActionButton) findViewById(R.id.fab2);
     }
 
     @Override

@@ -22,7 +22,6 @@ public class NoteCustomAdapter extends ArrayAdapter<Note_data> {
 
     private Activity mContext;
     private ArrayList<Note_data> data;
-    private View row;
     private ArrayList<View> row2 = new ArrayList<>();
     private ArrayList<CheckBox> c = new ArrayList<>();
 
@@ -36,7 +35,7 @@ public class NoteCustomAdapter extends ArrayAdapter<Note_data> {
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater mInflater = mContext.getLayoutInflater();
 
-        row = mInflater.inflate(R.layout.listview_note,null,true);
+        View row = mInflater.inflate(R.layout.listview_note,null,true);
         c.add( (CheckBox)row.findViewById(R.id.checkbox) );
 
         TextView textView1 = (TextView)row.findViewById(R.id.title);
@@ -64,5 +63,17 @@ public class NoteCustomAdapter extends ArrayAdapter<Note_data> {
                 cc.setChecked(false);
             }
         }
+    }
+
+    public ArrayList<Integer> isChecked(){
+        ArrayList<Integer> list = new ArrayList<>();
+        int i = 0;
+        for ( CheckBox cc : c ) {
+            if(cc.isChecked()){
+                list.add(data.get(i).getNote_id());
+            }
+            i++;
+        }
+        return list;
     }
 }
