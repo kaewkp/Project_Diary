@@ -37,7 +37,7 @@ public class NoteCustomAdapter extends ArrayAdapter<Note_data> {
         TextView textView1 = (TextView)row.findViewById(R.id.title);
         textView1.setText(data.get(position).getNote_title());
 
-        TextView textView2 = (TextView)row.findViewById(R.id.desc);
+        TextView textView2 = (TextView)row.findViewById(R.id.date);
 
         String date = data.get(position).getNote_date();
         date = date.substring(0,date.lastIndexOf(" "));

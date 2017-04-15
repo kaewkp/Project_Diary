@@ -1,13 +1,11 @@
 package com.example.kaew_pc.diary_project.NoteManagement;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -22,19 +20,12 @@ import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Database.Note_data;
 import com.example.kaew_pc.diary_project.R;
 import com.example.kaew_pc.diary_project.UserPicture;
-import com.example.kaew_pc.diary_project.main;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import android.provider.MediaStore.Images.Media;
-import android.widget.Toast;
 
-import static android.R.attr.bitmap;
-import static com.example.kaew_pc.diary_project.R.id.imageView;
-import static com.example.kaew_pc.diary_project.main.REQUEST_GALLERY;
+import android.widget.Toast;
 
 /**
  * Created by Ekachart-PC on 23/3/2560.
@@ -88,6 +79,18 @@ public class NoteCreatePage extends AppCompatActivity {
                         , "Select Picture"), SELECT_SINGLE_PICTURE);
             }
         });
+
+//        ImageButton pic = (ImageButton)findViewById(R.id.picButton);
+//        pic.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//        // this line is different here !!
+//        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_MULTIPLE_PICTURE);
+//    }
+//});
 
         Button cancel = (Button)findViewById(R.id.cancelButton);
         Button save = (Button)findViewById(R.id.saveButton);
@@ -149,7 +152,7 @@ public class NoteCreatePage extends AppCompatActivity {
     private void init() {
         date = (TextView) findViewById(R.id.showdate);
         title = (EditText) findViewById(R.id.title);
-        desc = (EditText) findViewById(R.id.desc);
+        desc = (EditText) findViewById(R.id.date);
         Date time = Calendar.getInstance().getTime();
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -169,7 +172,7 @@ public class NoteCreatePage extends AppCompatActivity {
                 Uri selectedImageUri = data.getData();
                 try {
                     img.setImageBitmap(new UserPicture(selectedImageUri, getContentResolver()).getBitmap());
-                } catch (IOException e) {
+                } catch (Exception e) {
                     Log.e(NoteCreatePage.class.getSimpleName(), "Failed to load image", e);
                 }
                 // original code
