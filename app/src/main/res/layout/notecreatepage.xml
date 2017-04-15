@@ -41,7 +41,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/desc"
+            android:id="@+id/date"
             android:hint=" แตะเพื่อแก้ไข"
             android:textColor="#000000"
             android:gravity="top"
@@ -81,8 +81,8 @@
             android:layout_width="10dp"
             android:text="บันทึก"
             android:id="@+id/saveButton"
-            android:textColor="#000000"
-            android:background="#ffff8800"
+            android:textColor="@android:color/white"
+            android:background="#FF9999"
             android:singleLine="false"
             android:textSize="15dp"
             android:layout_above="@+id/listButton"
@@ -98,16 +98,17 @@
             android:layout_width="10dp"
             android:text="ยกเลิก"
             android:id="@+id/cancelButton"
-            android:textColor="#000000"
+            android:textColor="@android:color/white"
             android:background="#D3D3D3"
             android:singleLine="true"
             android:textSize="15dp"
             android:layout_above="@+id/cameraButton"
             android:layout_marginBottom="10dp"
-            android:layout_alignLeft="@+id/desc"
-            android:layout_alignStart="@+id/desc"
-            android:layout_toLeftOf="@+id/cameraButton"
-            android:layout_height="40dp" />
+            android:layout_alignLeft="@+id/date"
+            android:layout_alignStart="@+id/date"
+            android:layout_height="40dp"
+            android:layout_toStartOf="@+id/picButton"
+            android:layout_alignEnd="@+id/cameraButton" />
 
         <ImageButton
             android:layout_width="30dp"
@@ -116,7 +117,8 @@
             android:background="@drawable/list"
             android:layout_alignTop="@+id/microButton"
             android:layout_alignRight="@+id/saveButton"
-            android:layout_alignEnd="@+id/saveButton" />
+            android:layout_alignEnd="@+id/saveButton"
+            android:visibility="invisible" />
 
         <TextView
             android:text="TextView"
@@ -125,8 +127,8 @@
             android:id="@+id/showdate"
             android:layout_alignBaseline="@+id/textView"
             android:layout_alignBottom="@+id/textView"
-            android:layout_alignRight="@+id/desc"
-            android:layout_alignEnd="@+id/desc"
+            android:layout_alignRight="@+id/date"
+            android:layout_alignEnd="@+id/date"
             tools:textColor="@android:color/black" />
 
         <ImageButton
@@ -142,16 +144,6 @@
         <ImageButton
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:id="@+id/picButton"
-            android:background="@drawable/picture"
-            android:layout_marginBottom="11dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignLeft="@+id/cancelButton"
-            android:layout_alignStart="@+id/cancelButton" />
-
-        <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
             android:id="@+id/microButton"
             android:background="@drawable/microphoneeeeeee"
             android:clickable="false"
@@ -161,14 +153,6 @@
             android:layout_marginRight="15dp"
             android:layout_marginEnd="15dp"
             android:visibility="invisible" />
-
-        <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/attachButton"
-            android:background="@drawable/attachment"
-            android:layout_below="@+id/saveButton"
-            android:layout_centerHorizontal="true" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -201,6 +185,24 @@
             android:layout_height="200dp"
             android:layout_above="@+id/saveButton"
             android:layout_alignParentStart="true" />
+
+        <ImageButton
+            android:id="@+id/picButton"
+            android:background="@drawable/picture"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignEnd="@+id/picShow"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/attachButton"
+            android:background="@drawable/attachment"
+            android:layout_below="@+id/cancelButton"
+            android:layout_alignStart="@+id/cancelButton"
+            android:visibility="invisible" />
 
     </RelativeLayout>
 
