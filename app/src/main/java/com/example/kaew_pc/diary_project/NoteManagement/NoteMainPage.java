@@ -6,8 +6,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -33,6 +35,10 @@ public class NoteMainPage extends AppCompatActivity {
     private TextView date;
     private DBHelper db;
     private ListView list;
+    private FloatingActionButton fab;
+    private float historicX, historicY;
+    static final int DELTA = 50;
+    private boolean isResume = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +49,6 @@ public class NoteMainPage extends AppCompatActivity {
         action.setDisplayHomeAsUpEnabled(true);
         action.setHomeButtonEnabled(true);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                Intent intent;
-                intent = new Intent(getApplicationContext(), NoteCreatePage.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
         loadNoteList();
 
     }
@@ -63,34 +56,97 @@ public class NoteMainPage extends AppCompatActivity {
     private void loadNoteList() {
         final ArrayList<Note_data> data = db.getAllNote();
 
-        NoteCustomAdapter adapter = new NoteCustomAdapter(NoteMainPage.this, data);
-        list = (ListView) findViewById(R.id.listview);
+        final NoteCustomAdapter adapter = new NoteCustomAdapter(NoteMainPage.this, data);
 
         list.setAdapter(adapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                isResume = true;
                 Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
                 intent.putExtra("id", data.get(position).getNote_id());
                 startActivity(intent);
-                finish();
+            }
+        });
+
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long id) {
+//                Toast.makeText(NoteMainPage.this, "POS : " + pos, Toast.LENGTH_SHORT).show();
+//                db.deleteNote(db.getWritableDatabase(), data.get(pos).getNote_id());
+                adapter.toggleCheckbox(pos);
+//                loadNoteList();
+                return true;
+            }
+        });
+
+//        registerForContextMenu(list);
+
+//        list.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//
+//                switch (event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        historicX = event.getX();
+//                        historicY = event.getY();
+//                        break;
+//
+//                    case MotionEvent.ACTION_UP:
+//                        if (event.getX() - historicX < -DELTA) {
+//                            Toast.makeText(NoteMainPage.this, "X : ", Toast.LENGTH_SHORT).show();
+//                            return true;
+//                        }
+//                        else if (event.getX() - historicX > DELTA) {
+//                            Toast.makeText(NoteMainPage.this, "Y", Toast.LENGTH_SHORT).show();
+//                            return true;
+//                        }
+//                        break;
+//
+//                    default:
+//                        return false;
+//                }
+//                return false;
+//            }
+//        });
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId()==R.id.listview) {
+//            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+//            menu.setHeaderTitle(Countries[info.position]);
+//            String[] menuItems = getResources().getStringArray(R.array.menu);
+//            for (int i = 0; i<menuItems.length; i++) {
+//                menu.add(Menu.NONE, i, i, menuItems[i]);
+//            }
+//            Toast.makeText(this, "Messi", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void init() {
+        db = DBHelper.getInstance(this);
+        list = (ListView) findViewById(R.id.listview);
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isResume = true;
+                Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
+                startActivity(intent);
             }
         });
     }
 
-    private void init() {
-//        date = (TextView) findViewById(R.id.showdate);
-
-        Date time = Calendar.getInstance().getTime();
-
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-//        String formattedDate = df.format(time);
-
-        android.util.Log.i("Time Class ", " Time value in milliseconds "+time.getYear());
-//        date.setText(formattedDate);
-
-        db = DBHelper.getInstance(this);
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(isResume)
+            loadNoteList();
+        isResume = false;
     }
 
 
@@ -107,12 +163,9 @@ public class NoteMainPage extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
 
-        Intent intent;
         switch (item.getItemId()) {
 
             case android.R.id.home:
-                intent = new Intent(getApplicationContext(), main.class);
-                startActivity(intent);
                 finish();
                 return true;
 

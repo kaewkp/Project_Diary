@@ -178,6 +178,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return list;
     }
 
+    public void deleteNote(SQLiteDatabase db, int id){
+        String whereClause = Note_data.Column.Note_id + "=?";
+        String[] whereArgs = new String[] { String.valueOf(id) };
+        db.delete(Note_data.TABLE, whereClause, whereArgs);
+    }
+
 //    public ArrayList<Payments_data> getAllPayment(){
 //        Log.d("Search!!!!!!", "query in Payment");
 //        SQLiteDatabase db = this.getReadableDatabase();
@@ -246,42 +252,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return data;
     }
-
-//    public Payments_data getPaymentById(String id){
-//        Log.d("Search!!!!!!", "query in Payment by id");
-//
-//        Payments_data data = null;
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        Cursor cursor = db.query(Payments_data.TABLE,
-//                null,
-//                "Payment id = ?",
-//                new String[] { id },
-//                null, null, null); //(table, column, where, where arg, groupby, having, orderby)
-//
-//        if(cursor.getCount() < 1){
-//
-//        }
-//
-//        Log.d("Search!!!!!!", "size : " + cursor.getCount());
-//
-//        if (cursor != null) {
-//            cursor.moveToFirst();
-//        }
-//
-//        while(!cursor.isAfterLast()) {
-//            data = new Payments_data();
-//            data.setPayment_id(cursor.getInt(cursor.getColumnIndex(Payments_data.Column.Payments_id)));
-//            data.setPayment_title(cursor.getString(cursor.getColumnIndex(Payments_data.Column.Payments_title)));
-//            data.setPayment_price(cursor.getString(cursor.getColumnIndex(Payments_data.Column.Payments_price)));
-//            data.setNote_date(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_date)));
-//            data.setNoti_id(cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id)));
-//            cursor.moveToNext();
-//        }
-//        cursor.close();
-//
-//        return data;
-//    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
