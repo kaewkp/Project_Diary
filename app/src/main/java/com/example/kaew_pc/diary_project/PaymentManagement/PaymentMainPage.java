@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Database.Payment_data;
 import com.example.kaew_pc.diary_project.R;
+import com.example.kaew_pc.diary_project.Repository.PaymentDataRepo;
 import com.example.kaew_pc.diary_project.main;
 
 import java.util.ArrayList;
@@ -28,6 +31,7 @@ public class PaymentMainPage extends AppCompatActivity {
     private FloatingActionButton fab;
     private DBHelper db;
     private ListView list;
+    private Boolean isResume = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,21 +52,27 @@ public class PaymentMainPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(PaymentMainPage.this, "Click", Toast.LENGTH_LONG).show();
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
                 Intent intent;
                 intent = new Intent(getApplicationContext(), PaymentActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
     }
 
     private void loadPaymentList() {
-        ArrayList<Payment_data> data = db.getAllPayment();
+        ArrayList<Payment_data> data = new PaymentDataRepo().getData(db.getReadableDatabase());
         PaymentCustomAdapter adapter = new PaymentCustomAdapter(PaymentMainPage.this, data);
         list.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isResume)
+            loadPaymentList();
+        isResume = false;
     }
 
     @Override
@@ -88,6 +98,11 @@ public class PaymentMainPage extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 
 }
