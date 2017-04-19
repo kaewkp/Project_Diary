@@ -88,7 +88,10 @@ public class PaymentActivity extends AppCompatActivity {
         if (id != 0) { //When click from listview
             data = new PaymentDataRepo().getDataById(db.getReadableDatabase(), String.valueOf(id));
             paymentTypeSpinner.setSelected(true);
-            descpayment.setText(data.getPayment_desc());;
+
+
+            descpayment.setText(data.getPayment_desc());
+
             priceEdit.setText(String.valueOf(data.getPayment_price()));
 
             //set spinner select position
@@ -155,7 +158,11 @@ public class PaymentActivity extends AppCompatActivity {
 
     private void savePayment() {
         data.setPayment_title(items);
-        data.setPayment_desc(descpayment.getText().toString());
+
+        String dpay = data.getPayment_desc();
+        if(dpay != null) {
+            data.setPayment_desc(descpayment.getText().toString());
+        }
 
         double price = 0;
         if(!priceEdit.getText().toString().equals("")) {
@@ -227,6 +234,7 @@ public class PaymentActivity extends AppCompatActivity {
 //                db.getAllPayType();
 
                 items = paymentTypeSpinner.getSelectedItem().toString();
+                paymentTypeSpinner.setPrompt("เลือกประเภทค่าใช้จ่าย");
                 Log.i("Selected item : ", items);
 
                 if (items.equalsIgnoreCase("ค่าบัตรเครดิต")) {
