@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -78,10 +79,45 @@ public class NoteMainPage extends AppCompatActivity {
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view,final int pos, long id) {
-//                Toast.makeText(NoteMainPage.this, "POS : " + pos, Toast.LENGTH_SHORT).show();
-                adapter.toggleCheckbox(pos);
+//                adapter.toggleCheckbox2(pos);
                 fab2.setVisibility(View.VISIBLE);
                 return true;
+            }
+        });
+
+        list.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private int currentVisibleItemCount;
+            private int currentScrollState;
+            private int currentFirstVisibleItem;
+            private int totalItem;
+
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+//                Toast.makeText(NoteMainPage.this, "Messi", Toast.LENGTH_SHORT).show();
+//                if(isScrollCompleted())
+//                    adapter.toggleCheckbox(0);
+//                adapter.toggleCheckbox2();
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+//                Toast.makeText(NoteMainPage.this, "CR7", Toast.LENGTH_LONG).show();
+                adapter.toggleCheckbox2(0);
+            }
+
+            private boolean isScrollCompleted() {
+                if (totalItem - currentFirstVisibleItem == currentVisibleItemCount
+                        && this.currentScrollState == SCROLL_STATE_IDLE)
+                    return true;
+                else
+                    return false;
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.toggleCheckbox(0);
             }
         });
 
@@ -162,14 +198,15 @@ public class NoteMainPage extends AppCompatActivity {
         list = (ListView) findViewById(R.id.listview);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isResume = true;
-                Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
-                startActivity(intent);
-            }
-        });
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                isResume = true;
+////                Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
+////                startActivity(intent);
+//
+//            }
+//        });
 
         fab2 = (FloatingActionButton) findViewById(R.id.fab2);
     }
