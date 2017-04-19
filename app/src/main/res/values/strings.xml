@@ -19,6 +19,43 @@
             <item>อื่นๆ</item>
         </string-array>
 
-        <!--<string name="title_activity_main_menu">SomsamaiDiary</string>-->
+    <string-array name="ประเภทคธนาคาร">
+        <item>SCB (ไทยพาณิชย์)</item>
+        <item>KBANK (กสิกรไทย)</item>
+        <item>GSB (ออมสิน)</item>
+        <item>KTC (กรุงไทย)</item>
+        <item>UOB (ยูโอบี)</item>
+        <item>KRUNGSRI (กรุงศรี)</item>
+        <item>TMB (ทหารไทย)</item>
+        <item>AEON (อิออน)</item>
+        <item>BBL (บัวหลวง)</item>
+        <item>Citybank  (ซิตี้แบงก์)</item>
+    </string-array>
+
+    <string-array name="การผ่อนชำระ">
+        <item>6 เดือน</item>
+        <item>12 เดือน</item>
+        <item>18 เดือน</item>
+        <item>24 เดือน</item>
+        <item>30 เดือน</item>
+        <item>36 เดือน</item>
+        <item>40 เดือน</item>
+        <item>44 เดือน</item>
+        <item>50 เดือน</item>
+        <item>62 เดือน</item>
+    </string-array>
+
+
+    <string-array name="การแจ้งเตือน">
+        <item>ล่วงหน้า 1 วัน</item>
+        <item>ล่วงหน้า 3 วัน</item>
+        <item>ล่วงหน้า 5 วัน</item>
+        <item>ล่วงหน้า 1 สัปดาห์</item>
+        <item>ล่วงหน้า 2 สัปดาห์</item>
+    </string-array>
+
+
+
+    <!--<string name="title_activity_main_menu">SomsamaiDiary</string>-->
 
 </resources>
