@@ -4,8 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -38,9 +36,6 @@ import java.util.Calendar;
 
 import java.util.Date;
 
-import java.util.List;
-
-
 /**
  * Created by chommchome on 28/3/2560.
  */
@@ -52,24 +47,19 @@ public class PaymentActivity extends AppCompatActivity {
     private AlertDialog.Builder builder, timealertbuilder;
     private TextView bankname;
     private TextView showalertdate;
-    private String[] banks = new String[]{ "SCB (ไทยพาณิชย์)", "KBANK (กสิกรไทย)","GSB (ออมสิน)","KTC (กรุงไทย)","UOB (ยูโอบี)","KRUNGSRI (กรุงศรี)",
-            "TMB (ทหารไทย)","AEON (อิออน)","BBL (บัวหลวง)","Citybank  (ซิตี้แบงก์)"};
-    private TextView debt;
-    private String[] debtyear = new String[]{"6 เดือน", "12 งวด"};
-    private String[] timealert = new String[]{"ล่วงหน้า 1 วัน", "ล่วงหน้า 3 วัน", "ล่วงหน้า 5 วัน", "ล่วงหน้า 1 สัปดาห์", "ล่วงหน้า 2 สัปดาห์"};
+    private String[] banks, debtyear, timealert;
 
-    private TextView date;
+    private TextView debt, date;
+    private String formattedDate;
 
     private EditText priceEdit;
     private EditText descpayment;
     private Boolean isEdit = false;
 
-    private String items;//type of payment
-    private String formattedDate;
+    private String items, dateChoose;//type of payment
 
     private int y, d, m;
-    private Button click;
-    private Button start;
+    private Button save;
 
     private ArrayList<String> paymentTypeID;
     private ArrayList<String> paymentTypeValue;
@@ -80,7 +70,6 @@ public class PaymentActivity extends AppCompatActivity {
     private PaymentTypeRepo spinnerRepo;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,50 +78,61 @@ public class PaymentActivity extends AppCompatActivity {
         action.setDisplayHomeAsUpEnabled(true);
 
         init();
-
-
-
-        String[] paymentT = getResources().getStringArray(R.array.ประเภทค่าใช้จ่าย);
-        ArrayAdapter<String> adapterPayment = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, paymentT);
-        paymentTypeSpinner.setAdapter(adapterPayment);
-
-
-
         initAlertDialog();
         initSpinner();
-
-        Button save = (Button) findViewById(R.id.button);
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                savePayment();
-                finish();
-            }
-        });
-
 
         onSpinnerClick();
         showCalendar();
 
         int id = getIntent().getIntExtra("id", 0);
-
         if (id != 0) { //When click from listview
-
             data = new PaymentDataRepo().getDataById(db.getReadableDatabase(), String.valueOf(id));
             paymentTypeSpinner.setSelected(true);
-            descpayment.setText(data.getPayment_desc());
-//            priceEdit.setDouble.parseDouble(data.getPayment_price());
+            descpayment.setText(data.getPayment_desc());;
+            priceEdit.setText(String.valueOf(data.getPayment_price()));
 
-            data = dataRepo.getDataById(db.getReadableDatabase(), String.valueOf(id));
-//            paymentTypeSpinner.setText(data.getPayment_title());
-//            priceEdit.setText(data.getPayment_price());
+            //set spinner select position
+            paymentTypeSpinner.setSelection(Integer.parseInt(data.getPayType_id()));
+            date.setVisibility(View.VISIBLE);
 
-            date.setText(data.getPayment_endDate());
-
+            String d = data.getPayment_endDate();
+            if(d != null)
+                date.setText("วันที่เลือก : " + d);
             isEdit = true;
-
         }
+    }
+
+    private void init() {
+        bankname = (TextView) findViewById(R.id.bankname);
+        debt = (TextView) findViewById(R.id.debt);
+        date = (TextView) findViewById(R.id.showdatetime);
+//        start = (Button) findViewById(R.id.start);
+        priceEdit = (EditText) findViewById(R.id.editprice);
+        descpayment = (EditText) findViewById(R.id.descpayment);
+//        showalertdate = (TextView) findViewById(R.id.showalert);
+        paymentTypeSpinner = (Spinner) findViewById(R.id.typepayment);
+
+        save = (Button) findViewById(R.id.button);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                savePayment();
+                finish();
+            }
+        });
+
+        data = new Payment_data();
+        paytypeData = new PayType();
+
+        debtyear = getResources().getStringArray(R.array.การผ่อนชำระ);
+        banks = getResources().getStringArray(R.array.ประเภทคธนาคาร);
+        timealert = getResources().getStringArray(R.array.การแจ้งเตือน);
+
+        Date time = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        formattedDate = df.format(time);
+
+        db = DBHelper.getInstance(this);
     }
 
 
@@ -141,7 +141,7 @@ public class PaymentActivity extends AppCompatActivity {
         paymentTypeID = new ArrayList<>();
         paymentTypeValue = new ArrayList<>();
 
-        ArrayList<PayType> list = spinnerRepo.getData(db.getReadableDatabase());
+        ArrayList<PayType> list = new PaymentTypeRepo().getData(db.getReadableDatabase());
 
         for ( PayType p : list ) {
             paymentTypeID.add(p.getPayType_id());
@@ -153,71 +153,24 @@ public class PaymentActivity extends AppCompatActivity {
         paymentTypeSpinner.setAdapter(adapterEnglish);
     }
 
-
     private void savePayment() {
         data.setPayment_title(items);
         data.setPayment_desc(descpayment.getText().toString());
-        data.setPayment_price(Double.parseDouble(priceEdit.getText().toString()));
-        data.setPayment_endDate(date.getText().toString());
-        data.setPayment_date(formattedDate);
 
+        double price = 0;
+        if(!priceEdit.getText().toString().equals("")) {
+            price = Double.parseDouble(priceEdit.getText().toString());
+        }
+
+        data.setPayment_price(price);
+        data.setPayment_endDate(dateChoose);
+        data.setPayment_date(formattedDate);
 
         if (!isEdit)
             new PaymentDataRepo().insertData(db.getWritableDatabase(), data);
         else
             new PaymentDataRepo().updateData(db.getWritableDatabase(), data);
-
-
     }
-
-    private void init() {
-        bankname = (TextView) findViewById(R.id.bankname);
-        debt = (TextView) findViewById(R.id.debt);
-        date = (TextView) findViewById(R.id.showdatetime);
-        start = (Button) findViewById(R.id.start);
-        priceEdit = (EditText) findViewById(R.id.editprice);
-        descpayment = (EditText) findViewById(R.id.descpayment);
-//        showalertdate = (TextView) findViewById(R.id.showalert);
-        paymentTypeSpinner = (Spinner) findViewById(R.id.typepayment);
-
-        data = new Payment_data();
-
-        paytypeData = new PayType();
-
-
-        Date time = Calendar.getInstance().getTime();
-
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        formattedDate = df.format(time);
-
-        Log.i("Time Class ", " Time value in milliseconds " + time.getYear());
-        date.setText(formattedDate);
-
-        db = DBHelper.getInstance(this);
-
-        initAlertDialog();
-
-
-        if(!isEdit)
-            dataRepo.insertData(db.getWritableDatabase(), data);
-        else
-            dataRepo.updateData(db.getWritableDatabase(), data);
-    }
-
-//    private void init() {
-//            bankname = (TextView) findViewById(R.id.bankname);
-//            debt = (TextView) findViewById(R.id.debt);
-//            date = (TextView) findViewById(R.id.showdatetime);
-//            start = (Button)findViewById(R.id.start);
-//            priceEdit = (EditText)findViewById(R.id.editprice);
-////            descpayment = (EditText)findViewById(R.id.descpayment);
-//
-//            data = new Payment_data();
-//            dataRepo = new PaymentDataRepo();
-//            spinnerRepo = new PaymentTypeRepo();
-//            db = DBHelper.getInstance(this);
-//
-//    }
 
     private void initDialog(final String[] text, String head, final TextView tv) {
         builder = new AlertDialog.Builder(PaymentActivity.this);
@@ -259,20 +212,18 @@ public class PaymentActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-
-//        timealertbuilder.setNegativeButton("ยกเลิก", null);
         timealertbuilder.create();
     }
 
     private void onSpinnerClick() {
-
         paymentTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
 
                 debt.setVisibility(View.INVISIBLE);
                 bankname.setVisibility(View.INVISIBLE);
+
+                data.setPayType_id(String.valueOf(position));
 //                db.getAllPayType();
 
                 items = paymentTypeSpinner.getSelectedItem().toString();
@@ -287,13 +238,7 @@ public class PaymentActivity extends AppCompatActivity {
                     builder.show();
                     debt.setVisibility(View.VISIBLE);
                 }
-                loadSpinnerData();
-
             }
-
-            private void loadSpinnerData() {
-            }
-
 
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -301,11 +246,6 @@ public class PaymentActivity extends AppCompatActivity {
 
         });
     }
-
-
-    private void loadSpinnerData() {
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -341,8 +281,8 @@ public class PaymentActivity extends AppCompatActivity {
         m = ca.get(Calendar.MONTH);
         d = ca.get(Calendar.DAY_OF_MONTH);
 
-        click = (Button) findViewById(R.id.calendar);
-        click.setOnClickListener(new View.OnClickListener() {
+        Button calendarButton = (Button) findViewById(R.id.calendar);
+        calendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog(dialogID);
@@ -355,7 +295,6 @@ public class PaymentActivity extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         if (id == dialogID) {
             return new DatePickerDialog(this, /*android.R.style.Theme_Holo_Dialog*/dpicklistener, y, m, d);
-
         }
         return null;
     }
@@ -366,8 +305,9 @@ public class PaymentActivity extends AppCompatActivity {
             y = year;
             m = monthOfYear + 1; //Month start from 0
             d = dayOfMonth;
+            dateChoose = String.valueOf(d) + " / " + String.valueOf(m) + " / " + String.valueOf(y);
             date.setVisibility(View.VISIBLE);
-            date.setText("วันที่เลือก : " + String.valueOf(d) + " / " + String.valueOf(m) + " / " + String.valueOf(y));
+            date.setText("วันที่เลือก : " + dateChoose);
         }
     };
 

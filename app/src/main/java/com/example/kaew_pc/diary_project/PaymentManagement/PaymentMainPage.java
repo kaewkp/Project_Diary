@@ -11,11 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Database.Payment_data;
+import com.example.kaew_pc.diary_project.NoteManagement.NoteCreatePage;
 import com.example.kaew_pc.diary_project.R;
 import com.example.kaew_pc.diary_project.Repository.PaymentDataRepo;
 import com.example.kaew_pc.diary_project.main;
@@ -33,6 +35,8 @@ public class PaymentMainPage extends AppCompatActivity {
     private ListView list;
     private Boolean isResume = false;
 
+    private PaymentDataRepo paymentObj;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,26 +49,36 @@ public class PaymentMainPage extends AppCompatActivity {
 
     private void init() {
         db = DBHelper.getInstance(this);
+        paymentObj = new PaymentDataRepo();
         list = (ListView) findViewById(R.id.paymentlist);
 
         fab = (FloatingActionButton) findViewById(R.id.fabpayment);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                Intent intent;
-                intent = new Intent(getApplicationContext(), PaymentActivity.class);
+                isResume = true;
+                Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
                 startActivity(intent);
             }
         });
     }
 
     private void loadPaymentList() {
-        ArrayList<Payment_data> data = new PaymentDataRepo().getData(db.getReadableDatabase());
+        final ArrayList<Payment_data> data = paymentObj != null ?
+                        paymentObj.getData(db.getReadableDatabase()) :
+                        new PaymentDataRepo().getData(db.getReadableDatabase());
+
         PaymentCustomAdapter adapter = new PaymentCustomAdapter(PaymentMainPage.this, data);
         list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                isResume = true;
+                Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
+                intent.putExtra("id", data.get(position).getPayment_id());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

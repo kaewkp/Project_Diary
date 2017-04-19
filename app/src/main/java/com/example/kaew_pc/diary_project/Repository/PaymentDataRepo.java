@@ -69,11 +69,11 @@ public class PaymentDataRepo {
         initialValues.put(Payment_data.Column.Payment_endDate, paymentdata.getPayment_endDate());
         initialValues.put(Payment_data.Column.PayType_id, paymentdata.getPayType_id());
         initialValues.put(Payment_data.Column.PayStatus_id, paymentdata.getPayStatus_id());
-        initialValues.put(Note_data.Column.Noti_id, paymentdata.getNoti_id());
+        initialValues.put(Payment_data.Column.Noti_id, paymentdata.getNoti_id());
 
         Log.d(TAG + " Update Data", "title : " + paymentdata.getPayment_title());
 
-        db.update(Payment_data.TABLE, initialValues, "Payment_data="+paymentdata.getPayment_id(), null);
+        db.update(Payment_data.TABLE, initialValues, Payment_data.Column.Payment_id+"="+paymentdata.getPayment_id(), null);
     }
 
     public void deleteData(SQLiteDatabase db, Payment_data paymentdata){
