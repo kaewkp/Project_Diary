@@ -222,6 +222,7 @@ public class PaymentActivity extends AppCompatActivity {
 
     private void onSpinnerClick() {
         paymentTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
 

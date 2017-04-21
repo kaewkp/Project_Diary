@@ -55,7 +55,7 @@ public class PaymentMainPage extends AppCompatActivity {
         init();
         loadPaymentList();
         initSortDialog();
-        
+
     }
 
 
@@ -172,7 +172,7 @@ public class PaymentMainPage extends AppCompatActivity {
             }
 
             if (item.getItemId() == android.R.id.home) {
-                intent = new Intent(getApplicationContext(), PaymentMainPage.class);
+                intent = new Intent(getApplicationContext(), main.class);
                 startActivity(intent);
                 finish();
             }
