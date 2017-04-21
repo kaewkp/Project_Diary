@@ -159,10 +159,7 @@ public class PaymentActivity extends AppCompatActivity {
     private void savePayment() {
         data.setPayment_title(items);
 
-        String dpay = data.getPayment_desc();
-        if(dpay != null) {
-            data.setPayment_desc(descpayment.getText().toString());
-        }
+        data.setPayment_desc(descpayment.getText().toString());
 
         double price = 0;
         if(!priceEdit.getText().toString().equals("")) {
@@ -222,6 +219,7 @@ public class PaymentActivity extends AppCompatActivity {
         timealertbuilder.create();
     }
 
+
     private void onSpinnerClick() {
         paymentTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -231,7 +229,6 @@ public class PaymentActivity extends AppCompatActivity {
                 bankname.setVisibility(View.INVISIBLE);
 
                 data.setPayType_id(String.valueOf(position));
-//                db.getAllPayType();
 
                 items = paymentTypeSpinner.getSelectedItem().toString();
                 paymentTypeSpinner.setPrompt("เลือกประเภทค่าใช้จ่าย");

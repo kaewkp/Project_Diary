@@ -1,18 +1,23 @@
 package com.example.kaew_pc.diary_project.PaymentManagement;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kaew_pc.diary_project.Database.DBHelper;
@@ -24,6 +29,8 @@ import com.example.kaew_pc.diary_project.main;
 
 import java.util.ArrayList;
 
+import static com.example.kaew_pc.diary_project.Database.Password.Column.id;
+
 /**
  * Created by chommchome on 27/3/2560.
  */
@@ -31,6 +38,8 @@ import java.util.ArrayList;
 public class PaymentMainPage extends AppCompatActivity {
 
     private FloatingActionButton fab;
+    private AlertDialog.Builder builder, sortdialog;
+    private String[] sortlist;
     private DBHelper db;
     private ListView list;
     private Boolean isResume = false;
@@ -45,7 +54,10 @@ public class PaymentMainPage extends AppCompatActivity {
         action.setDisplayHomeAsUpEnabled(true);
         init();
         loadPaymentList();
+        initSortDialog();
+        
     }
+
 
     private void init() {
         db = DBHelper.getInstance(this);
@@ -61,7 +73,56 @@ public class PaymentMainPage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        sortlist = getResources().getStringArray(R.array.เรียงลำดับ);
     }
+
+
+    private void initDialog(final String[] text, String head, final TextView tv) {
+        builder = new AlertDialog.Builder(PaymentMainPage.this);
+        builder.setTitle(head);
+        builder.setSingleChoiceItems(text, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "คุณเลือก " +
+                        text[which], Toast.LENGTH_SHORT).show();
+                tv.setVisibility(View.VISIBLE);
+                tv.setText(text[which]);
+            }
+        });
+        builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("ยกเลิก", null);
+        builder.create();
+    }
+
+
+    private void initSortDialog() {
+        sortdialog = new AlertDialog.Builder(PaymentMainPage.this);
+        sortdialog.setTitle("เรียงโดย");
+        sortdialog.setSingleChoiceItems(sortlist, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "คุณเลือก " +
+                        sortlist[which], Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        sortdialog.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        sortdialog.create();
+    }
+
+
 
     private void loadPaymentList() {
         final ArrayList<Payment_data> data = paymentObj != null ?
@@ -81,6 +142,8 @@ public class PaymentMainPage extends AppCompatActivity {
         });
     }
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -97,22 +160,25 @@ public class PaymentMainPage extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-//        if (item.getItemId() == R.id.action_addshow) {
-//            intent = new Intent(getApplicationContext(), PaymentActivity.class);
-//            startActivity(intent);
-//        }
-//        else if (item.getItemId() == R.id.action_add) {
-//            return true;
-//        }
+            Intent intent;
+            if (item.getItemId() == R.id.action_sortNew) {
+                sortdialog.show();
+//
+                    paymentObj.getDataByIdOrderByNew(db.getReadableDatabase(), String.valueOf(id));
+                    return true;
 
-        if(item.getItemId() == android.R.id.home){
-//            intent = new Intent(getApplicationContext(), main.class);
-//            startActivity(intent);
-            finish();
+            } else if (item.getItemId() == R.id.action_add) {
+                return true;
+            }
+
+            if (item.getItemId() == android.R.id.home) {
+                intent = new Intent(getApplicationContext(), PaymentMainPage.class);
+                startActivity(intent);
+                finish();
+            }
+
+            return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onBackPressed() {
@@ -120,3 +186,5 @@ public class PaymentMainPage extends AppCompatActivity {
     }
 
 }
+
+

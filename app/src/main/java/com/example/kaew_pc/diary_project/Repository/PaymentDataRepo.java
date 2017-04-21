@@ -156,4 +156,44 @@ public class PaymentDataRepo {
         }
         return data;
     }
+
+
+    public Payment_data getDataByIdOrderByNew(SQLiteDatabase db, String id){
+        Log.d(TAG + "Get Data By ID", "select * from Payment order by id where DESC" + id);
+
+        Payment_data data = null;
+
+        Cursor cursor = null;
+        try {
+            cursor = db.query(Payment_data.TABLE,   //table
+                    null,                   //column
+                    "Payment_id = ?",       //where
+                    new String[]{id},       //where arg
+                    null, null, null);      //groupby, having, orderby
+
+            if (cursor.getCount() < 1) {
+                return data;
+            }
+            cursor.moveToFirst();
+
+            data = new Payment_data();
+            data.setPayment_id(cursor.getInt(cursor.getColumnIndex(Payment_data.Column.Payment_id)));
+            data.setPayment_title(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_title)));
+            data.setPayment_title(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_desc)));
+            data.setPayment_price(cursor.getDouble(cursor.getColumnIndex(Payment_data.Column.Payment_price)));
+            data.setPayment_date(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_date)));
+            data.setPayment_endDate(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_endDate)));
+            data.setPayType_id(cursor.getString(cursor.getColumnIndex(Payment_data.Column.PayType_id)));
+            data.setPayStatus_id(cursor.getString(cursor.getColumnIndex(Payment_data.Column.PayStatus_id)));
+            data.setNoti_id(cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id)));
+        }
+        catch (Exception ex){
+            Log.e(TAG + "Get Data By ID", "Exception : " + ex.toString());
+        }
+        finally {
+            if(cursor != null)
+                cursor.close();
+        }
+        return data;
+    }
 }

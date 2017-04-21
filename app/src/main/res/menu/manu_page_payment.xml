@@ -9,4 +9,14 @@
         app:actionViewClass="android.support.v7.widget.SearchView"
         android:title="Search"/>
 
+    <item android:id="@+id/action_sortNew"
+        android:title="เรียงโดย"
+        app:showAsAction="never"
+        />
+
+    <!--<item android:id="@+id/action_add"-->
+        <!--android:title="เพิ่มการชำระใหม่"-->
+        <!--app:showAsAction="never"-->
+        <!--/>-->
+
 </menu>
