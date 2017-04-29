@@ -2,8 +2,10 @@ package com.example.kaew_pc.diary_project.PaymentManagement;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -76,6 +78,9 @@ public class PaymentMainPage extends AppCompatActivity {
 
         sortlist = getResources().getStringArray(R.array.เรียงลำดับ);
     }
+
+
+
 
 
     private void initDialog(final String[] text, String head, final TextView tv) {
@@ -163,8 +168,7 @@ public class PaymentMainPage extends AppCompatActivity {
             Intent intent;
             if (item.getItemId() == R.id.action_sortNew) {
                 sortdialog.show();
-//
-                    paymentObj.getDataByIdOrderByNew(db.getReadableDatabase(), String.valueOf(id));
+//                    paymentObj.getDataByIdOrderByNew(db.getReadableDatabase(), String.valueOf(id));
                     return true;
 
             } else if (item.getItemId() == R.id.action_add) {

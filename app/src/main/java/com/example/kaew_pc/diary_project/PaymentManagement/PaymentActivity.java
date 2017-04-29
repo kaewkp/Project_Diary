@@ -90,7 +90,7 @@ public class PaymentActivity extends AppCompatActivity {
             paymentTypeSpinner.setSelected(true);
 
 
-            descpayment.setText(data.getPayment_desc());
+            descpayment.setText(data.getPayment_title());
 
             priceEdit.setText(String.valueOf(data.getPayment_price()));
 
@@ -232,7 +232,6 @@ public class PaymentActivity extends AppCompatActivity {
                 data.setPayType_id(String.valueOf(position));
 
                 items = paymentTypeSpinner.getSelectedItem().toString();
-                paymentTypeSpinner.setPrompt("เลือกประเภทค่าใช้จ่าย");
                 Log.i("Selected item : ", items);
 
                 if (items.equalsIgnoreCase("ค่าบัตรเครดิต")) {

@@ -105,16 +105,6 @@
             android:layout_alignParentStart="true"
             android:id="@+id/debt" />
 
-        <Button
-            android:text="เลือกวันที่"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView4"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="27dp"
-            android:background="@android:color/holo_orange_dark"
-            android:id="@+id/calendar" />
-
         <TextView
             android:text="ยังไม่ได้เลือกวันที่"
             android:layout_width="wrap_content"
@@ -167,6 +157,33 @@
             android:layout_marginTop="11dp"
             android:layout_below="@+id/descpayment"
             android:layout_toEndOf="@+id/textView" />
+
+        <Button
+            android:text="เลือกวันที่"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_orange_dark"
+            android:id="@+id/calendar"
+            android:layout_below="@+id/switch1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="13dp" />
+
+        <Switch
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/switch1"
+            android:layout_below="@+id/textView4"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/switch1"
+            android:layout_alignParentStart="true"
+            android:id="@+id/textView7" />
+
 
         <!--<TextView-->
             <!--android:text="วันที่แจ้งเตือน : "-->
