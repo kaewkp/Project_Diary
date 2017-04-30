@@ -179,7 +179,8 @@ public class PaymentActivity extends AppCompatActivity {
     private void initDialog(final String[] text, String head, final TextView tv) {
         builder = new AlertDialog.Builder(PaymentActivity.this);
         builder.setTitle(head);
-        builder.setSingleChoiceItems(text, 0, new DialogInterface.OnClickListener() {
+        int choiseNumber = 0;
+        builder.setSingleChoiceItems(text, choiseNumber, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getApplicationContext(), "คุณเลือก " +
@@ -187,6 +188,8 @@ public class PaymentActivity extends AppCompatActivity {
                 tv.setVisibility(View.VISIBLE);
                 tv.setText(text[which]);
             }
+
+
         });
         builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
             @Override

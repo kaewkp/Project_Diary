@@ -37,7 +37,7 @@ import static com.example.kaew_pc.diary_project.Database.Password.Column.id;
  * Created by chommchome on 27/3/2560.
  */
 
-public class PaymentMainPage extends AppCompatActivity {
+public class  PaymentMainPage extends AppCompatActivity {
 
     private FloatingActionButton fab;
     private AlertDialog.Builder builder, sortdialog;

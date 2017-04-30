@@ -55,13 +55,13 @@ public class NoteMainPage extends AppCompatActivity {
             }
         });
 
-        loadNoteList();
+//        loadNoteList();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        loadNoteList();
+//        loadNoteList();
     }
 
 
