@@ -5,31 +5,24 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.ContextMenu;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Database.Note_data;
 import com.example.kaew_pc.diary_project.R;
-import com.example.kaew_pc.diary_project.main;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
-import static android.R.attr.data;
+import java.util.HashSet;
 
 /**
  * Created by Ekachart-PC on 23/3/2560.
@@ -41,10 +34,9 @@ public class NoteMainPage extends AppCompatActivity {
     private DBHelper db;
     private ListView list;
     private FloatingActionButton fab, fab2;
-    private float historicX, historicY;
-    static final int DELTA = 50;
     private boolean isResume = false;
     private ArrayList<Note_data> data;
+    private HashSet<Integer> del = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,18 +61,38 @@ public class NoteMainPage extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                isResume = true;
-                Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
-                intent.putExtra("id", data.get(position).getNote_id());
-                startActivity(intent);
+                if(fab2.getVisibility() == View.GONE) {
+                    isResume = true;
+                    Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
+                    intent.putExtra("id", data.get(position).getNote_id());
+                    startActivity(intent);
+                }
+                else {
+                    CheckBox cb = (CheckBox) view.findViewById(R.id.checkbox);
+                    if (cb.isChecked()) {
+                        cb.setChecked(false);
+                        del.remove(data.get(position).getNote_id());
+                    } else {
+                        cb.setChecked(true);
+                        del.add(data.get(position).getNote_id());
+                    }
+                }
             }
         });
 
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view,final int pos, long id) {
-//                adapter.toggleCheckbox2(pos);
-                fab2.setVisibility(View.VISIBLE);
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long id) {
+                if(fab2.getVisibility() == View.GONE) {
+                    fab2.setVisibility(View.VISIBLE);
+                    adapter.toggleCheckbox(true);
+                }
+                else {
+                    fab2.setVisibility(View.GONE);
+                    adapter.toggleCheckbox(false);
+                    del.clear();
+                }
+
                 return true;
             }
         });
@@ -102,7 +114,7 @@ public class NoteMainPage extends AppCompatActivity {
             @Override
             public void onScroll(AbsListView absListView, int i, int i1, int i2) {
 //                Toast.makeText(NoteMainPage.this, "CR7", Toast.LENGTH_LONG).show();
-                adapter.toggleCheckbox2(0);
+//                adapter.toggleCheckbox();
             }
 
             private boolean isScrollCompleted() {
@@ -114,52 +126,16 @@ public class NoteMainPage extends AppCompatActivity {
             }
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                adapter.toggleCheckbox(0);
-            }
-        });
-
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteDialog(adapter.isChecked());
+                Log.e("Adapter", "Hash : "+ del);
+                deleteDialog();
             }
         });
-
-//        registerForContextMenu(list);
-
-//        list.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//
-//                switch (event.getAction()) {
-//                    case MotionEvent.ACTION_DOWN:
-//                        historicX = event.getX();
-//                        historicY = event.getY();
-//                        break;
-//
-//                    case MotionEvent.ACTION_UP:
-//                        if (event.getX() - historicX < -DELTA) {
-//                            Toast.makeText(NoteMainPage.this, "X : ", Toast.LENGTH_SHORT).show();
-//                            return true;
-//                        }
-//                        else if (event.getX() - historicX > DELTA) {
-//                            Toast.makeText(NoteMainPage.this, "Y", Toast.LENGTH_SHORT).show();
-//                            return true;
-//                        }
-//                        break;
-//
-//                    default:
-//                        return false;
-//                }
-//                return false;
-//            }
-//        });
     }
 
-    private void deleteDialog(final ArrayList<Integer> idList){
+    private void deleteDialog(){
         final AlertDialog.Builder exitDialog = new AlertDialog.Builder(this);
         exitDialog.setTitle("Confirm Delete");
         exitDialog.setPositiveButton("No", new DialogInterface.OnClickListener() {
@@ -170,7 +146,7 @@ public class NoteMainPage extends AppCompatActivity {
         exitDialog.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                for ( int id : idList ) {
+                for ( int id : del ) {
                     db.deleteNote(db.getWritableDatabase(), id);
                 }
                 fab2.setVisibility(View.GONE);
@@ -179,34 +155,20 @@ public class NoteMainPage extends AppCompatActivity {
         }).show();
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
-        if (v.getId()==R.id.listview) {
-//            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
-//            menu.setHeaderTitle(Countries[info.position]);
-//            String[] menuItems = getResources().getStringArray(R.array.menu);
-//            for (int i = 0; i<menuItems.length; i++) {
-//                menu.add(Menu.NONE, i, i, menuItems[i]);
-//            }
-//            Toast.makeText(this, "Messi", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private void init() {
         db = DBHelper.getInstance(this);
         list = (ListView) findViewById(R.id.listview);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                isResume = true;
-////                Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
-////                startActivity(intent);
-//
-//            }
-//        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isResume = true;
+                Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
+                startActivity(intent);
+
+            }
+        });
 
         fab2 = (FloatingActionButton) findViewById(R.id.fab2);
     }
