@@ -1,12 +1,12 @@
 package com.example.kaew_pc.diary_project.NoteManagement;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.example.kaew_pc.diary_project.Database.Note_data;
@@ -22,7 +22,6 @@ public class NoteCustomAdapter extends ArrayAdapter<Note_data> {
 
     private Activity mContext;
     private ArrayList<Note_data> data;
-    private ArrayList<View> row2 = new ArrayList<>();
     private ArrayList<CheckBox> c = new ArrayList<>();
 
     public NoteCustomAdapter(Activity mContext,  ArrayList<Note_data> data) {
@@ -31,49 +30,59 @@ public class NoteCustomAdapter extends ArrayAdapter<Note_data> {
         this.data = data;
     }
 
-    @Override
-    public View getView(int position, View view, ViewGroup parent) {
-        LayoutInflater mInflater = mContext.getLayoutInflater();
-
-        View row = mInflater.inflate(R.layout.listview_note,null,true);
-        c.add( (CheckBox)row.findViewById(R.id.checkbox) );
-
-        TextView textView1 = (TextView)row.findViewById(R.id.title);
-        textView1.setText(data.get(position).getNote_title());
-
-        TextView textView2 = (TextView)row.findViewById(R.id.date);
-
-        String date = data.get(position).getNote_date();
-        date = date.substring(0,date.lastIndexOf(" "));
-        textView2.setText(date);
-
-        row2.add(row);
-
-        return row;
+    static class ViewHolder {
+        protected TextView title, date;
+        protected CheckBox checkbox;
     }
 
-    public void toggleCheckbox(int pos){
-        for ( CheckBox cc : c ) {
-            if(cc.getVisibility() == View.GONE){
+    @Override
+    public View getView(final int position, View view, ViewGroup parent) {
+
+
+        ViewHolder viewHolder = null;
+        if (view == null) {
+            LayoutInflater inflator = mContext.getLayoutInflater();
+            view = inflator.inflate(R.layout.listview_note, null);
+            viewHolder = new ViewHolder();
+            viewHolder.title = (TextView) view.findViewById(R.id.title);
+            viewHolder.date = (TextView) view.findViewById(R.id.date);
+            viewHolder.checkbox = (CheckBox) view.findViewById(R.id.checkbox);
+            viewHolder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    int getPosition = (Integer) buttonView.getTag();  // Here we get the position that we have set for the checkbox using setTag.
+                    data.get(getPosition).setSelected(buttonView.isChecked()); // Set the value of checkbox to maintain its state.
+                }
+            });
+            view.setTag(viewHolder);
+            view.setTag(R.id.title, viewHolder.title);
+            view.setTag(R.id.date, viewHolder.date);
+            view.setTag(R.id.checkbox, viewHolder.checkbox);
+        } else {
+            viewHolder = (ViewHolder) view.getTag();
+        }
+        viewHolder.checkbox.setTag(position); // This line is important.
+
+        viewHolder.title.setText(data.get(position).getNote_title());
+        viewHolder.date.setText(data.get(position).getNote_date());
+        viewHolder.checkbox.setChecked(data.get(position).isSelected());
+
+        c.add( viewHolder.checkbox );
+
+        return view;
+    }
+
+    public void toggleCheckbox(boolean isChecked){
+        if(isChecked){
+            for(CheckBox cc : c){
                 cc.setVisibility(View.VISIBLE);
-                ((CheckBox) row2.get(pos).findViewById(R.id.checkbox)).setChecked(true);
             }
-            else{
+        }
+        else{
+            for(CheckBox cc : c){
                 cc.setVisibility(View.GONE);
                 cc.setChecked(false);
             }
         }
-    }
-
-    public ArrayList<Integer> isChecked(){
-        ArrayList<Integer> list = new ArrayList<>();
-        int i = 0;
-        for ( CheckBox cc : c ) {
-            if(cc.isChecked()){
-                list.add(data.get(i).getNote_id());
-            }
-            i++;
-        }
-        return list;
     }
 }
