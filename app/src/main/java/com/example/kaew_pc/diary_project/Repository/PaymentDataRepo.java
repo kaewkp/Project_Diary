@@ -22,7 +22,7 @@ public class PaymentDataRepo {
 
     public static String createTable(){
         String CREATE_Payment_data_TABLE = String.format("CREATE TABLE %s " +
-                        "(%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, %s TEXT, %s TEXT, %s REAL, %s TEXT, %s TEXT, %s VARCHAR(3), %s VARCHAR(3), %s VARCHAR(3))",
+                        "(%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, %s TEXT, %s TEXT, %s REAL, %s TEXT, %s TEXT, %s VARCHAR(3), %s VARCHAR(3), %s VARCHAR(3), %s VARCHAR(3), %s VARCHAR(3))",
                 Payment_data.TABLE,
                 Payment_data.Column.Payment_id,
                 Payment_data.Column.Payment_title,
@@ -31,6 +31,8 @@ public class PaymentDataRepo {
                 Payment_data.Column.Payment_endDate,
                 Payment_data.Column.Payment_date,
                 Payment_data.Column.PayType_id,
+                Payment_data.Column.BankName_id,
+                Payment_data.Column.DebtTime_id,
                 Payment_data.Column.PayStatus_id,
                 Payment_data.Column.Noti_id);
         Log.i(TAG, CREATE_Payment_data_TABLE);
@@ -51,6 +53,8 @@ public class PaymentDataRepo {
         initialValues.put(Payment_data.Column.Payment_date, paymentdata.getPayment_date());
         initialValues.put(Payment_data.Column.Payment_endDate, paymentdata.getPayment_endDate());
         initialValues.put(Payment_data.Column.PayType_id, paymentdata.getPayType_id());
+        initialValues.put(Payment_data.Column.BankName_id, paymentdata.getBankName_id());
+        initialValues.put(Payment_data.Column.DebtTime_id, paymentdata.getDebtTime_id());
         initialValues.put(Payment_data.Column.PayStatus_id, paymentdata.getPayStatus_id());
         initialValues.put(Payment_data.Column.Noti_id, paymentdata.getNoti_id());
 
@@ -68,6 +72,8 @@ public class PaymentDataRepo {
         initialValues.put(Payment_data.Column.Payment_date, paymentdata.getPayment_date());
         initialValues.put(Payment_data.Column.Payment_endDate, paymentdata.getPayment_endDate());
         initialValues.put(Payment_data.Column.PayType_id, paymentdata.getPayType_id());
+        initialValues.put(Payment_data.Column.BankName_id, paymentdata.getBankName_id());
+        initialValues.put(Payment_data.Column.DebtTime_id, paymentdata.getDebtTime_id());
         initialValues.put(Payment_data.Column.PayStatus_id, paymentdata.getPayStatus_id());
         initialValues.put(Payment_data.Column.Noti_id, paymentdata.getNoti_id());
 
@@ -102,6 +108,8 @@ public class PaymentDataRepo {
                         , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_date))
                         , cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_endDate))
                         , cursor.getString(cursor.getColumnIndex(Payment_data.Column.PayType_id))
+                        , cursor.getString(cursor.getColumnIndex(Payment_data.Column.BankName_id))
+                        , cursor.getString(cursor.getColumnIndex(Payment_data.Column.DebtTime_id))
                         , cursor.getString(cursor.getColumnIndex(Payment_data.Column.PayStatus_id))
                         , cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id)));
                 list.add(data);
@@ -144,6 +152,8 @@ public class PaymentDataRepo {
             data.setPayment_date(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_date)));
             data.setPayment_endDate(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_endDate)));
             data.setPayType_id(cursor.getString(cursor.getColumnIndex(Payment_data.Column.PayType_id)));
+            data.setBankName_id(cursor.getString(cursor.getColumnIndex(Payment_data.Column.BankName_id)));
+            data.setDebtTime_id(cursor.getString(cursor.getColumnIndex(Payment_data.Column.DebtTime_id)));
             data.setPayStatus_id(cursor.getString(cursor.getColumnIndex(Payment_data.Column.PayStatus_id)));
             data.setNoti_id(cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id)));
         }
@@ -184,6 +194,8 @@ public class PaymentDataRepo {
             data.setPayment_date(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_date)));
             data.setPayment_endDate(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_endDate)));
             data.setPayType_id(cursor.getString(cursor.getColumnIndex(Payment_data.Column.PayType_id)));
+            data.setBankName_id(cursor.getString(cursor.getColumnIndex(Payment_data.Column.BankName_id)));
+            data.setDebtTime_id(cursor.getString(cursor.getColumnIndex(Payment_data.Column.DebtTime_id)));
             data.setPayStatus_id(cursor.getString(cursor.getColumnIndex(Payment_data.Column.PayStatus_id)));
             data.setNoti_id(cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id)));
         }
