@@ -156,8 +156,8 @@ public class main extends AppCompatActivity
                     Toast.LENGTH_LONG).show();
 
         } else if (id == R.id.nav_bin) {
-            Toast.makeText(getApplicationContext(), "Not Available",
-                    Toast.LENGTH_LONG).show();
+            intent = new Intent(getApplicationContext(), Bin.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_pin) {
             intent = new Intent(getApplicationContext(), SettingPassword.class);

@@ -1,11 +1,13 @@
 package com.example.kaew_pc.diary_project.NoteManagement;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -62,7 +64,7 @@ public class NoteCreatePage extends AppCompatActivity {
 
         int id = getIntent().getIntExtra("id", 0);
 
-        if(id != 0){ //When click from listview
+        if (id != 0) { //When click from listview
             data = db.getNoteById(String.valueOf(id));
             title.setText(data.getNote_title());
             desc.setText(data.getNote_desc());
@@ -70,7 +72,7 @@ public class NoteCreatePage extends AppCompatActivity {
             isEdit = true;
         }
 
-        ImageButton buttonIntent = (ImageButton)findViewById(R.id.picButton);
+        ImageButton buttonIntent = (ImageButton) findViewById(R.id.picButton);
         buttonIntent.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -92,21 +94,38 @@ public class NoteCreatePage extends AppCompatActivity {
 //    }
 //});
 
-        Button cancel = (Button)findViewById(R.id.cancelButton);
-        Button save = (Button)findViewById(R.id.saveButton);
+        Button cancel = (Button) findViewById(R.id.cancelButton);
+        Button save = (Button) findViewById(R.id.saveButton);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 saveNote();
+                Toast.makeText(NoteCreatePage.this, "บันทึกแล้ว ",
+                        Toast.LENGTH_LONG).show();
                 finish();
             }
         });
 
+        final AlertDialog.Builder adb = new AlertDialog.Builder(this);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
+                adb.setTitle("บันทึก");
+                adb.setMessage("คุณต้องการบันทึกหรือไม่ ?");
+                adb.setNegativeButton("ยกเลิก", null);
+                adb.setPositiveButton("บันทึก", new AlertDialog.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int arg1) {
+
+                        saveNote();
+                        Toast.makeText(NoteCreatePage.this, "บันทึกแล้ว ",
+                                Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+
+                });
+                adb.show();
             }
         });
     }

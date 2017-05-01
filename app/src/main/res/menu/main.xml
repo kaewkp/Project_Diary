@@ -7,4 +7,14 @@
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView"
         android:title="Search"/>
+
+    <item android:id="@+id/action_alert"
+        android:title="สีพื้นหลัง"
+        app:showAsAction="never"
+        />
+
+    <item android:id="@+id/action_sortNew"
+        android:title="เรียงโดย"
+        app:showAsAction="never"
+        />
 </menu>

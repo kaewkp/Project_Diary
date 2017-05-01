@@ -50,6 +50,10 @@
             android:name=".NoteManagement.NoteShowData"
             android:label="......" />
 
+        <activity
+            android:name=".Bin"
+            android:label="ถังขยะ" />
+
     </application>
 
 </manifest>
