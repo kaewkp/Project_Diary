@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.kaew_pc.diary_project.Repository.BankNameRepo;
+import com.example.kaew_pc.diary_project.Repository.DebtTimeRepo;
 import com.example.kaew_pc.diary_project.Repository.PaymentDataRepo;
 import com.example.kaew_pc.diary_project.Repository.PaymentTypeRepo;
 
@@ -64,8 +66,13 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_Note_data_TABLE);
         db.execSQL(PaymentDataRepo.createTable());
         db.execSQL(PaymentTypeRepo.createTable());
+        db.execSQL(BankNameRepo.createTable());
+        db.execSQL(DebtTimeRepo.createTable());
+
 
         new PaymentTypeRepo().createData(db);
+        new BankNameRepo().createData(db);
+        new DebtTimeRepo().createData(db);
     }
 
     public void setPassword(SQLiteDatabase db, String pass){
@@ -209,6 +216,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(PaymentDataRepo.dropTable());
         db.execSQL(DROP_Password_TABLE);
         db.execSQL(PaymentTypeRepo.dropTable());
+        db.execSQL(BankNameRepo.dropTable());
+        db.execSQL(DebtTimeRepo.dropTable());
 
         Log.i(TAG, "Upgrade Database from " + oldVersion + " to " + newVersion);
 
