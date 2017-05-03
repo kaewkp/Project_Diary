@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -36,6 +38,7 @@ public class NoteMainPage extends AppCompatActivity {
     private FloatingActionButton fab, fab2;
     private boolean isResume = false;
     private ArrayList<Note_data> data;
+    private NoteCustomAdapter adapter;
     private HashSet<Integer> del = new HashSet<>();
 
     @Override
@@ -47,26 +50,15 @@ public class NoteMainPage extends AppCompatActivity {
         action.setDisplayHomeAsUpEnabled(true);
         action.setHomeButtonEnabled(true);
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
-                startActivity(intent);
-            }
-        });
-
         loadNoteList();
     }
 
 
     private void loadNoteList() {
-        final ArrayList<Note_data> data = db.getAllNote();
-
-        final NoteCustomAdapter adapter = new NoteCustomAdapter(NoteMainPage.this, data);
-
+        data = db.getAllNote();
+        adapter = new NoteCustomAdapter(NoteMainPage.this, data);
         list.setAdapter(adapter);
+
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -106,42 +98,34 @@ public class NoteMainPage extends AppCompatActivity {
             }
         });
 
-        list.setOnScrollListener(new AbsListView.OnScrollListener() {
-            private int currentVisibleItemCount;
-            private int currentScrollState;
-            private int currentFirstVisibleItem;
-            private int totalItem;
-
-            @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-//                Toast.makeText(NoteMainPage.this, "Messi", Toast.LENGTH_SHORT).show();
-//                if(isScrollCompleted())
-//                    adapter.toggleCheckbox(0);
-//                adapter.toggleCheckbox2();
-            }
-
-            @Override
-            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-//                Toast.makeText(NoteMainPage.this, "CR7", Toast.LENGTH_LONG).show();
-//                adapter.toggleCheckbox();
-            }
-
-            private boolean isScrollCompleted() {
-                if (totalItem - currentFirstVisibleItem == currentVisibleItemCount
-                        && this.currentScrollState == SCROLL_STATE_IDLE)
-                    return true;
-                else
-                    return false;
-            }
-        });
-
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("Adapter", "Hash : "+ del);
-                deleteDialog();
-            }
-        });
+//        list.setOnScrollListener(new AbsListView.OnScrollListener() {
+//            private int currentVisibleItemCount;
+//            private int currentScrollState;
+//            private int currentFirstVisibleItem;
+//            private int totalItem;
+//
+//            @Override
+//            public void onScrollStateChanged(AbsListView absListView, int i) {
+////                Toast.makeText(NoteMainPage.this, "Messi", Toast.LENGTH_SHORT).show();
+////                if(isScrollCompleted())
+////                    adapter.toggleCheckbox(0);
+////                adapter.toggleCheckbox2();
+//            }
+//
+//            @Override
+//            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+////                Toast.makeText(NoteMainPage.this, "CR7", Toast.LENGTH_LONG).show();
+////                adapter.toggleCheckbox();
+//            }
+//
+//            private boolean isScrollCompleted() {
+//                if (totalItem - currentFirstVisibleItem == currentVisibleItemCount
+//                        && this.currentScrollState == SCROLL_STATE_IDLE)
+//                    return true;
+//                else
+//                    return false;
+//            }
+//        });
     }
 
     private void deleteDialog(){
@@ -167,24 +151,31 @@ public class NoteMainPage extends AppCompatActivity {
     private void init() {
         db = DBHelper.getInstance(this);
         list = (ListView) findViewById(R.id.listview);
-
-
-        list = (ListView) findViewById(R.id.listview);
-
-//        Date time = Calendar.getInstance().getTime();
-
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 isResume = true;
-                Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
-                startActivity(intent);
+                Note_data d = new Note_data();
 
+                for (int i=1; i<= 15; i++){
+                    d.setNote_title("" + i);
+                    db.createNote(db.getWritableDatabase(), d);
+                }
+//                Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
+//                startActivity(intent);
             }
         });
 
-        fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("Adapter", "Hash : "+ del);
+                deleteDialog();
+            }
+        });
     }
 
     @Override
@@ -212,14 +203,24 @@ public class NoteMainPage extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case android.R.id.home:
-//                intent = new Intent(getApplicationContext(), main.class);
-//                startActivity(intent);
                 finish();
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
 
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(fab2.getVisibility() == View.GONE) {
+            finish();
+        }
+        else {
+            fab2.setVisibility(View.GONE);
+            adapter.toggleCheckbox(false);
+            del.clear();
         }
     }
 }
