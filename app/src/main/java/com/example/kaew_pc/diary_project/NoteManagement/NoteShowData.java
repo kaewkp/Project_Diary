@@ -2,12 +2,8 @@ package com.example.kaew_pc.diary_project.NoteManagement;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.kaew_pc.diary_project.Database.DBHelper;
@@ -38,7 +34,7 @@ public class NoteShowData extends AppCompatActivity {
     }
 
     private void init() {
-        desc = (TextView) findViewById(R.id.desc);
+        desc = (TextView) findViewById(R.id.date);
         title = (TextView) findViewById(R.id.title);
 
         intent = getIntent();

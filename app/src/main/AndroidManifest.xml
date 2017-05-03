@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.kaew_pc.diary_project">
+    package="com.example.kaew_pc.diary_project"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="8" />
 
     <application
         android:allowBackup="true"
@@ -8,7 +14,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".splash_screen">
+        <activity
+            android:name=".splash_screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -16,11 +23,11 @@
             </intent-filter>
         </activity>
 
-
         <activity
             android:name=".main"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".PasswordManagement.SettingPassword"
             android:label="@string/title_activity_password_manager"
@@ -48,18 +55,19 @@
             android:label="รายการที่ต้องชำระใหม่"
             android:windowSoftInputMode="stateHidden"/>
 
+
         <activity
             android:name=".PaymentManagement.PaymentShow"
             android:label="รายการที่ต้องชำระ" />
 
         <activity
             android:name=".NoteManagement.NoteShowData"
-            android:label="......" /><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+            android:label="......" />
+        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
     </application>
 
 </manifest>

@@ -14,12 +14,30 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import android.net.Uri;
+import android.provider.MediaStore.Images.Media;
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ImageView;
+
 import com.example.kaew_pc.diary_project.NoteManagement.NoteMainPage;
 import com.example.kaew_pc.diary_project.PasswordManagement.SettingPassword;
 import com.example.kaew_pc.diary_project.PaymentManagement.PaymentMainPage;
 
 public class main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static final int REQUEST_GALLERY = 1;
+    Bitmap bitmap;
+    ImageView imageView1;
+    ImageView imageView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +54,35 @@ public class main extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        imageView1 = (ImageView)findViewById(R.id.imageView);
+
+//        imageView2 = (ImageView) findViewById(R.id.imageView2);
+//
+//        Button buttonIntent = (Button)findViewById(R.id.picButton);
+//        buttonIntent.setOnClickListener(new OnClickListener() {
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                intent.setType("image/*");
+//                startActivityForResult(Intent.createChooser(intent
+//                        , "Select Picture"), REQUEST_GALLERY);
+//            }
+//        });
+    }
+
+    public void onActivityResult(int requestCode, int resultCode
+            , Intent data) {
+        if (requestCode == REQUEST_GALLERY && resultCode == RESULT_OK) {
+            Uri uri = data.getData();
+            try {
+                bitmap = Media.getBitmap(this.getContentResolver(), uri);
+                imageView1.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

@@ -35,23 +35,19 @@ public class SettingPassword extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(pass.getText().toString().equalsIgnoreCase(pass2.getText().toString())){
+                if(pass.getText().toString().equalsIgnoreCase(pass2.getText().toString()) && !pass.getText().toString().equals("")){
 
                     Intent go;
                     db.setPassword(db.getWritableDatabase(), pass.getText().toString());
 
-                    if(intent.getExtras().getBoolean("Setting")) { //call setting from main
-                        go = new Intent(SettingPassword.this, main.class);
-                    }
-                    else { //call after install (first run)
+                    if( !intent.getExtras().getBoolean("Setting") ) { //call after install (first run)
                         go = new Intent(SettingPassword.this, Login.class);
+                        startActivity(go);
                     }
-
-                    startActivity(go);
                     finish();
                 }
                 else{
-                    Toast.makeText(SettingPassword.this, "Password not match", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SettingPassword.this, "Password must not empty and must be the same", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -68,8 +64,6 @@ public class SettingPassword extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(SettingPassword.this, main.class);
-        startActivity(intent);
         finish();
     }
 

@@ -22,7 +22,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DBHelper";
     private static final String DBName = "Database.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
 
     private Context context;
 
@@ -158,6 +158,12 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         Log.d("Search!!!!!!", "Here 3");
         return list;
+    }
+
+    public void deleteNote(SQLiteDatabase db, int id){
+        String whereClause = Note_data.Column.Note_id + "=?";
+        String[] whereArgs = new String[] { String.valueOf(id) };
+        db.delete(Note_data.TABLE, whereClause, whereArgs);
     }
 
     public Note_data getNoteById(String id){
