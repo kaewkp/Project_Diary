@@ -21,11 +21,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kaew_pc.diary_project.Database.BankName;
 import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Database.PayType;
 import com.example.kaew_pc.diary_project.Database.Payment_data;
 import com.example.kaew_pc.diary_project.R;
 
+import com.example.kaew_pc.diary_project.Repository.BankNameRepo;
 import com.example.kaew_pc.diary_project.Repository.PaymentDataRepo;
 import com.example.kaew_pc.diary_project.Repository.PaymentTypeRepo;
 
@@ -170,6 +172,13 @@ public class PaymentActivity extends AppCompatActivity {
         data.setPayment_endDate(dateChoose);
         data.setPayment_date(formattedDate);
 
+        //Save Bank
+//        if( items.equals("ค่าบัตรเครดิต") ){
+//            BankNameRepo bankNameRepo = new BankNameRepo();
+//            BankName bankName = bankNameRepo.getDataByName(db.getReadableDatabase(), tv);
+//        }
+//        data.setBankName_id();
+
         if (!isEdit)
             new PaymentDataRepo().insertData(db.getWritableDatabase(), data);
         else
@@ -180,6 +189,9 @@ public class PaymentActivity extends AppCompatActivity {
         builder = new AlertDialog.Builder(PaymentActivity.this);
         builder.setTitle(head);
         int choiseNumber = 0;
+        if(data.getBankName_id() != null){
+            choiseNumber = Integer.parseInt(data.getBankName_id())-1;
+        }
         builder.setSingleChoiceItems(text, choiseNumber, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -187,6 +199,11 @@ public class PaymentActivity extends AppCompatActivity {
                         text[which], Toast.LENGTH_SHORT).show();
                 tv.setVisibility(View.VISIBLE);
                 tv.setText(text[which]);
+
+                //Set bank name to data
+                BankNameRepo bankNameRepo = new BankNameRepo();
+                BankName bankName = bankNameRepo.getDataByName(db.getReadableDatabase(), text[which]);
+                data.setBankName_id(bankName.getBankName_id());
             }
 
 

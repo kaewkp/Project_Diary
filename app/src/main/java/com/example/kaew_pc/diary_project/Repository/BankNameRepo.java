@@ -116,4 +116,36 @@ public class BankNameRepo {
         }
         return data;
     }
+
+    public BankName getDataByName(SQLiteDatabase db, String name){
+        Log.d(TAG + "Get Data By Name", "Name : " + name);
+
+        BankName data = null;
+
+        Cursor cursor = null;
+        try {
+            cursor = db.query(BankName.TABLE,                //table
+                    null,                                   //column
+                    BankName.Column.BankName_name + "=?",       //where
+                    new String[]{name},                       //where arg
+                    null, null, null);                      //groupby, having, orderby
+
+            if (cursor.getCount() < 1) {
+                return data;
+            }
+            cursor.moveToFirst();
+
+            data = new BankName();
+            data.setBankName_id(cursor.getString(cursor.getColumnIndex(BankName.Column.BankName_id)));
+            data.setBankName_name(cursor.getString(cursor.getColumnIndex(BankName.Column.BankName_name)));
+        }
+        catch (Exception ex){
+            Log.e(TAG + "Get Data By ID", "Exception : " + ex.toString());
+        }
+        finally {
+            if(cursor != null)
+                cursor.close();
+        }
+        return data;
+    }
 }
