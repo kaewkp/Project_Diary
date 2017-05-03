@@ -41,16 +41,16 @@ public class DebtTimeRepo {
     }
 
     public void createData(SQLiteDatabase db) {
-        insertData(db, "bn1","SCB (ไทยพาณิชย์)");
-        insertData(db, "bn2","KBANK (กสิกรไทย)");
-        insertData(db, "bn3","GSB (ออมสิน)");
-        insertData(db, "bn4","KTC (กรุงไทย)");
-        insertData(db, "bn5","UOB (ยูโอบี)");
-        insertData(db, "bn6","KRUNGSRI (กรุงศรี)");
-        insertData(db, "bn7","TMB (ทหารไทย)");
-        insertData(db, "bn8","AEON (อิออน)");
-        insertData(db, "bn9","BBL (บัวหลวง)");
-        insertData(db, "bn10","Citybank  (ซิตี้แบงก์)");
+        insertData(db, "dt1","6 เดือน");
+        insertData(db, "dt2","12 เดือน");
+        insertData(db, "dt3","18 เดือน)");
+        insertData(db, "dt4","24 เดือน");
+        insertData(db, "dt5","30 เดือน");
+        insertData(db, "dt6","36 เดือน");
+        insertData(db, "dt7","40 เดือน");
+        insertData(db, "dt8","44 เดือน");
+        insertData(db, "dt9","50 เดือน");
+        insertData(db, "dt10","62 เดือน");
     }
 
     public ArrayList<DebtTime> getData(SQLiteDatabase db){
