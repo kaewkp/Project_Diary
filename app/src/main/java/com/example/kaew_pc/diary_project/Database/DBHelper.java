@@ -138,7 +138,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<Note_data> list = new ArrayList<Note_data>();
         Cursor cursor = null;
         try {
-            cursor = db.query("yy", null, null, null, null, null, null); //(table, column, where, where arg, groupby, having, orderby)
+            cursor = db.query(Note_data.TABLE, null, null, null, null, null, null); //(table, column, where, where arg, groupby, having, orderby)
             if (cursor.getCount() < 1) {
                 return list;
             }
