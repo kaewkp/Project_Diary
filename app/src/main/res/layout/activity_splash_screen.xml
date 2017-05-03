@@ -13,28 +13,16 @@
     android:background="#FF9999">
 
     <ImageView
-        android:layout_height="70dp"
-        android:id="@+id/imageView3"
-        android:layout_width="70dp"
+        android:id="@+id/icon"
         android:elevation="1dp"
-        app:srcCompat="@android:drawable/ic_menu_today"
+        app:srcCompat="@drawable/iconnn"
         android:layout_marginBottom="100dp"
         android:layout_above="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="false"
         android:layout_alignParentTop="false"
-        android:layout_centerInParent="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tamutami Diary"
-        android:textColor="@android:color/white"
-        android:fontFamily="sans-serif"
-        android:textStyle="italic"
-        android:layout_above="@+id/imageView3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:textSize="25dp" />
+        android:layout_centerInParent="true"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
 
 </RelativeLayout>

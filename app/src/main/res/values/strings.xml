@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Diary_Project</string>
+    <string name="app_name">Tamutami Diary</string>
     <string name="title_activity_main">main</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -7,4 +7,14 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_password_manager">passwordManager</string>
+
+
+    <string-array name="เรียงตาม">
+        <item>วันทีบันทึก</item>
+        <item>วันที่แก้ไข</item>
+        <item>วันที่แจ้งเตือน</item>
+    </string-array>
+
+
+
 </resources>

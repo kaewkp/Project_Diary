@@ -58,6 +58,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_Note_data_TABLE);
     }
 
+
     public void setPassword(SQLiteDatabase db, String pass){
         ContentValues initialValues = new ContentValues();
         initialValues.put(Password.Column.Password, pass);
