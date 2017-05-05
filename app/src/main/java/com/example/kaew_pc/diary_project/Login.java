@@ -14,6 +14,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.kaew_pc.diary_project.Database.DBHelper;
+import com.example.kaew_pc.diary_project.PasswordManagement.SettingPassword;
 
 
 /**
@@ -26,18 +27,22 @@ public class Login extends AppCompatActivity {
     private ImageView[] imageSet;
     private String inputPass = "", realPass;
     private int count = 0;
+    private Button forgot;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pass);
         init();
+
     }
 
     private void init() {
         db = DBHelper.getInstance(this);
         realPass = db.getPassword();
         db.close();
+        forgot = (Button)findViewById(R.id.forgotPass);
 
         imageSet = new ImageView[]{ (ImageView)findViewById(R.id.i1), (ImageView) findViewById(R.id.i2), (ImageView) findViewById(R.id.i3), (ImageView) findViewById(R.id.i4) };
 
@@ -62,6 +67,15 @@ public class Login extends AppCompatActivity {
                 changeImg();
             }
         });
+
+        forgot.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SettingPassword.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void checkPass(){
