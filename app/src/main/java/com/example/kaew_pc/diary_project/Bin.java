@@ -4,8 +4,14 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Database.Note_data;
@@ -43,6 +49,7 @@ public class Bin extends AppCompatActivity {
         final NoteCustomAdapter adapter = new NoteCustomAdapter(Bin.this, data);
 
         list.setAdapter(adapter);
+        registerForContextMenu(list);
     }
 
     private void init() {
@@ -66,6 +73,41 @@ public class Bin extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
 
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId()==R.id.listview) {
+            menu.setHeaderTitle("Choose");
+            String[] menuItems = new String[]{ "Restore", "Delete"};
+//                    getResources().getStringArray(R.array.menu);
+            for (int i = 0; i<menuItems.length; i++) {
+                menu.add(Menu.NONE, i, i, menuItems[i]);
+            }
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        int menuItemIndex = item.getItemId();
+        String[] menuItems = new String[]{ "Restore", "Delete"};
+        String menuItemName = menuItems[menuItemIndex];
+        Toast.makeText(getApplicationContext(), menuItemName + " : " + data.get(info.position).getNote_title(),
+                Toast.LENGTH_SHORT).show();
+        onSelectChoice(menuItemName, data.get(info.position).getNote_id());
+        loadBinList();
+        return true;
+    }
+
+    private void onSelectChoice(String selected, int id) {
+        if(selected.equals("Delete")){
+            repo.deleteData(db.getWritableDatabase(), id);
+        }
+        else{
+            repo.restoreData(db.getWritableDatabase(), id);
         }
     }
 

@@ -45,14 +45,20 @@ public class BinRepo {
         db.insert(Note_recycle.TABLE, null, initialValues);
     }
 
-    public void updateData(SQLiteDatabase db, Note_recycle data){
+    public void restoreData(SQLiteDatabase db, int id){
         ContentValues initialValues = new ContentValues();
-//            initialValues.put(Note_recycle.Column.Recycle_id, data.getRecycle_id());
-        initialValues.put(Note_recycle.Column.Note_id, data.getNote_id());
-        initialValues.put(Note_recycle.Column.Time_del, data.getTime_del());
+        initialValues.put(Note_data.Column.isDelete, 1);
 
-        Log.d(TAG + " Update Data", "title : " + data.getRecycle_id());
-        db.update(Note_recycle.TABLE, initialValues, Note_recycle.Column.Recycle_id+"="+data.getRecycle_id(), null);
+        Log.d(TAG + " Restore Data", "ID : " + id);
+        db.update(Note_data.TABLE, initialValues, "Note_id="+id, null);
+    }
+
+    public void deleteData(SQLiteDatabase db, int id){
+        String whereClause = Note_data.Column.Note_id+"=?";
+        String[] whereArgs = new String[] { String.valueOf(id) };
+
+        Log.d("Delete Dsta in Recycle", "id : " + id);
+        db.delete(Note_data.TABLE, whereClause, whereArgs);
     }
 
     public ArrayList<Note_data> getData(SQLiteDatabase db){

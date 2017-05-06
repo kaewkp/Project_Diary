@@ -65,14 +65,9 @@ public class Note_dataRepo {
 
     public void deleteData(SQLiteDatabase db, int id){
         ContentValues initialValues = new ContentValues();
-//        initialValues.put(Note_data.Column.Note_id, notedata.getNote_id());
-//        initialValues.put(Note_data.Column.Note_title, notedata.getNote_title());
-//        initialValues.put(Note_data.Column.Note_desc, notedata.getNote_desc());
-//        initialValues.put(Note_data.Column.Note_date, notedata.getNote_date());
-//        initialValues.put(Note_data.Column.Noti_id, notedata.getNoti_id());
         initialValues.put(Note_data.Column.isDelete, 0);
 
-        Log.d("Delete Dsta", "title : " + id);
+        Log.d("Delete Dsta to Recycle", "title : " + id);
 
         db.update(Note_data.TABLE, initialValues, "Note_id="+id, null);
     }

@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -109,27 +111,39 @@ public class NoteCreatePage extends AppCompatActivity {
             }
         });
 
-        final AlertDialog.Builder adb = new AlertDialog.Builder(this);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                adb.setTitle("บันทึก");
-                adb.setMessage("คุณต้องการบันทึกหรือไม่ ?");
-                adb.setNegativeButton("ยกเลิก", null);
-                adb.setPositiveButton("บันทึก", new AlertDialog.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int arg1) {
-
-                        saveNote();
-                        Toast.makeText(NoteCreatePage.this, "บันทึกแล้ว ",
-                                Toast.LENGTH_LONG).show();
-                        finish();
-                    }
-
-                });
-                adb.show();
+                confirmCancel();
             }
         });
+    }
+
+    private void confirmCancel(){
+        final AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        adb.setTitle("บันทึก");
+        adb.setMessage("คุณต้องการบันทึกหรือไม่ ?");
+        adb.setNegativeButton("ไม่", new AlertDialog.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                finish();
+            }
+
+        });
+        adb.setPositiveButton("บันทึก", new AlertDialog.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                saveNote();
+                Toast.makeText(NoteCreatePage.this, "บันทึกแล้ว ",
+                        Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+        adb.setNeutralButton("ยกเลิก", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id)
+            {
+                dialog.cancel();
+            }
+        });
+        adb.show();
     }
 
 //    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -153,8 +167,6 @@ public class NoteCreatePage extends AppCompatActivity {
 
 
     private void saveNote() {
-//        Note_data note = new Note_data();
-
         data.setNote_date(formattedDate);
         data.setNote_title(title.getText().toString());
         data.setNote_desc(desc.getText().toString());
@@ -245,7 +257,10 @@ public class NoteCreatePage extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
 
-
+    @Override
+    public void onBackPressed() {
+        confirmCancel();
     }
 }
