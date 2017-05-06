@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Database.Note_data;
 import com.example.kaew_pc.diary_project.R;
+import com.example.kaew_pc.diary_project.Repository.Note_dataRepo;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -32,6 +33,7 @@ public class NoteMainPage extends AppCompatActivity {
 
     private TextView date;
     private DBHelper db;
+    private Note_dataRepo repo;
     private ListView list;
     private FloatingActionButton fab, fab2;
     private boolean isResume = false;
@@ -52,7 +54,7 @@ public class NoteMainPage extends AppCompatActivity {
     }
 
     private void loadNoteList() {
-        data = db.getAllNote();
+        data = repo.getData(db.getReadableDatabase());
 
         final NoteCustomAdapter adapter = new NoteCustomAdapter(NoteMainPage.this, data);
 
@@ -147,7 +149,7 @@ public class NoteMainPage extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 for ( int id : del ) {
-                    db.deleteNote(db.getWritableDatabase(), id);
+                    repo.deleteData(db.getWritableDatabase(), id);
                 }
                 fab2.setVisibility(View.GONE);
                 loadNoteList();
@@ -157,6 +159,7 @@ public class NoteMainPage extends AppCompatActivity {
 
     private void init() {
         db = DBHelper.getInstance(this);
+        repo = new Note_dataRepo();
         list = (ListView) findViewById(R.id.listview);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -164,9 +167,13 @@ public class NoteMainPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 isResume = true;
-                Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
-                startActivity(intent);
-
+//                Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
+//                startActivity(intent);
+                Note_data d = new Note_data();
+                for(int i=0;i<15;i++){
+                    d.setNote_title(""+i);
+                    repo.insertData(db.getWritableDatabase(), d);
+                }
             }
         });
 

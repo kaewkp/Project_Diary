@@ -5,8 +5,6 @@ package com.example.kaew_pc.diary_project.Database;
  */
 
 public class Note_recycle {
-    public static final String DATABASE_NAME = "์Note_recycle.db";
-    public static final int DATABASE_VERSION = 1;
     public static final String TABLE = "Note_recycle";
 
     public class Column{
@@ -56,6 +54,7 @@ public class Note_recycle {
     public void setTime_del(String Time_del) {
         this.Time_del = Time_del;
     }
+
 
     // For Manage checkbox
     private Boolean selected = false;

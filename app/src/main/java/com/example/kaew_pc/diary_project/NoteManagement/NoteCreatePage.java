@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Database.Note_data;
 import com.example.kaew_pc.diary_project.R;
+import com.example.kaew_pc.diary_project.Repository.Note_dataRepo;
 import com.example.kaew_pc.diary_project.UserPicture;
 
 import java.text.SimpleDateFormat;
@@ -37,6 +38,7 @@ public class NoteCreatePage extends AppCompatActivity {
 
     private TextView date;
     private DBHelper db;
+    private Note_dataRepo repo;
     private String formattedDate;
     private EditText title, desc;
     private Boolean isEdit = false;
@@ -65,7 +67,7 @@ public class NoteCreatePage extends AppCompatActivity {
         int id = getIntent().getIntExtra("id", 0);
 
         if (id != 0) { //When click from listview
-            data = db.getNoteById(String.valueOf(id));
+            data = repo.getDataById(String.valueOf(id), db.getReadableDatabase());
             title.setText(data.getNote_title());
             desc.setText(data.getNote_desc());
             date.setText(data.getNote_date());
@@ -158,9 +160,9 @@ public class NoteCreatePage extends AppCompatActivity {
         data.setNote_desc(desc.getText().toString());
 
         if(!isEdit)
-            db.createNote(db.getWritableDatabase(), data);
+            repo.insertData(db.getWritableDatabase(), data);
         else
-            db.updateNote(db.getWritableDatabase(), data);
+            repo.updateData(db.getWritableDatabase(), data);
     }
 
     private void init() {
@@ -177,6 +179,7 @@ public class NoteCreatePage extends AppCompatActivity {
         img = (ImageView)findViewById(R.id.picShow);
 
         db = DBHelper.getInstance(this);
+        repo = new Note_dataRepo();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
