@@ -19,9 +19,10 @@ import com.example.kaew_pc.diary_project.splash_screen;
 public class SettingPassword extends AppCompatActivity {
 
     private Button submit;
-    private EditText pass, pass2;
+    private EditText pass, pass2, pid;
     private DBHelper db;
     private Intent intent;
+    private boolean isSetting = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,26 +36,38 @@ public class SettingPassword extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(pass.getText().toString().equalsIgnoreCase(pass2.getText().toString())){
 
-                    Intent go;
-                    db.setPassword(db.getWritableDatabase(), pass.getText().toString());
-
-                    if(intent.getExtras().getBoolean("Setting")) { //call setting from main
-                        go = new Intent(SettingPassword.this, main.class);
+                if(validateInput()){
+                    if(isSetting) { //call setting from main
+                        db.updatePassword(db.getWritableDatabase(), pass.getText().toString());
                     }
                     else { //call after install (first run)
-                        go = new Intent(SettingPassword.this, Login.class);
+                        db.setPassword(db.getWritableDatabase(), pass.getText().toString(), pid.getText().toString());
+                        Intent go = new Intent(SettingPassword.this, Login.class);
+                        startActivity(go);
                     }
-
-                    startActivity(go);
                     finish();
-                }
-                else{
-                    Toast.makeText(SettingPassword.this, "Password not match", Toast.LENGTH_LONG).show();
                 }
             }
         });
+    }
+
+    private boolean validateInput() {
+        if(pid.length() != 13 && !isSetting){
+            Toast.makeText(SettingPassword.this, "Personal ID must be 13 digit", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(pass.length() != 4){
+            Toast.makeText(SettingPassword.this, "Password must be 4 digit", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(!pass.getText().toString().equalsIgnoreCase(pass2.getText().toString())){
+            Toast.makeText(SettingPassword.this, "Password not match", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     private void init() {
@@ -62,14 +75,17 @@ public class SettingPassword extends AppCompatActivity {
         submit = (Button) findViewById(R.id.submit);
         pass = (EditText) findViewById(R.id.password);
         pass2 = (EditText) findViewById(R.id.password2);
-
+        pid = (EditText) findViewById(R.id.pid);
         intent = getIntent();
+        isSetting = intent.getExtras().getBoolean("Setting");
+
+        if(isSetting){
+            pid.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(SettingPassword.this, main.class);
-        startActivity(intent);
         finish();
     }
 
