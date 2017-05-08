@@ -14,8 +14,6 @@ import java.util.Locale;
 
 public class Note_data {
 
-    public static final String DATABASE_NAME = "Note_data.db";
-    public static final int DATABASE_VERSION = 1;
     public static final String TABLE = "Note_data";
 
     public class Column{
@@ -24,6 +22,7 @@ public class Note_data {
         public static final String Note_desc = "Note_desc";
         public static final String Note_date = "Note_date";
         public static final String Noti_id = "Noti_id";
+        public static final String isDelete = "Active";
     }
 
     private int Note_id ;
@@ -31,18 +30,20 @@ public class Note_data {
     private String Note_desc;
     private String Note_date;
     private String Noti_id;
+    private int isDelete;
 
     //Default Constructor
     public Note_data(){
     }
 
     //Constructor
-    public Note_data(int Note_id, String Note_title, String Note_desc, String Note_date, String Noti_id){
+    public Note_data(int Note_id, String Note_title, String Note_desc, String Note_date, String Noti_id, int isDelete){
         this.Note_id = Note_id;
         this.Note_title = Note_title;
         this.Note_desc = Note_desc;
         this.Note_date = Note_date;
         this.Noti_id = Noti_id;
+        this.isDelete = isDelete;
     }//Getter, Setter
 
     public int getNote_id(){
@@ -83,6 +84,14 @@ public class Note_data {
         this.Noti_id = Noti_id;
     }
 
+
+    public int getisDelete() {
+        return isDelete;
+    }
+
+    public void setisDelete(int isDelete){
+        this.isDelete = isDelete;
+    }
 
 
     // For Manage checkbox

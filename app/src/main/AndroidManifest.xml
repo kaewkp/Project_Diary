@@ -31,7 +31,7 @@
         <activity
             android:name=".PasswordManagement.SettingPassword"
             android:label="@string/title_activity_password_manager"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
             android:name=".Login"
@@ -63,6 +63,10 @@
         <activity
             android:name=".NoteManagement.NoteShowData"
             android:label="......" />
+        <activity
+            android:name=".Bin"
+            android:label="ถังขยะ" />
+
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data

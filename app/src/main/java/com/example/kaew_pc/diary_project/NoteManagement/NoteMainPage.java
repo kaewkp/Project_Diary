@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Database.Note_data;
 import com.example.kaew_pc.diary_project.R;
+import com.example.kaew_pc.diary_project.Repository.Note_dataRepo;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -34,6 +35,7 @@ public class NoteMainPage extends AppCompatActivity {
 
     private TextView date;
     private DBHelper db;
+    private Note_dataRepo repo;
     private ListView list;
     private FloatingActionButton fab, fab2;
     private boolean isResume = false;
@@ -55,8 +57,11 @@ public class NoteMainPage extends AppCompatActivity {
 
 
     private void loadNoteList() {
-        data = db.getAllNote();
         adapter = new NoteCustomAdapter(NoteMainPage.this, data);
+        data = repo.getData(db.getReadableDatabase());
+
+        final NoteCustomAdapter adapter = new NoteCustomAdapter(NoteMainPage.this, data);
+
         list.setAdapter(adapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -97,35 +102,6 @@ public class NoteMainPage extends AppCompatActivity {
                 return true;
             }
         });
-
-//        list.setOnScrollListener(new AbsListView.OnScrollListener() {
-//            private int currentVisibleItemCount;
-//            private int currentScrollState;
-//            private int currentFirstVisibleItem;
-//            private int totalItem;
-//
-//            @Override
-//            public void onScrollStateChanged(AbsListView absListView, int i) {
-////                Toast.makeText(NoteMainPage.this, "Messi", Toast.LENGTH_SHORT).show();
-////                if(isScrollCompleted())
-////                    adapter.toggleCheckbox(0);
-////                adapter.toggleCheckbox2();
-//            }
-//
-//            @Override
-//            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-////                Toast.makeText(NoteMainPage.this, "CR7", Toast.LENGTH_LONG).show();
-////                adapter.toggleCheckbox();
-//            }
-//
-//            private boolean isScrollCompleted() {
-//                if (totalItem - currentFirstVisibleItem == currentVisibleItemCount
-//                        && this.currentScrollState == SCROLL_STATE_IDLE)
-//                    return true;
-//                else
-//                    return false;
-//            }
-//        });
     }
 
     private void deleteDialog(){
@@ -140,7 +116,7 @@ public class NoteMainPage extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 for ( int id : del ) {
-                    db.deleteNote(db.getWritableDatabase(), id);
+                    repo.deleteData(db.getWritableDatabase(), id);
                 }
                 fab2.setVisibility(View.GONE);
                 loadNoteList();
@@ -150,6 +126,7 @@ public class NoteMainPage extends AppCompatActivity {
 
     private void init() {
         db = DBHelper.getInstance(this);
+        repo = new Note_dataRepo();
         list = (ListView) findViewById(R.id.listview);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab2 = (FloatingActionButton) findViewById(R.id.fab2);
@@ -158,14 +135,15 @@ public class NoteMainPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 isResume = true;
-                Note_data d = new Note_data();
+                Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
+                startActivity(intent);
 
-                for (int i=1; i<= 15; i++){
-                    d.setNote_title("" + i);
-                    db.createNote(db.getWritableDatabase(), d);
-                }
-//                Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
-//                startActivity(intent);
+//                For quick test only
+//                Note_data d = new Note_data();
+//                for(int i=0;i<15;i++){
+//                    d.setNote_title(""+i);
+//                    repo.insertData(db.getWritableDatabase(), d);
+//                }
             }
         });
 
@@ -189,7 +167,7 @@ public class NoteMainPage extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main_note, menu);
         return true;
     }
 
@@ -205,10 +183,8 @@ public class NoteMainPage extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
