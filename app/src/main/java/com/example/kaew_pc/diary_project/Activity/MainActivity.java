@@ -22,6 +22,8 @@ import android.provider.MediaStore.Images.Media;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
+import com.example.kaew_pc.diary_project.Activity.Note.NoteMainPageActivity;
+import com.example.kaew_pc.diary_project.Activity.Payment.PaymentMainPageActivity;
 import com.example.kaew_pc.diary_project.R;
 
 public class MainActivity extends AppCompatActivity

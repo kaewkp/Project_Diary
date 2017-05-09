@@ -5,11 +5,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.kaew_pc.diary_project.Database.PayType;
+import com.example.kaew_pc.diary_project.Manager.Database.PayType;
 
 import java.util.ArrayList;
 
-import static com.example.kaew_pc.diary_project.Database.PayType.Column.PayType_id;
+import static com.example.kaew_pc.diary_project.Manager.Database.PayType.Column.PayType_id;
 
 /**
  * Created by Ekachart-PC on 12/4/2560.

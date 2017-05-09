@@ -5,10 +5,10 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.kaew_pc.diary_project.Database.DBHelper;
+import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
 import com.example.kaew_pc.diary_project.R;
 
-public class Splash_screenActivity extends AppCompatActivity {
+public class SplashScreenActivity extends AppCompatActivity {
 
     private Runnable runnable;
     private Handler handler;
@@ -30,9 +30,9 @@ public class Splash_screenActivity extends AppCompatActivity {
             public void run() {
                 Intent intent;
                 if(havePass) {
-                    intent = new Intent(Splash_screenActivity.this, LoginActivity.class);
+                    intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
                 }else{
-                    intent = new Intent(Splash_screenActivity.this, SettingPasswordActivity.class);
+                    intent = new Intent(SplashScreenActivity.this, SettingPasswordActivity.class);
                     intent.putExtra("Setting", false);
                 }
                 startActivity(intent);

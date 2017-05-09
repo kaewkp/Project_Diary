@@ -1,12 +1,4 @@
-package com.example.kaew_pc.diary_project.Database;
-
-import android.widget.ListView;
-import android.widget.TextView;
-import com.example.kaew_pc.diary_project.R;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
+package com.example.kaew_pc.diary_project.Manager.Database;
 
 /**
  * Created by KAEW-PC on 18-Feb-17.

@@ -5,11 +5,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.kaew_pc.diary_project.Database.DebtTime;
+import com.example.kaew_pc.diary_project.Manager.Database.DebtTime;
 
 import java.util.ArrayList;
 
-import static com.example.kaew_pc.diary_project.Database.DebtTime.Column.DebtTime_id;
+import static com.example.kaew_pc.diary_project.Manager.Database.DebtTime.Column.DebtTime_id;
 
 /**
  * Created by chommchome on 30/4/2560.

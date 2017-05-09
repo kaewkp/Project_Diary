@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activity.Splash_screenActivity">
+            android:name=".Activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,29 +39,29 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".Activity.NoteMainPageActivity"
+            android:name=".Activity.Note.NoteMainPageActivity"
             android:label="บันทึกทั้งหมด" />
 
         <activity
-            android:name=".Activity.NoteCreatePageActivity"
+            android:name=".Activity.Note.NoteCreatePageActivity"
             android:label="บันทึกใหม่" />
 
         <activity
-            android:name=".Activity.PaymentMainPageActivity"
+            android:name=".Activity.Payment.PaymentMainPageActivity"
             android:label="รายการทั้งหมด" />
 
         <activity
-            android:name=".Activity.PaymentActivity"
+            android:name=".Activity.Payment.PaymentActivity"
             android:label="รายการที่ต้องชำระใหม่"
             android:windowSoftInputMode="stateHidden"/>
 
 
         <activity
-            android:name=".Activity.PaymentShowActivity"
+            android:name=".Activity.Payment.PaymentShowActivity"
             android:label="รายการที่ต้องชำระ" />
 
         <activity
-            android:name=".Activity.NoteShowDataActivity"
+            android:name=".Activity.Note.NoteShowDataActivity"
             android:label="......" />
         <activity
             android:name=".Activity.BinActivity"

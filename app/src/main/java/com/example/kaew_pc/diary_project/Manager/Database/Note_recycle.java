@@ -1,4 +1,4 @@
-package com.example.kaew_pc.diary_project.Database;
+package com.example.kaew_pc.diary_project.Manager.Database;
 
 /**
  * Created by KAEW-PC on 03-May-17.

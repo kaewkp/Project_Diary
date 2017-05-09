@@ -11,8 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.kaew_pc.diary_project.Database.DBHelper;
-import com.example.kaew_pc.diary_project.Database.Note_data;
+import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
+import com.example.kaew_pc.diary_project.Manager.Database.Note_data;
 import com.example.kaew_pc.diary_project.Manager.Adapter.NoteCustomAdapter;
 import com.example.kaew_pc.diary_project.R;
 import com.example.kaew_pc.diary_project.Manager.Repository.BinRepository;

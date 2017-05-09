@@ -1,4 +1,4 @@
-package com.example.kaew_pc.diary_project.Activity;
+package com.example.kaew_pc.diary_project.Activity.Note;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.example.kaew_pc.diary_project.Database.DBHelper;
+import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
 import com.example.kaew_pc.diary_project.R;
 
 /**

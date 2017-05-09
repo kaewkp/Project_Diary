@@ -1,4 +1,4 @@
-package com.example.kaew_pc.diary_project.Activity;
+package com.example.kaew_pc.diary_project.Activity.Payment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,8 +15,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.kaew_pc.diary_project.Database.DBHelper;
-import com.example.kaew_pc.diary_project.Database.Payment_data;
+import com.example.kaew_pc.diary_project.Activity.MainActivity;
+import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
+import com.example.kaew_pc.diary_project.Manager.Database.Payment_data;
 import com.example.kaew_pc.diary_project.Manager.Adapter.PaymentCustomAdapter;
 import com.example.kaew_pc.diary_project.R;
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentDataRepository;

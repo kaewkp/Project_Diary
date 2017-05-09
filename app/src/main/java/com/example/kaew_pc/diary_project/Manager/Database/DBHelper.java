@@ -1,4 +1,4 @@
-package com.example.kaew_pc.diary_project.Database;
+package com.example.kaew_pc.diary_project.Manager.Database;
 
 import android.content.ContentValues;
 import android.content.Context;

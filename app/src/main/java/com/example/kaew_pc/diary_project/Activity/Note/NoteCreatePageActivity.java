@@ -1,4 +1,4 @@
-package com.example.kaew_pc.diary_project.Activity;
+package com.example.kaew_pc.diary_project.Activity.Note;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,8 +18,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.kaew_pc.diary_project.Database.DBHelper;
-import com.example.kaew_pc.diary_project.Database.Note_data;
+import com.example.kaew_pc.diary_project.Manager.UserPicture;
+import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
+import com.example.kaew_pc.diary_project.Manager.Database.Note_data;
 import com.example.kaew_pc.diary_project.R;
 import com.example.kaew_pc.diary_project.Manager.Repository.NoteDataRepository;
 
@@ -196,7 +197,7 @@ public class NoteCreatePageActivity extends AppCompatActivity {
 
                 Uri selectedImageUri = data.getData();
                 try {
-                    img.setImageBitmap(new UserPictureActivity(selectedImageUri, getContentResolver()).getBitmap());
+                    img.setImageBitmap(new UserPicture(selectedImageUri, getContentResolver()).getBitmap());
                 } catch (Exception e) {
                     Log.e(NoteCreatePageActivity.class.getSimpleName(), "Failed to load image", e);
                 }

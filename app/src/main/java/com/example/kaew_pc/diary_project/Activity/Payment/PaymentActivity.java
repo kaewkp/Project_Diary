@@ -1,4 +1,4 @@
-package com.example.kaew_pc.diary_project.Activity;
+package com.example.kaew_pc.diary_project.Activity.Payment;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -21,9 +21,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.kaew_pc.diary_project.Database.DBHelper;
-import com.example.kaew_pc.diary_project.Database.PayType;
-import com.example.kaew_pc.diary_project.Database.Payment_data;
+import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
+import com.example.kaew_pc.diary_project.Manager.Database.PayType;
+import com.example.kaew_pc.diary_project.Manager.Database.Payment_data;
 import com.example.kaew_pc.diary_project.R;
 
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentDataRepository;

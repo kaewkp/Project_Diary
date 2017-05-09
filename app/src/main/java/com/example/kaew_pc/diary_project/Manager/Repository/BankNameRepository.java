@@ -5,11 +5,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.kaew_pc.diary_project.Database.BankName;
+import com.example.kaew_pc.diary_project.Manager.Database.BankName;
 
 import java.util.ArrayList;
 
-import static com.example.kaew_pc.diary_project.Database.BankName.Column.BankName_id;
+import static com.example.kaew_pc.diary_project.Manager.Database.BankName.Column.BankName_id;
 
 
 /**

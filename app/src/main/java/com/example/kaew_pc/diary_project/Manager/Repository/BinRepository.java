@@ -5,8 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.kaew_pc.diary_project.Database.Note_data;
-import com.example.kaew_pc.diary_project.Database.Note_recycle;
+import com.example.kaew_pc.diary_project.Manager.Database.Note_data;
+import com.example.kaew_pc.diary_project.Manager.Database.Note_recycle;
 
 import java.util.ArrayList;
 
