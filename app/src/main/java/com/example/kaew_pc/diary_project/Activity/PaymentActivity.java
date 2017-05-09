@@ -1,4 +1,4 @@
-package com.example.kaew_pc.diary_project.PaymentManagement;
+package com.example.kaew_pc.diary_project.Activity;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -26,8 +26,8 @@ import com.example.kaew_pc.diary_project.Database.PayType;
 import com.example.kaew_pc.diary_project.Database.Payment_data;
 import com.example.kaew_pc.diary_project.R;
 
-import com.example.kaew_pc.diary_project.Repository.PaymentDataRepo;
-import com.example.kaew_pc.diary_project.Repository.PaymentTypeRepo;
+import com.example.kaew_pc.diary_project.Manager.Repository.PaymentDataRepository;
+import com.example.kaew_pc.diary_project.Manager.Repository.PaymentTypeRepository;
 
 
 import java.text.SimpleDateFormat;
@@ -66,8 +66,8 @@ public class PaymentActivity extends AppCompatActivity {
     private Payment_data data;
     private PayType paytypeData;
     private DBHelper db;
-    private PaymentDataRepo dataRepo;
-    private PaymentTypeRepo spinnerRepo;
+    private PaymentDataRepository dataRepo;
+    private PaymentTypeRepository spinnerRepo;
 
 
     @Override
@@ -86,7 +86,7 @@ public class PaymentActivity extends AppCompatActivity {
 
         int id = getIntent().getIntExtra("id", 0);
         if (id != 0) { //When click from listview
-            data = new PaymentDataRepo().getDataById(db.getReadableDatabase(), String.valueOf(id));
+            data = new PaymentDataRepository().getDataById(db.getReadableDatabase(), String.valueOf(id));
             paymentTypeSpinner.setSelected(true);
 
 
@@ -144,7 +144,7 @@ public class PaymentActivity extends AppCompatActivity {
         paymentTypeID = new ArrayList<>();
         paymentTypeValue = new ArrayList<>();
 
-        ArrayList<PayType> list = new PaymentTypeRepo().getData(db.getReadableDatabase());
+        ArrayList<PayType> list = new PaymentTypeRepository().getData(db.getReadableDatabase());
 
         for ( PayType p : list ) {
             paymentTypeID.add(p.getPayType_id());
@@ -171,9 +171,9 @@ public class PaymentActivity extends AppCompatActivity {
         data.setPayment_date(formattedDate);
 
         if (!isEdit)
-            new PaymentDataRepo().insertData(db.getWritableDatabase(), data);
+            new PaymentDataRepository().insertData(db.getWritableDatabase(), data);
         else
-            new PaymentDataRepo().updateData(db.getWritableDatabase(), data);
+            new PaymentDataRepository().updateData(db.getWritableDatabase(), data);
     }
 
     private void initDialog(final String[] text, String head, final TextView tv) {
@@ -272,7 +272,7 @@ public class PaymentActivity extends AppCompatActivity {
         }
 
         if (item.getItemId() == android.R.id.home) {
-            intent = new Intent(getApplicationContext(), PaymentMainPage.class);
+            intent = new Intent(getApplicationContext(), PaymentMainPageActivity.class);
             startActivity(intent);
             finish();
         }

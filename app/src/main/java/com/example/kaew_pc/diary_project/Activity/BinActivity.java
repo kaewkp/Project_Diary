@@ -1,7 +1,6 @@
-package com.example.kaew_pc.diary_project;
+package com.example.kaew_pc.diary_project.Activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
@@ -10,14 +9,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Database.Note_data;
-import com.example.kaew_pc.diary_project.NoteManagement.NoteCustomAdapter;
-import com.example.kaew_pc.diary_project.NoteManagement.NoteMainPage;
-import com.example.kaew_pc.diary_project.Repository.BinRepo;
+import com.example.kaew_pc.diary_project.Manager.Adapter.NoteCustomAdapter;
+import com.example.kaew_pc.diary_project.R;
+import com.example.kaew_pc.diary_project.Manager.Repository.BinRepository;
 
 import java.util.ArrayList;
 
@@ -25,9 +23,9 @@ import java.util.ArrayList;
  * Created by KAEW-PC on 23-Apr-17.
  */
 
-public class Bin extends AppCompatActivity {
+public class BinActivity extends AppCompatActivity {
     private DBHelper db;
-    private BinRepo repo;
+    private BinRepository repo;
     private ListView list;
     private boolean isResume = false;
     private ArrayList<Note_data> data;
@@ -46,7 +44,7 @@ public class Bin extends AppCompatActivity {
     private void loadBinList() {
         data = repo.getData(db.getReadableDatabase());
 
-        final NoteCustomAdapter adapter = new NoteCustomAdapter(Bin.this, data);
+        final NoteCustomAdapter adapter = new NoteCustomAdapter(BinActivity.this, data);
 
         list.setAdapter(adapter);
         registerForContextMenu(list);
@@ -54,7 +52,7 @@ public class Bin extends AppCompatActivity {
 
     private void init() {
         db = DBHelper.getInstance(this);
-        repo = new BinRepo();
+        repo = new BinRepository();
         list = (ListView) findViewById(R.id.listview);
     }
 

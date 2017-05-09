@@ -1,19 +1,16 @@
-package com.example.kaew_pc.diary_project.NoteManagement;
+package com.example.kaew_pc.diary_project.Activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -21,8 +18,9 @@ import android.widget.TextView;
 
 import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Database.Note_data;
+import com.example.kaew_pc.diary_project.Manager.Adapter.NoteCustomAdapter;
 import com.example.kaew_pc.diary_project.R;
-import com.example.kaew_pc.diary_project.Repository.Note_dataRepo;
+import com.example.kaew_pc.diary_project.Manager.Repository.NoteDataRepository;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -31,11 +29,11 @@ import java.util.HashSet;
  * Created by Ekachart-PC on 23/3/2560.
  */
 
-public class NoteMainPage extends AppCompatActivity {
+public class NoteMainPageActivity extends AppCompatActivity {
 
     private TextView date;
     private DBHelper db;
-    private Note_dataRepo repo;
+    private NoteDataRepository repo;
     private ListView list;
     private FloatingActionButton fab, fab2;
     private boolean isResume = false;
@@ -57,10 +55,10 @@ public class NoteMainPage extends AppCompatActivity {
 
 
     private void loadNoteList() {
-        adapter = new NoteCustomAdapter(NoteMainPage.this, data);
+        adapter = new NoteCustomAdapter(NoteMainPageActivity.this, data);
         data = repo.getData(db.getReadableDatabase());
 
-        final NoteCustomAdapter adapter = new NoteCustomAdapter(NoteMainPage.this, data);
+        final NoteCustomAdapter adapter = new NoteCustomAdapter(NoteMainPageActivity.this, data);
 
         list.setAdapter(adapter);
 
@@ -69,7 +67,7 @@ public class NoteMainPage extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(fab2.getVisibility() == View.GONE) {
                     isResume = true;
-                    Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
+                    Intent intent = new Intent(getApplicationContext(), NoteCreatePageActivity.class);
                     intent.putExtra("id", data.get(position).getNote_id());
                     startActivity(intent);
                 }
@@ -126,7 +124,7 @@ public class NoteMainPage extends AppCompatActivity {
 
     private void init() {
         db = DBHelper.getInstance(this);
-        repo = new Note_dataRepo();
+        repo = new NoteDataRepository();
         list = (ListView) findViewById(R.id.listview);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab2 = (FloatingActionButton) findViewById(R.id.fab2);
@@ -135,7 +133,7 @@ public class NoteMainPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 isResume = true;
-                Intent intent = new Intent(getApplicationContext(), NoteCreatePage.class);
+                Intent intent = new Intent(getApplicationContext(), NoteCreatePageActivity.class);
                 startActivity(intent);
 
 //                For quick test only

@@ -1,4 +1,4 @@
-package com.example.kaew_pc.diary_project;
+package com.example.kaew_pc.diary_project.Activity;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
@@ -26,7 +26,7 @@ import java.io.InvalidObjectException;
  * http://stackoverflow.com/users/1797000/hdante
  */
 
-public class UserPicture {
+public class UserPictureActivity {
 
     static int MAX_WIDTH = 600;
     static int MAX_HEIGHT = 800;
@@ -37,7 +37,7 @@ public class UserPicture {
     int storedHeight;
     int storedWidth;
 
-    public UserPicture(Uri uri, ContentResolver resolver) {
+    public UserPictureActivity(Uri uri, ContentResolver resolver) {
         this.uri = uri;
         this.resolver = resolver;
     }

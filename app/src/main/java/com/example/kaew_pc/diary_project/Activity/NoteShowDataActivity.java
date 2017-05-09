@@ -1,4 +1,4 @@
-package com.example.kaew_pc.diary_project.NoteManagement;
+package com.example.kaew_pc.diary_project.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import com.example.kaew_pc.diary_project.R;
  * Created by KAEW-PC on 29-Mar-17.
  */
 
-public class NoteShowData extends AppCompatActivity {
+public class NoteShowDataActivity extends AppCompatActivity {
     private TextView title,desc;
     private DBHelper db;
     private Intent intent;
@@ -42,7 +42,7 @@ public class NoteShowData extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        Intent intent = new Intent(getApplicationContext(), NoteMainPage.class);
+        Intent intent = new Intent(getApplicationContext(), NoteMainPageActivity.class);
         startActivity(intent);
         finish();
     }

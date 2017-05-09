@@ -1,4 +1,4 @@
-package com.example.kaew_pc.diary_project.PaymentManagement;
+package com.example.kaew_pc.diary_project.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import com.example.kaew_pc.diary_project.R;
  * Created by chommchome on 29/3/2560.
  */
 
-public class PaymentShow extends AppCompatActivity {
+public class PaymentShowActivity extends AppCompatActivity {
     private TextView desc;
     private Spinner paymentType;
     private EditText editprice;
@@ -48,7 +48,7 @@ public class PaymentShow extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        Intent intent = new Intent(getApplicationContext(), PaymentMainPage.class);
+        Intent intent = new Intent(getApplicationContext(), PaymentMainPageActivity.class);
         startActivity(intent);
         finish();
     }

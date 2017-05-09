@@ -1,4 +1,4 @@
-package com.example.kaew_pc.diary_project.NoteManagement;
+package com.example.kaew_pc.diary_project.Manager.Adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;

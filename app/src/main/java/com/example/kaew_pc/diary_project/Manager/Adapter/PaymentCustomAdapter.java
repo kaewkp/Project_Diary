@@ -1,4 +1,4 @@
-package com.example.kaew_pc.diary_project.PaymentManagement;
+package com.example.kaew_pc.diary_project.Manager.Adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.kaew_pc.diary_project.Database.Note_data;
 import com.example.kaew_pc.diary_project.Database.Payment_data;
 import com.example.kaew_pc.diary_project.R;
 

@@ -1,4 +1,4 @@
-package com.example.kaew_pc.diary_project.Repository;
+package com.example.kaew_pc.diary_project.Manager.Repository;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 
 @SuppressWarnings("TryFinallyCanBeTryWithResources")
-public class BinRepo {
+public class BinRepository {
 
     private static final String TAG = Note_recycle.class.getSimpleName();
 

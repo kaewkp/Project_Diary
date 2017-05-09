@@ -1,4 +1,4 @@
-package com.example.kaew_pc.diary_project;
+package com.example.kaew_pc.diary_project.Activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -19,19 +19,12 @@ import java.io.IOException;
 
 import android.net.Uri;
 import android.provider.MediaStore.Images.Media;
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.kaew_pc.diary_project.NoteManagement.NoteMainPage;
-import com.example.kaew_pc.diary_project.PasswordManagement.SettingPassword;
-import com.example.kaew_pc.diary_project.PaymentManagement.PaymentMainPage;
+import com.example.kaew_pc.diary_project.R;
 
-public class main extends AppCompatActivity
+public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final int REQUEST_GALLERY = 1;
@@ -140,12 +133,12 @@ public class main extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_note) {
-            intent = new Intent(getApplicationContext(), NoteMainPage.class);
+            intent = new Intent(getApplicationContext(), NoteMainPageActivity.class);
             startActivity(intent);
 //            finish();
 
         } else if (id == R.id.nav_payment) {
-            intent = new Intent(getApplicationContext(), PaymentMainPage.class);
+            intent = new Intent(getApplicationContext(), PaymentMainPageActivity.class);
             startActivity(intent);
 //            finish();
 
@@ -154,11 +147,11 @@ public class main extends AppCompatActivity
                     Toast.LENGTH_LONG).show();
 
         } else if (id == R.id.nav_bin) {
-            intent = new Intent(getApplicationContext(), Bin.class);
+            intent = new Intent(getApplicationContext(), BinActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_pin) {
-            intent = new Intent(getApplicationContext(), SettingPassword.class);
+            intent = new Intent(getApplicationContext(), SettingPasswordActivity.class);
             intent.putExtra("Setting", true);
             startActivity(intent);
 //            finish();

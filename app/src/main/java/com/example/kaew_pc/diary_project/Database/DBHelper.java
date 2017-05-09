@@ -7,13 +7,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.kaew_pc.diary_project.Repository.PaymentDataRepo;
-import com.example.kaew_pc.diary_project.Repository.PaymentTypeRepo;
+import com.example.kaew_pc.diary_project.Manager.Repository.PaymentDataRepository;
+import com.example.kaew_pc.diary_project.Manager.Repository.PaymentTypeRepository;
 
-import com.example.kaew_pc.diary_project.Repository.BinRepo;
-import com.example.kaew_pc.diary_project.Repository.Note_dataRepo;
-
-import java.util.ArrayList;
+import com.example.kaew_pc.diary_project.Manager.Repository.BinRepository;
+import com.example.kaew_pc.diary_project.Manager.Repository.NoteDataRepository;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper dbHelper = null;
@@ -49,13 +47,13 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_Password_TABLE);
 
         // Table Note_data
-        db.execSQL(Note_dataRepo.createTable());
+        db.execSQL(NoteDataRepository.createTable());
         // Table Recycle
-        db.execSQL(BinRepo.createTable());
+        db.execSQL(BinRepository.createTable());
         // Table Payment
-        db.execSQL(PaymentDataRepo.createTable());
+        db.execSQL(PaymentDataRepository.createTable());
         // Table Payment Type
-        db.execSQL(PaymentTypeRepo.createTable());
+        db.execSQL(PaymentTypeRepository.createTable());
     }
 
 
@@ -108,16 +106,16 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(DROP_Password_TABLE);
 
         //Table Note_data
-        db.execSQL(Note_dataRepo.dropTable());
+        db.execSQL(NoteDataRepository.dropTable());
 
         //Table PaymentData
-        db.execSQL(PaymentDataRepo.dropTable());
+        db.execSQL(PaymentDataRepository.dropTable());
 
         //Table PaymentType
-        db.execSQL(PaymentTypeRepo.dropTable());
+        db.execSQL(PaymentTypeRepository.dropTable());
 
-        //Table BinRepo
-        db.execSQL(BinRepo.dropTable());
+        //Table BinRepository
+        db.execSQL(BinRepository.dropTable());
 
         Log.i(TAG, "Upgrade Database from " + oldVersion + " to " + newVersion);
 

@@ -1,13 +1,11 @@
-package com.example.kaew_pc.diary_project.Repository;
+package com.example.kaew_pc.diary_project.Manager.Repository;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.kaew_pc.diary_project.Database.Note_data;
 import com.example.kaew_pc.diary_project.Database.PayType;
-import com.example.kaew_pc.diary_project.Database.Payment_data;
 
 import java.util.ArrayList;
 
@@ -17,8 +15,8 @@ import static com.example.kaew_pc.diary_project.Database.PayType.Column.PayType_
  * Created by Ekachart-PC on 12/4/2560.
  */
 
-public class PaymentTypeRepo {
-    private static final String TAG = PaymentTypeRepo.class.getSimpleName();
+public class PaymentTypeRepository {
+    private static final String TAG = PaymentTypeRepository.class.getSimpleName();
 
     public static String createTable(){
         String CREATE_PayType_TABLE = String.format("CREATE TABLE %s " +

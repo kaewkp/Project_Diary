@@ -1,19 +1,12 @@
-package com.example.kaew_pc.diary_project.PaymentManagement;
+package com.example.kaew_pc.diary_project.Activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,20 +17,17 @@ import android.widget.Toast;
 
 import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Database.Payment_data;
-import com.example.kaew_pc.diary_project.NoteManagement.NoteCreatePage;
+import com.example.kaew_pc.diary_project.Manager.Adapter.PaymentCustomAdapter;
 import com.example.kaew_pc.diary_project.R;
-import com.example.kaew_pc.diary_project.Repository.PaymentDataRepo;
-import com.example.kaew_pc.diary_project.main;
+import com.example.kaew_pc.diary_project.Manager.Repository.PaymentDataRepository;
 
 import java.util.ArrayList;
-
-import static com.example.kaew_pc.diary_project.Database.Password.Column.id;
 
 /**
  * Created by chommchome on 27/3/2560.
  */
 
-public class  PaymentMainPage extends AppCompatActivity {
+public class PaymentMainPageActivity extends AppCompatActivity {
 
     private FloatingActionButton fab;
     private AlertDialog.Builder builder, sortdialog;
@@ -46,7 +36,7 @@ public class  PaymentMainPage extends AppCompatActivity {
     private ListView list;
     private Boolean isResume = false;
 
-    private PaymentDataRepo paymentObj;
+    private PaymentDataRepository paymentObj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +53,7 @@ public class  PaymentMainPage extends AppCompatActivity {
 
     private void init() {
         db = DBHelper.getInstance(this);
-        paymentObj = new PaymentDataRepo();
+        paymentObj = new PaymentDataRepository();
         list = (ListView) findViewById(R.id.paymentlist);
 
         fab = (FloatingActionButton) findViewById(R.id.fabpayment);
@@ -84,7 +74,7 @@ public class  PaymentMainPage extends AppCompatActivity {
 
 
     private void initDialog(final String[] text, String head, final TextView tv) {
-        builder = new AlertDialog.Builder(PaymentMainPage.this);
+        builder = new AlertDialog.Builder(PaymentMainPageActivity.this);
         builder.setTitle(head);
         builder.setSingleChoiceItems(text, 0, new DialogInterface.OnClickListener() {
             @Override
@@ -108,7 +98,7 @@ public class  PaymentMainPage extends AppCompatActivity {
 
 
     private void initSortDialog() {
-        sortdialog = new AlertDialog.Builder(PaymentMainPage.this);
+        sortdialog = new AlertDialog.Builder(PaymentMainPageActivity.this);
         sortdialog.setTitle("เรียงโดย");
         sortdialog.setSingleChoiceItems(sortlist, 0, new DialogInterface.OnClickListener() {
             @Override
@@ -132,9 +122,9 @@ public class  PaymentMainPage extends AppCompatActivity {
     private void loadPaymentList() {
         final ArrayList<Payment_data> data = paymentObj != null ?
                         paymentObj.getData(db.getReadableDatabase()) :
-                        new PaymentDataRepo().getData(db.getReadableDatabase());
+                        new PaymentDataRepository().getData(db.getReadableDatabase());
 
-        PaymentCustomAdapter adapter = new PaymentCustomAdapter(PaymentMainPage.this, data);
+        PaymentCustomAdapter adapter = new PaymentCustomAdapter(PaymentMainPageActivity.this, data);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -176,7 +166,7 @@ public class  PaymentMainPage extends AppCompatActivity {
             }
 
             if (item.getItemId() == android.R.id.home) {
-                intent = new Intent(getApplicationContext(), main.class);
+                intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
             }

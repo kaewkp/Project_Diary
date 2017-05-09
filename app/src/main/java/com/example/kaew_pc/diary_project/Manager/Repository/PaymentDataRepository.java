@@ -1,4 +1,4 @@
-package com.example.kaew_pc.diary_project.Repository;
+package com.example.kaew_pc.diary_project.Manager.Repository;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -6,19 +6,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.kaew_pc.diary_project.Database.Note_data;
-import com.example.kaew_pc.diary_project.Database.PayType;
 import com.example.kaew_pc.diary_project.Database.Payment_data;
 
 import java.util.ArrayList;
-import java.util.EmptyStackException;
 
 /**
  * Created by Ekachart-PC on 12/4/2560.
  */
 
 @SuppressWarnings("TryFinallyCanBeTryWithResources")
-public class PaymentDataRepo {
-    private static final String TAG = PaymentDataRepo.class.getSimpleName();
+public class PaymentDataRepository {
+    private static final String TAG = PaymentDataRepository.class.getSimpleName();
 
     public static String createTable(){
         String CREATE_Payment_data_TABLE = String.format("CREATE TABLE %s " +

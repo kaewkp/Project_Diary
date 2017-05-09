@@ -1,4 +1,4 @@
-package com.example.kaew_pc.diary_project;
+package com.example.kaew_pc.diary_project.Activity;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -6,9 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.kaew_pc.diary_project.Database.DBHelper;
-import com.example.kaew_pc.diary_project.PasswordManagement.SettingPassword;
+import com.example.kaew_pc.diary_project.R;
 
-public class splash_screen extends AppCompatActivity {
+public class Splash_screenActivity extends AppCompatActivity {
 
     private Runnable runnable;
     private Handler handler;
@@ -30,9 +30,9 @@ public class splash_screen extends AppCompatActivity {
             public void run() {
                 Intent intent;
                 if(havePass) {
-                    intent = new Intent(splash_screen.this, Login.class);
+                    intent = new Intent(Splash_screenActivity.this, LoginActivity.class);
                 }else{
-                    intent = new Intent(splash_screen.this, SettingPassword.class);
+                    intent = new Intent(Splash_screenActivity.this, SettingPasswordActivity.class);
                     intent.putExtra("Setting", false);
                 }
                 startActivity(intent);

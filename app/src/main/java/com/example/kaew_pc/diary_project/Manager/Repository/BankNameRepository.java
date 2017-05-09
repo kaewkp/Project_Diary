@@ -1,43 +1,44 @@
-package com.example.kaew_pc.diary_project.Repository;
+package com.example.kaew_pc.diary_project.Manager.Repository;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.kaew_pc.diary_project.Database.DebtTime;
+import com.example.kaew_pc.diary_project.Database.BankName;
 
 import java.util.ArrayList;
 
-import static com.example.kaew_pc.diary_project.Database.DebtTime.Column.DebtTime_id;
+import static com.example.kaew_pc.diary_project.Database.BankName.Column.BankName_id;
+
 
 /**
- * Created by chommchome on 30/4/2560.
+ * Created by chommchome on 29/4/2560.
  */
 
-public class DebtTimeRepo {
-    private static final String TAG = DebtTimeRepo.class.getSimpleName();
+public class BankNameRepository {
+    private static final String TAG = BankNameRepository.class.getSimpleName();
 
     public static String createTable(){
-        String CREATE_DebtTime_TABLE = String.format("CREATE TABLE %s " +
+        String CREATE_BankName_TABLE = String.format("CREATE TABLE %s " +
                         "(%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, %s TEXT)",
-                DebtTime.TABLE,
-                DebtTime_id,
-                DebtTime.Column.DebtTime_name);
-        Log.i(TAG, CREATE_DebtTime_TABLE);
-        return CREATE_DebtTime_TABLE;
+                BankName.TABLE,
+                BankName_id,
+                BankName.Column.BankName_name);
+        Log.i(TAG, CREATE_BankName_TABLE);
+        return CREATE_BankName_TABLE;
     }
 
     public static String dropTable(){
-        return "DROP TABLE IF EXISTS " + DebtTime.TABLE;
+        return "DROP TABLE IF EXISTS " + BankName.TABLE;
     }
 
     private void insertData(SQLiteDatabase db, String id, String name){
         ContentValues initialValues = new ContentValues();
-//        initialValues.put(DebtTime_id, id);
-        initialValues.put(DebtTime.Column.DebtTime_name, name);
-        Log.d("Insert DebtTime Data", "title : " + name);
-        db.insert(DebtTime.TABLE, null, initialValues);
+//        initialValues.put(BankName_id, id);
+        initialValues.put(BankName.Column.BankName_name, name);
+        Log.d("Insert BankName Data", "title : " + name);
+        db.insert(BankName.TABLE, null, initialValues);
     }
 
     public void createData(SQLiteDatabase db) {
@@ -53,29 +54,29 @@ public class DebtTimeRepo {
         insertData(db, "bn10","Citybank  (ซิตี้แบงก์)");
     }
 
-    public ArrayList<DebtTime> getData(SQLiteDatabase db){
-        Log.d("DebtTime", "select * from DebtTime");
-        ArrayList<DebtTime> list = new ArrayList<DebtTime>();
+    public ArrayList<BankName> getData(SQLiteDatabase db){
+        Log.d("BankName", "select * from Bankname");
+        ArrayList<BankName> list = new ArrayList<BankName>();
         Cursor cursor = null;
 
         try {
-            cursor = db.query(DebtTime.TABLE, null, null, null, null, null, null); //(table, column, where, where arg, groupby, having, orderby)
+            cursor = db.query(BankName.TABLE, null, null, null, null, null, null); //(table, column, where, where arg, groupby, having, orderby)
 
             if (cursor.getCount() < 1) {
                 return list;
             }
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                Log.d("DebtTime", "DebtTime id : " + cursor.getString(cursor.getColumnIndex(DebtTime_id)));
+                Log.d("BankName", "PayType id : " + cursor.getString(cursor.getColumnIndex(BankName_id)));
 
-                DebtTime data = new DebtTime(cursor.getString(cursor.getColumnIndex(DebtTime_id))
-                        , cursor.getString(cursor.getColumnIndex(DebtTime.Column.DebtTime_name)));
+                BankName data = new BankName(cursor.getString(cursor.getColumnIndex(BankName_id))
+                        , cursor.getString(cursor.getColumnIndex(BankName.Column.BankName_name)));
                 list.add(data);
                 cursor.moveToNext();
             }
         }
         catch (Exception ex){
-            Log.e("DebtTime", ex.toString());
+            Log.e("BankName", ex.toString());
         }
         finally {
             if(cursor != null)
@@ -84,16 +85,16 @@ public class DebtTimeRepo {
         return list;
     }
 
-    public DebtTime getDataById(SQLiteDatabase db, String id){
+    public BankName getDataById(SQLiteDatabase db, String id){
         Log.d(TAG + "Get Data By ID", "ID : " + id);
 
-        DebtTime data = null;
+        BankName data = null;
 
         Cursor cursor = null;
         try {
-            cursor = db.query(DebtTime.TABLE,                //table
+            cursor = db.query(BankName.TABLE,                //table
                     null,                                   //column
-                    DebtTime.Column.DebtTime_id + "=?",       //where
+                    BankName.Column.BankName_id + "=?",       //where
                     new String[]{id},                       //where arg
                     null, null, null);                      //groupby, having, orderby
 
@@ -102,9 +103,9 @@ public class DebtTimeRepo {
             }
             cursor.moveToFirst();
 
-            data = new DebtTime();
-            data.setDebtTime_id(cursor.getString(cursor.getColumnIndex(DebtTime.Column.DebtTime_id)));
-            data.setDebtTime_name(cursor.getString(cursor.getColumnIndex(DebtTime.Column.DebtTime_name)));
+            data = new BankName();
+            data.setBankName_id(cursor.getString(cursor.getColumnIndex(BankName.Column.BankName_id)));
+            data.setBankName_name(cursor.getString(cursor.getColumnIndex(BankName.Column.BankName_name)));
         }
         catch (Exception ex){
             Log.e(TAG + "Get Data By ID", "Exception : " + ex.toString());

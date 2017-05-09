@@ -1,4 +1,4 @@
-package com.example.kaew_pc.diary_project.Repository;
+package com.example.kaew_pc.diary_project.Manager.Repository;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.kaew_pc.diary_project.Database.Note_data;
-import com.example.kaew_pc.diary_project.Database.Note_recycle;
 
 import java.util.ArrayList;
 
@@ -14,7 +13,7 @@ import java.util.ArrayList;
  * Created by Ekachart-PC on 5/5/2560.
  */
 
-public class Note_dataRepo {
+public class NoteDataRepository {
     private static final String TAG = Note_data.class.getSimpleName();
 
     public static String createTable(){

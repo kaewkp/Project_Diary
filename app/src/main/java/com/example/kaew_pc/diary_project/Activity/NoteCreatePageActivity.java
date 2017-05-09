@@ -1,4 +1,4 @@
-package com.example.kaew_pc.diary_project.NoteManagement;
+package com.example.kaew_pc.diary_project.Activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -23,8 +21,7 @@ import android.widget.TextView;
 import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Database.Note_data;
 import com.example.kaew_pc.diary_project.R;
-import com.example.kaew_pc.diary_project.Repository.Note_dataRepo;
-import com.example.kaew_pc.diary_project.UserPicture;
+import com.example.kaew_pc.diary_project.Manager.Repository.NoteDataRepository;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -36,11 +33,11 @@ import android.widget.Toast;
  * Created by Ekachart-PC on 23/3/2560.
  */
 
-public class NoteCreatePage extends AppCompatActivity {
+public class NoteCreatePageActivity extends AppCompatActivity {
 
     private TextView date;
     private DBHelper db;
-    private Note_dataRepo repo;
+    private NoteDataRepository repo;
     private String formattedDate;
     private EditText title, desc;
     private Boolean isEdit = false;
@@ -104,7 +101,7 @@ public class NoteCreatePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveNote();
-                Toast.makeText(NoteCreatePage.this, "บันทึกแล้ว ",
+                Toast.makeText(NoteCreatePageActivity.this, "บันทึกแล้ว ",
                         Toast.LENGTH_LONG).show();
                 finish();
             }
@@ -131,7 +128,7 @@ public class NoteCreatePage extends AppCompatActivity {
         adb.setPositiveButton("บันทึก", new AlertDialog.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
                 saveNote();
-                Toast.makeText(NoteCreatePage.this, "บันทึกแล้ว ",
+                Toast.makeText(NoteCreatePageActivity.this, "บันทึกแล้ว ",
                         Toast.LENGTH_SHORT).show();
                 finish();
             }
@@ -190,7 +187,7 @@ public class NoteCreatePage extends AppCompatActivity {
         img = (ImageView)findViewById(R.id.picShow);
 
         db = DBHelper.getInstance(this);
-        repo = new Note_dataRepo();
+        repo = new NoteDataRepository();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -199,9 +196,9 @@ public class NoteCreatePage extends AppCompatActivity {
 
                 Uri selectedImageUri = data.getData();
                 try {
-                    img.setImageBitmap(new UserPicture(selectedImageUri, getContentResolver()).getBitmap());
+                    img.setImageBitmap(new UserPictureActivity(selectedImageUri, getContentResolver()).getBitmap());
                 } catch (Exception e) {
-                    Log.e(NoteCreatePage.class.getSimpleName(), "Failed to load image", e);
+                    Log.e(NoteCreatePageActivity.class.getSimpleName(), "Failed to load image", e);
                 }
                 // original code
 //                String selectedImagePath = getPath(selectedImageUri);
@@ -210,7 +207,7 @@ public class NoteCreatePage extends AppCompatActivity {
         } else {
             // report failure
             Toast.makeText(getApplicationContext(), "Fail to get intent data", Toast.LENGTH_LONG).show();
-            Log.d(NoteCreatePage.class.getSimpleName(), "Failed to get intent data, result code is " + resultCode);
+            Log.d(NoteCreatePageActivity.class.getSimpleName(), "Failed to get intent data, result code is " + resultCode);
         }
     }
 
@@ -220,7 +217,7 @@ public class NoteCreatePage extends AppCompatActivity {
         if( uri == null ) {
             // perform some logging or show user feedback
             Toast.makeText(getApplicationContext(), "Fail to get picture", Toast.LENGTH_LONG).show();
-            Log.d(NoteCreatePage.class.getSimpleName(), "Failed to parse image path from image URI " + uri);
+            Log.d(NoteCreatePageActivity.class.getSimpleName(), "Failed to parse image path from image URI " + uri);
             return null;
         }
 
