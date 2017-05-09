@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Diary_Project</string>
+    <string name="app_name">Tamutami Diary</string>
     <string name="title_activity_main">main</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

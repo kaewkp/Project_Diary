@@ -40,7 +40,8 @@ public class DBHelper extends SQLiteOpenHelper {
                         "(%s VARCHAR(1) PRIMARY KEY, %s TEXT)",
                 Password.TABLE,
                 Password.Column.id,
-                Password.Column.Password);
+                Password.Column.Password,
+                Password.Column.Personal_id);
         Log.i(TAG, CREATE_Password_TABLE);
 
         // Table Note_data
@@ -58,12 +59,46 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_Note_data_TABLE);
     }
 
-    public void setPassword(SQLiteDatabase db, String pass){
+    public Object getPassword(SQLiteDatabase db, String personalId){
         ContentValues initialValues = new ContentValues();
+        Cursor cursor = db.query(Password.TABLE,//Table
+                null, //Column
+                null, //Where
+                null, //Where Arg
+                null, // Group By
+                null, //orderby
+                null);
+        cursor.moveToFirst();
+        String personalIdFromQuery = cursor.getString(1);
+        Log.d("Personal ID", personalIdFromQuery);
+        return initialValues.get(Password.Column.Personal_id);
+    }
+
+    public void setPersonalData(SQLiteDatabase db, String personalId, String pk){
+        ContentValues initialValues = new ContentValues();
+        initialValues.put(Personal_ID.Column.id, pk);
+        initialValues.put(Personal_ID.Column.Personal_id, personalId);
+        Log.d("Set Password", "pass : " + personalId);
+
+        db.insert(Personal_ID.TABLE, null, initialValues);
+    }
+
+    public void setPassword(SQLiteDatabase db, String pass, String personalId) {
+        ContentValues initialValues = new ContentValues();
+        initialValues.put(Password.Column.id, "0");
         initialValues.put(Password.Column.Password, pass);
+        initialValues.put(Password.Column.Personal_id, personalId);
         Log.d("Set Password", "pass : " + pass);
 
         db.insert(Password.TABLE, null, initialValues);
+    }
+
+    public void updatePassword(SQLiteDatabase db, String pass){
+        ContentValues initialValues = new ContentValues();
+        initialValues.put(Password.Column.Password, pass);
+        Log.d("Update Password", "pass : " + pass);
+
+        db.update(Password.TABLE, initialValues, Password.Column.id+"=0", null);
     }
 
     public String getPassword(){

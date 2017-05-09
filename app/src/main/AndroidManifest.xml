@@ -39,6 +39,15 @@
             android:name=".NoteManagement.NoteCreatePage"
             android:label="บันทึกใหม่" />
 
+        <activity
+            android:name=".PasswordManagement.PersonalCheck"
+            android:label="ลืมรหัสผ่าน" />
+
+        <activity
+            android:name=".PasswordManagement.CreateNewPassword"
+            android:label="ตั้งค่ารหัสผ่านใหม่" />
+
+
 
     </application>
 

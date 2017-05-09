@@ -84,7 +84,6 @@ public class NoteMainPage extends AppCompatActivity {
 
         list.setAdapter(adapter);
 
-
 //        Toast.makeText(getApplicationContext(), String.valueOf(data.size()),
 //                        Toast.LENGTH_LONG).show();
     }
@@ -109,7 +108,6 @@ public class NoteMainPage extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

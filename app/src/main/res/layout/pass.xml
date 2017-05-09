@@ -2,9 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF0F5">
+    android:background="@android:color/white">
 
     <Button
         android:id="@+id/n8"
@@ -47,17 +48,17 @@
 
 
     <!--<Button-->
-        <!--android:id="@+id/button"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="5"-->
-        <!--tools:text="5"-->
-        <!--android:layout_alignStart="@+id/n2"-->
-        <!--android:textSize="20dp"-->
-        <!--android:layout_toStartOf="@+id/n6"-->
-        <!--android:layout_alignBottom="@+id/n4"-->
-        <!--android:layout_alignTop="@+id/n4"-->
-        <!--android:background="#ff8800" />-->
+    <!--android:id="@+id/button"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="5"-->
+    <!--tools:text="5"-->
+    <!--android:layout_alignStart="@+id/n2"-->
+    <!--android:textSize="20dp"-->
+    <!--android:layout_toStartOf="@+id/n6"-->
+    <!--android:layout_alignBottom="@+id/n4"-->
+    <!--android:layout_alignTop="@+id/n4"-->
+    <!--android:background="#ff8800" />-->
 
     <TextView
         android:text="ใส่รหัสผ่าน"
@@ -81,8 +82,17 @@
         android:textSize="20dp" />
 
     <ImageView
+        android:id="@+id/i1"
+        android:layout_marginTop="42dp"
+        android:src="@drawable/pink_button"
+        android:layout_below="@+id/textView5"
+        android:layout_toStartOf="@+id/textView4"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+
+    <ImageView
         android:id="@+id/i2"
-        app:srcCompat="@drawable/violet"
+        app:srcCompat="@drawable/pink_button"
         android:layout_alignTop="@+id/i1"
         android:layout_alignStart="@+id/n2"
         android:layout_marginStart="12dp"
@@ -90,8 +100,17 @@
         android:layout_height="40dp" />
 
     <ImageView
+        android:id="@+id/i3"
+        app:srcCompat="@drawable/pink_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="12dp"
+        android:layout_alignTop="@+id/i2"
+        android:layout_toStartOf="@+id/n3" />
+
+    <ImageView
         android:id="@+id/i4"
-        app:srcCompat="@drawable/violet"
+        app:srcCompat="@drawable/pink_button"
         android:layout_alignTop="@+id/i3"
         android:layout_toEndOf="@+id/textView4"
         android:layout_width="40dp"
@@ -210,23 +229,7 @@
         android:layout_height="80dp"
         android:layout_below="@+id/n8" />
 
-    <ImageView
-        android:id="@+id/i1"
-        android:layout_marginTop="42dp"
-        app:srcCompat="@drawable/violet"
-        android:layout_below="@+id/textView5"
-        android:layout_toStartOf="@+id/textView4"
-        android:layout_width="40dp"
-        android:layout_height="40dp" />
 
-    <ImageView
-        android:id="@+id/i3"
-        app:srcCompat="@drawable/violet"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="12dp"
-        android:layout_alignTop="@+id/i2"
-        android:layout_toStartOf="@+id/n3" />
 
 
 </RelativeLayout>
