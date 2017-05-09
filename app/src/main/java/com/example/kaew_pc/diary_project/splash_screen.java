@@ -18,6 +18,7 @@ public class splash_screen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_splash_screen);
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
