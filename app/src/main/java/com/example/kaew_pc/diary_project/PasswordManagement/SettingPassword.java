@@ -44,9 +44,7 @@ public class SettingPassword extends AppCompatActivity {
                         db.updatePassword(db.getWritableDatabase(), pass.getText().toString());
                     }
                     else { //call after install (first run)
-                        //test///////////////////////////////////////////////////////////////////////
                         db.setPassword(db.getWritableDatabase(), pass.getText().toString(), pid.getText().toString());
-//                        db.setPersonalData(db.getWritableDatabase(), pid.getText().toString(), (++personalInfo_seq)+"");
                         Intent go = new Intent(SettingPassword.this, Login.class);
                         startActivity(go);
                     }

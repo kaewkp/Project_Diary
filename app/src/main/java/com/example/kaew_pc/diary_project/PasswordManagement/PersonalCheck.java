@@ -3,14 +3,18 @@ package com.example.kaew_pc.diary_project.PasswordManagement;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.kaew_pc.diary_project.Database.DBHelper;
+import com.example.kaew_pc.diary_project.Database.Personal_ID;
 import com.example.kaew_pc.diary_project.R;
 import com.example.kaew_pc.diary_project.main;
+
+import java.io.Console;
 
 /**
  * Created by KAEW-PC on 05-May-17.
@@ -21,7 +25,8 @@ public class PersonalCheck extends AppCompatActivity {
     private Button submit;
     private EditText personalID;
     private DBHelper db;
-    private String inputID = "", realID;
+    private String inputID = "", realID = "";
+    private String TAG = "PersonalCheck";
 
 
     @Override
@@ -48,7 +53,10 @@ public class PersonalCheck extends AppCompatActivity {
 }
 
     private void checkPass(){
-        db.getPassword(db.getWritableDatabase(), personalID.getText().toString());
+        db = new DBHelper(this.getApplicationContext());
+        inputID = personalID.getText().toString();
+        realID = db.getPersonalID();
+        Log.i(TAG, realID);
 
         if(inputID.equalsIgnoreCase(realID)) {
             Intent intent = new Intent(PersonalCheck.this, CreateNewPassword.class);
