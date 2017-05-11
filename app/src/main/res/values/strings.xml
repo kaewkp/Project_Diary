@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Diary_Project</string>
+    <string name="app_name">Tamutami Diary</string>
     <string name="title_activity_main">main</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -9,15 +9,16 @@
     <string name="title_activity_password_manager">passwordManager</string>
 
 
-        <string-array name="ประเภทค่าใช้จ่าย">
-            <item>เลือกประเภทค่าใช้จ่าย</item>
-            <item>ค่าน้ำ</item>
-            <item>ค่าไฟ</item>
-            <item>ค่าโทรศัพท์</item>
-            <item>ค่าบัตรเครดิต</item>
-            <item>ค่าผ่อนชำระ</item>
-            <item>อื่นๆ</item>
-        </string-array>
+
+    <string-array name="ประเภทค่าใช้จ่าย">
+        <item>เลือกประเภทค่าใช้จ่าย</item>
+        <item>ค่าน้ำ</item>
+        <item>ค่าไฟ</item>
+        <item>ค่าโทรศัพท์</item>
+        <item>ค่าบัตรเครดิต</item>
+        <item>ค่าผ่อนชำระ</item>
+        <item>อื่นๆ</item>
+    </string-array>
 
     <string-array name="ประเภทคธนาคาร">
         <item>SCB (ไทยพาณิชย์)</item>
@@ -63,8 +64,10 @@
         <item>ล่วงหน้า 2 สัปดาห์</item>
     </string-array>
 
-
-
-    <!--<string name="title_activity_main_menu">SomsamaiDiary</string>-->
+    <string-array name="เรียงตาม">
+        <item>วันทีบันทึก</item>
+        <item>วันที่แก้ไข</item>
+        <item>วันที่แจ้งเตือน</item>
+    </string-array>
 
 </resources>
