@@ -114,9 +114,8 @@ public class main extends AppCompatActivity
 
         } else if (id == R.id.nav_pin) {
             intent = new Intent(getApplicationContext(), SettingPassword.class);
-            intent.putExtra("Setting", true);
+            intent.putExtra("Setting", "Main");
             startActivity(intent);
-            finish();
         } else if (id == R.id.nav_setup) {
             Toast.makeText(getApplicationContext(), "Not Available",
                     Toast.LENGTH_LONG).show();

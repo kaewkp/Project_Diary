@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.kaew_pc.diary_project.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Database.Personal_ID;
+import com.example.kaew_pc.diary_project.Login;
 import com.example.kaew_pc.diary_project.R;
 import com.example.kaew_pc.diary_project.main;
 
@@ -35,7 +36,6 @@ public class PersonalCheck extends AppCompatActivity {
         setContentView(R.layout.personal_check);
 
         init();
-//        checkPass();
 
     }
 
@@ -53,18 +53,19 @@ public class PersonalCheck extends AppCompatActivity {
 }
 
     private void checkPass(){
-        db = new DBHelper(this.getApplicationContext());
+        db = DBHelper.getInstance(this);
         inputID = personalID.getText().toString();
         realID = db.getPersonalID();
         Log.i(TAG, realID);
 
         if(inputID.equalsIgnoreCase(realID)) {
-            Intent intent = new Intent(PersonalCheck.this, CreateNewPassword.class);
+            Intent intent = new Intent(PersonalCheck.this, SettingPassword.class);
+            intent.putExtra("Setting", "ForgotPassword");
             startActivity(intent);
             finish();
         }
         else{
-            Toast.makeText(PersonalCheck.this, "Incorect Personal ID" , Toast.LENGTH_SHORT).show();
+            Toast.makeText(PersonalCheck.this, "Incorrect Personal ID" , Toast.LENGTH_SHORT).show();
 //            db.getPersonalData(db.getWritableDatabase(), pid.getText().toString(), (++personalInfo_seq)+"");
 
 //            db.setPassword(db.getWritableDatabase(), pass.getText().toString(), pid.getText().toString());
@@ -76,7 +77,7 @@ public class PersonalCheck extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(PersonalCheck.this, main.class);
+        Intent intent = new Intent(PersonalCheck.this, Login.class);
         startActivity(intent);
         finish();
     }

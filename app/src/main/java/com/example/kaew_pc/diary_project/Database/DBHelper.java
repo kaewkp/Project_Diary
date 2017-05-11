@@ -37,7 +37,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_Password_TABLE = String.format("CREATE TABLE %s " +
-                        "(%s VARCHAR(1) PRIMARY KEY, %s TEXT)",
+                        "(%s VARCHAR(1) PRIMARY KEY, %s TEXT, %s TEXT)",
                 Password.TABLE,
                 Password.Column.id,
                 Password.Column.Password,

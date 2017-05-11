@@ -33,7 +33,7 @@ public class splash_screen extends AppCompatActivity {
                     intent = new Intent(splash_screen.this, Login.class);
                 }else{
                     intent = new Intent(splash_screen.this, SettingPassword.class);
-                    intent.putExtra("Setting", false);
+                    intent.putExtra("Setting", "FirstRun");
                 }
                 startActivity(intent);
                 finish();

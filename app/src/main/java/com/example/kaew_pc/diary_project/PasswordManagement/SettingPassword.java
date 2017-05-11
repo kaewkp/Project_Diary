@@ -23,13 +23,13 @@ public class SettingPassword extends AppCompatActivity {
     private EditText pass, pass2, pid;
     private DBHelper db;
     private Intent intent;
-    private boolean isSetting = false;
+    private String comeFrom;
     private int personalInfo_seq = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_password_manager);
+        setContentView(R.layout.new_password);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 
@@ -38,13 +38,16 @@ public class SettingPassword extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(validateInput()){
-                    if(isSetting) { //call setting from main
+                    if(!comeFrom.equals("FirstRun")) { //call setting from main or forgot password from login so let user to change their password
                         db.updatePassword(db.getWritableDatabase(), pass.getText().toString());
                     }
-                    else { //call after install (first run)
+                    else { //call after install (first run) so "must" set personalID and password for the app
                         db.setPassword(db.getWritableDatabase(), pass.getText().toString(), pid.getText().toString());
+                    }
+
+                    // If come from forgot password or first run we will lead user to login page
+                    if(!comeFrom.equals("Main")){
                         Intent go = new Intent(SettingPassword.this, Login.class);
                         startActivity(go);
                     }
@@ -55,7 +58,7 @@ public class SettingPassword extends AppCompatActivity {
     }
 
     private boolean validateInput() {
-        if(pid.length() != 13 && !isSetting){
+        if(pid != null && pid.length() != 13){
             Toast.makeText(SettingPassword.this, "Personal ID must be 13 digit", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -74,23 +77,28 @@ public class SettingPassword extends AppCompatActivity {
 
     private void init() {
         db = new DBHelper(this);
+        comeFrom = getIntent().getExtras().getString("Setting");
+
+        //Mean come from first run so need to set personal ID
+        if(comeFrom.equals("FirstRun")){
+            setContentView(R.layout.activity_password_manager);
+            pid = (EditText) findViewById(R.id.pid);
+        }
+
+        Toast.makeText(SettingPassword.this, "PID is init : " + (pid != null), Toast.LENGTH_SHORT).show();
+
+        // 2 layout have the same ID
         submit = (Button) findViewById(R.id.submit);
         pass = (EditText) findViewById(R.id.password);
         pass2 = (EditText) findViewById(R.id.password2);
-        pid = (EditText) findViewById(R.id.pid);
-        intent = getIntent();
-        isSetting = intent.getExtras().getBoolean("Setting");
-
-        if(isSetting){
-            pid.setVisibility(View.GONE);
-        }
-
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(SettingPassword.this, main.class);
-        startActivity(intent);
+        if(comeFrom.equals("ForgotPassword")) {
+            Intent intent = new Intent(SettingPassword.this, PersonalCheck.class);
+            startActivity(intent);
+        }
         finish();
     }
 
