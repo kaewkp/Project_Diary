@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.kaew_pc.diary_project.Activity.PasswordManagement.SettingPasswordActivity;
 import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
 import com.example.kaew_pc.diary_project.R;
 
@@ -34,7 +35,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
                 }else{
                     intent = new Intent(SplashScreenActivity.this, SettingPasswordActivity.class);
-                    intent.putExtra("Setting", false);
+                    intent.putExtra("Setting", "FirstRun");
                 }
                 startActivity(intent);
                 finish();

@@ -23,6 +23,7 @@ import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import com.example.kaew_pc.diary_project.Activity.Note.NoteMainPageActivity;
+import com.example.kaew_pc.diary_project.Activity.PasswordManagement.SettingPasswordActivity;
 import com.example.kaew_pc.diary_project.Activity.Payment.PaymentMainPageActivity;
 import com.example.kaew_pc.diary_project.R;
 
@@ -154,9 +155,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_pin) {
             intent = new Intent(getApplicationContext(), SettingPasswordActivity.class);
-            intent.putExtra("Setting", true);
+            intent.putExtra("Setting", "Main");
             startActivity(intent);
-//            finish();
         } else if (id == R.id.nav_setup) {
             Toast.makeText(getApplicationContext(), "Not Available",
                     Toast.LENGTH_LONG).show();

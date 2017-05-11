@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.kaew_pc.diary_project.Activity.PasswordManagement.PersonalCheck;
 import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
 import com.example.kaew_pc.diary_project.R;
 
@@ -66,8 +67,9 @@ public class LoginActivity extends AppCompatActivity {
         forgot.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SettingPasswordActivity.class);
+                Intent intent = new Intent(getApplicationContext(), PersonalCheck.class);
                 startActivity(intent);
+                finish();
             }
         });
 

@@ -62,6 +62,35 @@ public class DBHelper extends SQLiteOpenHelper {
         new DebtTimeRepository().createData(db);
     }
 
+    public String getPersonalID(){
+        String personalID = "";
+
+        Cursor cursor = this.getReadableDatabase().query(
+                Password.TABLE,
+                new String[] {Password.Column.Personal_id},
+                null,
+                null,
+                null,
+                null,
+                null); //(table, column, where, where arg, groupby, having, orderby)
+        if(cursor.getCount() < 1){
+            Log.d("5555555555555", cursor.getString(cursor.getPosition()) + "");
+        }
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        int i=0;
+        while(!cursor.isAfterLast()) {
+            personalID = cursor.getString(0);
+            Log.d("Personal ID"+ (i++), personalID);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        Log.d("Search", "query in Password success : "+ personalID);
+        return personalID;
+    }
+
 
     public void setPassword(SQLiteDatabase db, String pass, String pid){
         ContentValues initialValues = new ContentValues();
