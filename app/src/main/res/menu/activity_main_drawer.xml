@@ -20,7 +20,9 @@
             android:title="ถังขยะ" />
     </group>
 
-    <item android:title="การตั้งค่า">
+    <item android:title="การตั้งค่า"
+        android:icon="@drawable/ic_menu_manage"
+        android:id="@+id/nav_setting">
         <menu>
             <item
                 android:id="@+id/nav_pin"
