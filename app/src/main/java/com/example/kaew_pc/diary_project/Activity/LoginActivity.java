@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         else{
             Toast.makeText(LoginActivity.this, "Incorect Password" , Toast.LENGTH_SHORT).show();
-            setImage( new int[]{ R.drawable.aaa, R.drawable.aaa, R.drawable.aaa, R.drawable.aaa}, 0);
+            setImage( new int[]{ R.drawable.pink_button, R.drawable.pink_button, R.drawable.pink_button, R.drawable.pink_button}, 0);
             count = 0;
             inputPass = "";
         }
@@ -92,16 +92,16 @@ public class LoginActivity extends AppCompatActivity {
     private void changeImg(){
         switch (count) {
             case 0:
-                setImage( new int[]{ R.drawable.aaa, R.drawable.aaa, R.drawable.aaa, R.drawable.aaa}, 0);
+                setImage( new int[]{ R.drawable.pink_button, R.drawable.pink_button, R.drawable.pink_button, R.drawable.pink_button}, 0);
                 break;
             case 1:
-                setImage( new int[]{ R.drawable.star, R.drawable.aaa, R.drawable.aaa, R.drawable.aaa}, 0);
+                setImage( new int[]{ R.drawable.star, R.drawable.pink_button, R.drawable.pink_button, R.drawable.pink_button}, 0);
                 break;
             case 2:
-                setImage( new int[]{ R.drawable.star, R.drawable.aaa, R.drawable.aaa}, 1);
+                setImage( new int[]{ R.drawable.star, R.drawable.pink_button, R.drawable.pink_button}, 1);
                 break;
             case 3:
-                setImage( new int[]{ R.drawable.star, R.drawable.aaa }, 2);
+                setImage( new int[]{ R.drawable.star, R.drawable.pink_button }, 2);
                 break;
             case 4:
                 setImage( new int[]{ R.drawable.star }, 3);
