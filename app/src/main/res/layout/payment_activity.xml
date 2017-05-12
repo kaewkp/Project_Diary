@@ -177,7 +177,7 @@
             android:layout_alignParentEnd="true" />
 
         <TextView
-            android:text="TextView"
+            android:text="ทำซ้ำทุกเดือน"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/switch1"

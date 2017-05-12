@@ -1,7 +1,9 @@
 package com.example.kaew_pc.diary_project.PaymentManagement;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -105,6 +107,9 @@ public class PaymentActivity extends AppCompatActivity {
                 date.setText("วันที่เลือก : " + d);
             isEdit = true;
         }
+
+
+
     }
 
     private void init() {
