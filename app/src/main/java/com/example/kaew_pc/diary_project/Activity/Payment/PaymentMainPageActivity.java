@@ -67,7 +67,7 @@ public class PaymentMainPageActivity extends AppCompatActivity {
             }
         });
 
-        sortlist = getResources().getStringArray(R.array.เรียงลำดับ);
+        sortlist = getResources().getStringArray(R.array.Sort);
     }
 
 

@@ -1,11 +1,13 @@
 package com.example.kaew_pc.diary_project.Manager.Repository;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.kaew_pc.diary_project.Manager.Database.DebtTime;
+import com.example.kaew_pc.diary_project.R;
 
 import java.util.ArrayList;
 
@@ -17,6 +19,12 @@ import static com.example.kaew_pc.diary_project.Manager.Database.DebtTime.Column
 
 public class DebtTimeRepository {
     private static final String TAG = DebtTimeRepository.class.getSimpleName();
+
+    Context mContext;
+    public DebtTimeRepository(Context context) // constructor
+    {
+        mContext = context;
+    }
 
     public static String createTable(){
         String CREATE_DebtTime_TABLE = String.format("CREATE TABLE %s " +
@@ -41,16 +49,10 @@ public class DebtTimeRepository {
     }
 
     public void createData(SQLiteDatabase db) {
-        insertData(db, "dt1","6 เดือน");
-        insertData(db, "dt2","12 เดือน");
-        insertData(db, "dt3","18 เดือน)");
-        insertData(db, "dt4","24 เดือน");
-        insertData(db, "dt5","30 เดือน");
-        insertData(db, "dt6","36 เดือน");
-        insertData(db, "dt7","40 เดือน");
-        insertData(db, "dt8","44 เดือน");
-        insertData(db, "dt9","50 เดือน");
-        insertData(db, "dt10","62 เดือน");
+        String[] DebtTime = mContext.getResources().getStringArray(R.array.DebtTime);
+        for (int i = 0; i < DebtTime.length; i++) {
+            insertData(db, "dt"+(i+1), DebtTime[i]);
+        }
     }
 
     public ArrayList<DebtTime> getData(SQLiteDatabase db){

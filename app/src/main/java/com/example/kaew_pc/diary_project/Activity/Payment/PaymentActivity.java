@@ -136,9 +136,9 @@ public class PaymentActivity extends AppCompatActivity {
         data = new Payment_data();
         paytypeData = new PayType();
 
-        debtyear = getResources().getStringArray(R.array.การผ่อนชำระ);
-        banks = getResources().getStringArray(R.array.ประเภทคธนาคาร);
-        timealert = getResources().getStringArray(R.array.การแจ้งเตือน);
+        debtyear = getResources().getStringArray(R.array.DebtTime);
+        banks = getResources().getStringArray(R.array.BankName);
+        timealert = getResources().getStringArray(R.array.Alert);
 
         Date time = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -208,7 +208,7 @@ public class PaymentActivity extends AppCompatActivity {
                 tv.setText(text[which]);
 
                 //Set bank name to data
-                BankNameRepository bankNameRepo = new BankNameRepository();
+                BankNameRepository bankNameRepo = new BankNameRepository(getApplicationContext());
                 BankName bankName = bankNameRepo.getDataByName(db.getReadableDatabase(), text[which]);
                 data.setBankName_id(bankName.getBankName_id());
             }

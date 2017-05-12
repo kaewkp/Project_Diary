@@ -58,8 +58,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(PaymentTypeRepository.createTable());
 
         new PaymentTypeRepository().createData(db);
-        new BankNameRepository().createData(db);
-        new DebtTimeRepository().createData(db);
+        new BankNameRepository(context).createData(db);
+        new DebtTimeRepository(context).createData(db);
     }
 
     public String getPersonalID(){

@@ -18,7 +18,7 @@
         <item>อื่นๆ</item>
     </string-array>
 
-    <string-array name="ประเภทคธนาคาร">
+    <string-array name="BankName">
         <item>SCB (ไทยพาณิชย์)</item>
         <item>KBANK (กสิกรไทย)</item>
         <item>GSB (ออมสิน)</item>
@@ -31,7 +31,7 @@
         <item>Citybank  (ซิตี้แบงก์)</item>
     </string-array>
 
-    <string-array name="การผ่อนชำระ">
+    <string-array name="DebtTime">
         <item>6 เดือน</item>
         <item>12 เดือน</item>
         <item>18 เดือน</item>
@@ -45,7 +45,7 @@
     </string-array>
 
 
-    <string-array name="การแจ้งเตือน">
+    <string-array name="Alert">
         <item>ล่วงหน้า 1 วัน</item>
         <item>ล่วงหน้า 3 วัน</item>
         <item>ล่วงหน้า 5 วัน</item>
@@ -54,13 +54,14 @@
     </string-array>
 
 
-    <string-array name="เรียงลำดับ">
+    <string-array name="Sort">
         <item>ค่าเริ่มต้น</item>
         <item>ที่สร้างล่าสุด</item>
         <item>ล่วงหน้า 5 วัน</item>
         <item>ล่วงหน้า 1 สัปดาห์</item>
         <item>ล่วงหน้า 2 สัปดาห์</item>
     </string-array>
+
 
     <string-array name="เรียงตาม">
         <item>วันทีบันทึก</item>
