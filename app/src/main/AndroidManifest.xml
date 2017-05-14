@@ -55,7 +55,6 @@
             android:label="รายการที่ต้องชำระใหม่"
             android:windowSoftInputMode="stateHidden"/>
 
-
         <activity
             android:name=".Activity.Payment.PaymentShowActivity"
             android:label="รายการที่ต้องชำระ" />
