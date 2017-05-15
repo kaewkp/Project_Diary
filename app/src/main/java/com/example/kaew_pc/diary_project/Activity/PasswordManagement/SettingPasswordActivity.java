@@ -3,6 +3,7 @@ package com.example.kaew_pc.diary_project.Activity.PasswordManagement;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -95,6 +96,8 @@ public class SettingPasswordActivity extends AppCompatActivity {
         }
         finish();
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
