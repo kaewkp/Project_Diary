@@ -144,15 +144,14 @@
     <Button
         android:id="@+id/del"
         android:layout_width="wrap_content"
-        android:text="del"
-        tools:text="del"
-        android:textSize="20dp"
-        android:layout_below="@+id/n8"
+        android:layout_height="80dp"
         android:layout_alignParentEnd="true"
+        android:layout_below="@+id/n8"
         android:layout_toEndOf="@+id/n8"
         android:background="#FF9999"
+        android:text="ลบ"
         android:textColor="@android:color/white"
-        android:layout_height="80dp" />
+        android:textSize="18dp" />
 
     <Button
         android:id="@+id/n0"
@@ -217,17 +216,17 @@
         android:layout_below="@+id/n2" />
 
     <Button
-        android:text="Forgot password ?"
-        android:layout_width="wrap_content"
-        android:layout_alignParentStart="true"
         android:id="@+id/forgotPass"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/n8"
         android:layout_toStartOf="@+id/n8"
         android:background="#FF9999"
+        android:text="ลืมรหัสผ่าน ?"
         android:textColor="@android:color/white"
-        android:textSize="16dp"
-        android:layout_alignParentBottom="true"
-        android:layout_height="80dp"
-        android:layout_below="@+id/n8" />
+        android:textSize="18dp" />
 
 
 </RelativeLayout>

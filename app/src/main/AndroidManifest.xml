@@ -30,7 +30,8 @@
 
         <activity
             android:name=".Activity.PasswordManagement.SettingPasswordActivity"
-            android:label="ตั้งค่ารหัสผ่าน" />
+            android:label="ตั้งค่ารหัสผ่าน"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
             android:name=".Activity.LoginActivity"
