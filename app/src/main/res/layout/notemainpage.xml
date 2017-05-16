@@ -60,7 +60,7 @@
         android:visibility="gone"/>
 
     <ImageView
-        app:srcCompat="@android:drawable/ic_menu_edit"
+        app:srcCompat="@drawable/ic_create_black"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:id="@+id/imageView2"
