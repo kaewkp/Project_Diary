@@ -8,6 +8,30 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/subject"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/mainlist"/>
+
+    <TextView
+        android:text="  รายการทั้งหมด"
+        android:layout_width="wrap_content"
+        android:id="@+id/subject"
+        android:layout_alignParentTop="true"
+        android:textColor="@android:color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/transparent"
+        android:layout_toEndOf="@+id/imageView2"
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_height="30dp"
+        android:paddingTop="8dp"
+        android:layout_marginLeft="5dp" />
+
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
@@ -22,4 +46,7 @@
         app:headerLayout="@layout/nav_header_main_menu"
         app:menu="@menu/activity_main_drawer" />
 
+
 </android.support.v4.widget.DrawerLayout>
+
+

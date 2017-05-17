@@ -34,7 +34,7 @@ public class PaymentMainPageActivity extends AppCompatActivity {
     private AlertDialog.Builder builder, sortdialog;
     private String[] sortlist;
     private DBHelper db;
-    private ListView list;
+    private ListView listpayment;
     private Boolean isResume = false;
 
     private PaymentDataRepository paymentObj;
@@ -55,7 +55,7 @@ public class PaymentMainPageActivity extends AppCompatActivity {
     private void init() {
         db = DBHelper.getInstance(this);
         paymentObj = new PaymentDataRepository();
-        list = (ListView) findViewById(R.id.paymentlist);
+        listpayment = (ListView) findViewById(R.id.paymentlist);
 
         fab = (FloatingActionButton) findViewById(R.id.fabpayment);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -69,8 +69,6 @@ public class PaymentMainPageActivity extends AppCompatActivity {
 
         sortlist = getResources().getStringArray(R.array.Sort);
     }
-
-
 
 
 
@@ -126,8 +124,8 @@ public class PaymentMainPageActivity extends AppCompatActivity {
                         new PaymentDataRepository().getData(db.getReadableDatabase());
 
         PaymentCustomAdapter adapter = new PaymentCustomAdapter(PaymentMainPageActivity.this, data);
-        list.setAdapter(adapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listpayment.setAdapter(adapter);
+        listpayment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 isResume = true;
@@ -137,7 +135,6 @@ public class PaymentMainPageActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
     @Override
