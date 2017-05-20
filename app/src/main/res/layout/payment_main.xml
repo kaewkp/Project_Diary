@@ -42,7 +42,7 @@
         android:id="@+id/fabpayment" />
 
     <ImageView
-        app:srcCompat="@drawable/pricetag"
+        app:srcCompat="@drawable/ic_pricetag"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:id="@+id/imageView2"
