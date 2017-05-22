@@ -1,5 +1,7 @@
 package com.example.kaew_pc.diary_project.Activity.Note;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,11 +16,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.kaew_pc.diary_project.Activity.ChangeColor;
 import com.example.kaew_pc.diary_project.Manager.UserPicture;
 import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Manager.Database.Note_data;
@@ -37,7 +41,9 @@ import android.widget.Toast;
 
 public class NoteCreatePageActivity extends AppCompatActivity {
 
-    private TextView date;
+    static final int dialogID = 0;
+    private TextView dateCreate, dateAlert;
+
     private DBHelper db;
     private NoteDataRepository repo;
     private String formattedDate;
@@ -45,7 +51,12 @@ public class NoteCreatePageActivity extends AppCompatActivity {
     private Boolean isEdit = false;
     private Note_data data = new Note_data();
     private ImageView img;
+//    private ImageButton white, yellow, green, pink, violet, blue;
+    private String dateChoose;
+    private AlertDialog.Builder builder, timealertbuilder;
+    private String[] timealert;
 
+    private int y, d, m;
 
     // this is the action code we use in our intent,
     // this way we know we're looking at the response from our own action
@@ -61,6 +72,9 @@ public class NoteCreatePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notecreatepage);
         init();
+//        initAlertDialog();
+        showCalendar();
+
         ActionBar action = getSupportActionBar();
         action.setDisplayHomeAsUpEnabled(true);
         action.setHomeButtonEnabled(true);
@@ -71,7 +85,8 @@ public class NoteCreatePageActivity extends AppCompatActivity {
             data = repo.getDataById(String.valueOf(id), db.getReadableDatabase());
             title.setText(data.getNote_title());
             desc.setText(data.getNote_desc());
-            date.setText(data.getNote_date());
+            dateCreate.setText(data.getNote_dateCreate());
+            dateAlert.setText(data.getNote_dateAlert());
             isEdit = true;
         }
 
@@ -85,26 +100,24 @@ public class NoteCreatePageActivity extends AppCompatActivity {
             }
         });
 
-//        ImageButton pic = (ImageButton)findViewById(R.id.picButton);
-//        pic.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//                intent.setType("image/*");
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//        // this line is different here !!
-//        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_MULTIPLE_PICTURE);
-//    }
-//});
+
+        final String titleStr = title.getText().toString();
+        final String descStr = desc.getText().toString();
 
         Button cancel = (Button) findViewById(R.id.cancelButton);
         Button save = (Button) findViewById(R.id.saveButton);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveNote();
-                Toast.makeText(NoteCreatePageActivity.this, "บันทึกแล้ว ",
-                        Toast.LENGTH_LONG).show();
+                if ((titleStr != null && !titleStr.isEmpty()) || (descStr != null && !descStr.isEmpty())){
+                    saveNote();
+                    Toast.makeText(NoteCreatePageActivity.this, "บันทึกแล้ว ",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(NoteCreatePageActivity.this, " ใส่ชื่อบันทึกและรายละเอียด ", Toast.LENGTH_SHORT).show();
+
+                }
                 finish();
             }
         });
@@ -115,6 +128,7 @@ public class NoteCreatePageActivity extends AppCompatActivity {
                 confirmCancel();
             }
         });
+
     }
 
     private void confirmCancel(){
@@ -131,7 +145,7 @@ public class NoteCreatePageActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int arg1) {
                 saveNote();
                 Toast.makeText(NoteCreatePageActivity.this, "บันทึกแล้ว ",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_LONG).show();
                 finish();
             }
         });
@@ -144,28 +158,30 @@ public class NoteCreatePageActivity extends AppCompatActivity {
         adb.show();
     }
 
-//    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-//        @Override
-//        public void onClick(DialogInterface dialog, int which) {
-//            switch (which){
-//                case DialogInterface.BUTTON_POSITIVE:
-//                    //Yes button clicked
-//                    break;
+// private void initAlertDialog() {
+//        timealertbuilder = new AlertDialog.Builder(์NoteCreatePageActivity.this);
+//        timealertbuilder.setTitle("ตั้งค่าการแจ้งเตือน");
+//        timealertbuilder.setSingleChoiceItems(timealert, 0, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                Toast.makeText(getApplicationContext(), "คุณเลือก " +
+//                        timealert[which], Toast.LENGTH_SHORT).show();
 //
-//                case DialogInterface.BUTTON_NEGATIVE:
-//                    //No button clicked
-//                    break;
 //            }
-//        }
-//    };
-//
-//    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//    builder.setMessage("คุณยังไม่ได้ทำการบันทึก คุณแน่ใจหรือว่าต้องการละทิ้งการเปลี่ยนแปลงนี้").setPositiveButton("Yes", dialogClickListener)
-//    .setNegativeButton("No", dialogClickListener).show();
+//        });
+//        timealertbuilder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+//        timealertbuilder.create();
+//    }
 
 
     private void saveNote() {
-        data.setNote_date(formattedDate);
+        data.setNote_dateCreate(formattedDate);
+        data.setNote_dateAlert(formattedDate);
         data.setNote_title(title.getText().toString());
         data.setNote_desc(desc.getText().toString());
 
@@ -176,16 +192,20 @@ public class NoteCreatePageActivity extends AppCompatActivity {
     }
 
     private void init() {
-        date = (TextView) findViewById(R.id.showdate);
+        dateCreate = (TextView) findViewById(R.id.showdate);
+        dateAlert = (TextView) findViewById(R.id.dateAlert);
+
         title = (EditText) findViewById(R.id.title);
-        desc = (EditText) findViewById(R.id.date);
+        desc = (EditText) findViewById(R.id.desc);
         Date time = Calendar.getInstance().getTime();
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         formattedDate = df.format(time);
 
         android.util.Log.i("Time Class ", " Time value in milliseconds "+time.getYear());
-        date.setText(formattedDate);
+        dateCreate.setText(formattedDate);
+
+
         img = (ImageView)findViewById(R.id.picShow);
 
         db = DBHelper.getInstance(this);
@@ -246,13 +266,22 @@ public class NoteCreatePageActivity extends AppCompatActivity {
 
         Intent intent;
         switch (item.getItemId()) {
+            case R.id.action_color:
+                intent = new Intent(getApplicationContext(), ChangeColor.class);
+                startActivity(intent);
+                finish();
+
+            case R.id.action_alert:
+
             case android.R.id.home:
+                confirmCancel();
                 finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
 
         }
+
     }
 
 
@@ -265,4 +294,43 @@ public class NoteCreatePageActivity extends AppCompatActivity {
     public void onBackPressed() {
         confirmCancel();
     }
+
+    //    show calendar
+    private void showCalendar() {
+        final Calendar ca = Calendar.getInstance();
+        y = ca.get(Calendar.YEAR);
+        m = ca.get(Calendar.MONTH);
+        d = ca.get(Calendar.DAY_OF_MONTH);
+
+        showDialog(dialogID);
+        Button calendarButton = (Button) findViewById(R.id.dateButton);
+        calendarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(dialogID);
+            }
+        });
+        dateAlert.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        if (id == dialogID) {
+            return new DatePickerDialog(this, /*android.R.style.Theme_Holo_Dialog*/dpicklistener, y, m, d);
+        }
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener dpicklistener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            y = year;
+            m = monthOfYear + 1; //Month start from 0
+            d = dayOfMonth;
+            dateChoose = String.valueOf(d) + " / " + String.valueOf(m) + " / " + String.valueOf(y);
+            dateAlert.setVisibility(View.VISIBLE);
+            dateAlert.setText("วันที่เลือก : " + dateChoose);
+        }
+    };
+
 }

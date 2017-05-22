@@ -45,7 +45,7 @@ public class NoteCustomAdapter extends ArrayAdapter<Note_data> {
             view = inflator.inflate(R.layout.listview_note, null);
             viewHolder = new ViewHolder();
             viewHolder.title = (TextView) view.findViewById(R.id.title);
-            viewHolder.date = (TextView) view.findViewById(R.id.date);
+            viewHolder.date = (TextView) view.findViewById(R.id.desc);
             viewHolder.checkbox = (CheckBox) view.findViewById(R.id.checkbox);
             viewHolder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -56,7 +56,7 @@ public class NoteCustomAdapter extends ArrayAdapter<Note_data> {
             });
             view.setTag(viewHolder);
             view.setTag(R.id.title, viewHolder.title);
-            view.setTag(R.id.date, viewHolder.date);
+            view.setTag(R.id.desc, viewHolder.date);
             view.setTag(R.id.checkbox, viewHolder.checkbox);
         } else {
             viewHolder = (ViewHolder) view.getTag();
@@ -64,7 +64,7 @@ public class NoteCustomAdapter extends ArrayAdapter<Note_data> {
         viewHolder.checkbox.setTag(position); // This line is important.
 
         viewHolder.title.setText(data.get(position).getNote_title());
-        viewHolder.date.setText(data.get(position).getNote_date());
+        viewHolder.date.setText(data.get(position).getNote_dateCreate());
         viewHolder.checkbox.setChecked(data.get(position).isSelected());
 
         c.add( viewHolder.checkbox );

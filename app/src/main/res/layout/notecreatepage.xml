@@ -32,16 +32,44 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
+        android:background="#FFE4E1"
         android:layout_alignParentStart="true"
-        android:background="#FFE4E1">
+        android:layout_below="@+id/appBarLayout">
 
 
-        <EditText
-            android:id="@+id/date"
+        <ImageButton
+            android:id="@+id/picButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/picture"
+            android:layout_below="@+id/saveButton"
+            android:layout_alignStart="@+id/showdate" />
+
+        <Button
+            android:id="@+id/dateButton"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
+            android:background="@color/wallet_holo_blue_light"
+            android:text="ตั้งวันที่แจ้งเตือน"
+            android:textColor="@android:color/white"
+            android:layout_above="@+id/dateAlert"
+            android:layout_alignStart="@+id/cancelButton" />
+
+        <TextView
+            android:id="@+id/dateAlert"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/picShow"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/dateButton"
+            android:layout_marginBottom="16dp"
+            android:text="วันที่แจ้งเตือน"
+            android:textColor="@android:color/black"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/desc"
+            android:layout_width="wrap_content"
+            android:layout_height="140dp"
             android:layout_alignEnd="@+id/title"
             android:layout_alignLeft="@+id/title"
             android:layout_alignRight="@+id/title"
@@ -74,54 +102,11 @@
             android:layout_alignLeft="@+id/title"
             android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/title"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
             android:text="ชื่อเรื่อง"
             android:textColor="#000000"
             android:textSize="20dp" />
-
-        <Button
-            android:id="@+id/saveButton"
-            android:layout_width="10dp"
-            android:layout_height="40dp"
-            android:layout_above="@+id/listButton"
-            android:layout_alignEnd="@+id/title"
-            android:layout_alignRight="@+id/title"
-            android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@+id/cancelButton"
-            android:layout_toRightOf="@+id/cancelButton"
-            android:background="#FF9999"
-            android:singleLine="false"
-            android:text="บันทึก"
-            android:textAlignment="gravity"
-            android:textColor="@android:color/white"
-            android:textSize="15dp" />
-
-        <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="10dp"
-            android:layout_height="40dp"
-            android:layout_above="@+id/cameraButton"
-            android:layout_alignEnd="@+id/cameraButton"
-            android:layout_alignLeft="@+id/date"
-            android:layout_alignStart="@+id/date"
-            android:layout_marginBottom="5dp"
-            android:layout_toStartOf="@+id/picButton"
-            android:background="#D3D3D3"
-            android:singleLine="true"
-            android:text="ยกเลิก"
-            android:textColor="@android:color/white"
-            android:textSize="15dp" />
-
-        <ImageButton
-            android:id="@+id/listButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignEnd="@+id/saveButton"
-            android:layout_alignRight="@+id/saveButton"
-            android:layout_alignTop="@+id/microButton"
-            android:background="@drawable/list"
-            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/showdate"
@@ -129,34 +114,11 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textView"
             android:layout_alignBottom="@+id/textView"
-            android:layout_alignEnd="@+id/date"
-            android:layout_alignRight="@+id/date"
+            android:layout_alignEnd="@+id/desc"
+            android:layout_alignRight="@+id/desc"
             android:background="@android:color/transparent"
-            android:text="TextView"
+            android:text="dateCreate"
             tools:textColor="@android:color/black" />
-
-        <ImageButton
-            android:id="@+id/cameraButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignTop="@+id/picButton"
-            android:layout_toEndOf="@+id/textView"
-            android:layout_toRightOf="@+id/textView"
-            android:background="@drawable/camera"
-            android:visibility="invisible" />
-
-        <ImageButton
-            android:id="@+id/microButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignTop="@+id/cameraButton"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_toLeftOf="@+id/showdate"
-            android:layout_toStartOf="@+id/showdate"
-            android:background="@drawable/microphoneeeeeee"
-            android:clickable="false"
-            android:visibility="invisible" />
 
         <EditText
             android:id="@+id/title"
@@ -172,7 +134,7 @@
             android:hint=" แตะเพื่อแก้ไข"
             android:inputType="textMultiLine"
             android:lines="1"
-            android:maxLines="3"
+            android:maxLines="1"
             android:scrollHorizontally="false"
             android:textColor="#000000"
             android:textSize="18dp" />
@@ -184,32 +146,40 @@
         <!--android:layout_alignBottom="@+id/listButton"-->
         <!--android:layout_alignEnd="@+id/desc" />-->
 
-        <ImageButton
-            android:id="@+id/picButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/picture" />
-
-        <ImageButton
-            android:id="@+id/attachButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignStart="@+id/cancelButton"
-            android:layout_below="@+id/cancelButton"
-            android:background="@drawable/attachment"
-            android:visibility="invisible" />
-
         <ImageView
             android:id="@+id/picShow"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_above="@+id/saveButton"
-            android:layout_alignEnd="@+id/date"
-            android:layout_alignStart="@+id/date"
-            android:layout_marginBottom="5dp" />
+            android:layout_above="@+id/cancelButton"
+            android:layout_alignEnd="@+id/desc"
+            android:layout_alignStart="@+id/desc"
+            android:layout_below="@+id/desc" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
+            android:background="#D3D3D3"
+            android:singleLine="true"
+            android:text="ยกเลิก"
+            android:textColor="@android:color/white"
+            android:textSize="15dp"
+            android:layout_above="@+id/dateButton"
+            android:layout_alignStart="@+id/picShow" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="10dp"
+            android:layout_height="40dp"
+            android:background="#FF9999"
+            android:singleLine="false"
+            android:text="บันทึก"
+            android:textAlignment="gravity"
+            android:textColor="@android:color/white"
+            android:textSize="15dp"
+            android:layout_alignEnd="@+id/picShow"
+            android:layout_toEndOf="@+id/dateButton"
+            android:layout_above="@+id/dateButton" />
 
     </RelativeLayout>
 

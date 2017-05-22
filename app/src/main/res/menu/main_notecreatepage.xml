@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/action_alert"
+    <item
+        android:id="@+id/action_color"
         android:title="สีพื้นหลัง"
-        app:showAsAction="never"
-        />
+        app:showAsAction="never" />
 
-    <item android:id="@+id/action_sortNew"
+    <item
+        android:id="@+id/action_alert"
         android:title="ตั้งการแจ้งเตือน"
-        app:showAsAction="never"
-        />
+        app:showAsAction="never" />
 
 </menu>

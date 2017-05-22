@@ -1,12 +1,15 @@
 package com.example.kaew_pc.diary_project.Activity.Note;
 
 import android.app.AlertDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,7 +54,9 @@ public class NoteMainPageActivity extends AppCompatActivity {
         action.setHomeButtonEnabled(true);
 
         loadNoteList();
+
     }
+
 
 
     private void loadNoteList() {
@@ -166,6 +171,7 @@ public class NoteMainPageActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_note, menu);
+
         return true;
     }
 
