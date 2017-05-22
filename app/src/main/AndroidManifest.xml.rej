@@ -1,0 +1,10 @@
+diff a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml	(rejected hunks)
+@@ -15,7 +15,7 @@
+         android:supportsRtl="true"
+         android:theme="@style/AppTheme">
+         <activity
+-            android:name=".splash_screen">
++            android:name=".Activity.SplashScreenActivity">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+ 
