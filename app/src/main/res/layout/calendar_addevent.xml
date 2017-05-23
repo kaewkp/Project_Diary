@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_alignParentRight="true">-->
+            <!--<ImageButton-->
+                <!--android:layout_width="50dp"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:src="@mipmap/ic_clear_white_48dp"/>-->
+
+            <!--<ImageButton-->
+                <!--android:layout_width="50dp"-->
+                <!--android:layout_height="50dp"/>-->
+        <!--</LinearLayout>-->
+
+        <ImageButton
+            android:id="@+id/calendar_done"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginRight="5dp"
+            android:background="@null"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/ic_done_white_48dp"/>
+
+        <ImageButton
+            android:id="@+id/calendar_cancel"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="5dp"
+            android:background="@null"
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/ic_clear_white_48dp"/>
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/txtNameofEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:layout_marginLeft="@dimen/calendar_dialog_padding"
+        android:layout_marginRight="@dimen/calendar_dialog_padding"
+        android:ems="10"
+        android:hint="ชื่อเรื่อง"
+        android:inputType="none" />
+
+    <Spinner
+        android:id="@+id/type_1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/txtNameofEvent"
+        android:layout_alignStart="@+id/txtNameofEvent"
+        android:layout_below="@+id/txtNameofEvent"
+        android:layout_marginLeft="@dimen/calendar_dialog_padding"
+        android:layout_marginRight="@dimen/calendar_dialog_padding"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="เริ่ม"
+        android:layout_marginLeft="@dimen/calendar_dialog_padding"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/calendar_dialog_padding"
+        android:layout_marginRight="@dimen/calendar_dialog_padding">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/start_date"
+            android:text="@string/pick_date"
+            android:onClick="showDatePickerDialog" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:id="@+id/start_time"
+            android:text="@string/pick_time"
+            android:onClick="showDatePickerDialog" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="สิ้นสุด"
+        android:layout_marginLeft="@dimen/calendar_dialog_padding"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/calendar_dialog_padding"
+        android:layout_marginRight="@dimen/calendar_dialog_padding">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/end_date"
+            android:text="@string/pick_date"
+            android:onClick="showDatePickerDialog" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:id="@+id/end_time"
+            android:text="@string/pick_time"
+            android:onClick="showDatePickerDialog" />
+
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/time_notic"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/txtNameofEvent"
+        android:layout_alignStart="@+id/txtNameofEvent"
+        android:layout_below="@+id/txtNameofEvent"
+        android:layout_marginLeft="@dimen/calendar_dialog_padding"
+        android:layout_marginRight="@dimen/calendar_dialog_padding"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/calendar_dialog_padding"
+        android:layout_marginRight="@dimen/calendar_dialog_padding"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="รายละเอียด"
+        android:inputType="none"
+        android:textSize="18sp" />
+
+
+
+</LinearLayout>

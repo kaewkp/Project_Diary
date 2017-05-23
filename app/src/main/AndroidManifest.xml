@@ -55,7 +55,6 @@
             android:label="รายการที่ต้องชำระใหม่"
             android:windowSoftInputMode="stateHidden"/>
 
-
         <activity
             android:name=".Activity.Payment.PaymentShowActivity"
             android:label="รายการที่ต้องชำระ" />
@@ -70,6 +69,10 @@
         <activity
             android:name=".Activity.PasswordManagement.PersonalCheck"
             android:label="ลืมรหัสผ่าน" />
+
+        <activity
+            android:name=".Activity.Calendar.CalendarMainActivity"
+            android:label="หน้าปฏิทินหลัก" />
 
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->

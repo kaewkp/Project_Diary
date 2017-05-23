@@ -22,6 +22,7 @@ import android.provider.MediaStore.Images.Media;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
+import com.example.kaew_pc.diary_project.Activity.Calendar.CalendarMainActivity;
 import com.example.kaew_pc.diary_project.Activity.Note.NoteMainPageActivity;
 import com.example.kaew_pc.diary_project.Activity.PasswordManagement.SettingPasswordActivity;
 import com.example.kaew_pc.diary_project.Activity.Payment.PaymentMainPageActivity;
@@ -146,8 +147,10 @@ public class MainActivity extends AppCompatActivity
 //            finish();
 
         } else if (id == R.id.nav_calendar) {
-                Toast.makeText(getApplicationContext(), "Not Available",
-                    Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "Not Available",
+//                    Toast.LENGTH_LONG).show();
+            intent = new Intent(getApplicationContext(), CalendarMainActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_bin) {
             intent = new Intent(getApplicationContext(), BinActivity.class);
