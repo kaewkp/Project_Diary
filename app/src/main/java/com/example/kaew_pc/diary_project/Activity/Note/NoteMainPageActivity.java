@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.ComponentName;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -68,10 +69,8 @@ public class NoteMainPageActivity extends AppCompatActivity implements SearchVie
         ActionBar action = getSupportActionBar();
         action.setDisplayHomeAsUpEnabled(true);
         action.setHomeButtonEnabled(true);
-
         loadNoteList(1);
     }
-
 
     private void loadNoteList(final Integer s) {
         Toast.makeText(NoteMainPageActivity.this, ""+s, Toast.LENGTH_SHORT).show();
@@ -244,6 +243,7 @@ public class NoteMainPageActivity extends AppCompatActivity implements SearchVie
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_note, menu);
+
         return true;
     }
 

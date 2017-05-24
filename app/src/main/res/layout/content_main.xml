@@ -13,4 +13,9 @@
     tools:context="com.example.kaew_pc.diary_project.main"
     tools:showIn="@layout/app_bar_main">
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
 </RelativeLayout>

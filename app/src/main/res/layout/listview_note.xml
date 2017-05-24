@@ -22,11 +22,14 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="50dp"
+        android:layout_alignParentTop="true"
         android:layout_marginLeft="5dp"
         android:layout_toEndOf="@+id/checkbox"
         android:background="#FFE4E1"
+        android:lines="1"
+        android:maxLines="1"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:text="Subject"
@@ -36,7 +39,7 @@
 
     <TextView
         android:id="@+id/desc"
-        android:layout_width="wrap_content"
+        android:layout_width="140dp"
         android:layout_height="50dp"
         android:layout_alignBottom="@+id/title"
         android:layout_alignParentEnd="true"
@@ -44,26 +47,11 @@
         android:layout_marginEnd="5dp"
         android:layout_toEndOf="@+id/title"
         android:background="#FFE4E1"
-        android:text=" Date  "
-        android:textAlignment="viewEnd"
-        android:textColor="#696969"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/desc"
-        android:text=" Date  "
-        android:textColor="#696969"
-        android:layout_alignBottom="@+id/title"
-        android:textSize="16dp"
-        android:background="#FFE4E1"
-        android:layout_height="50dp"
-        android:layout_toEndOf="@+id/title"
-        android:layout_marginEnd="5dp"
-        android:layout_width="180dp"
-        android:textAlignment="viewEnd"
         android:paddingRight="10dp"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:paddingTop="15dp" />
+        android:paddingTop="15dp"
+        android:text=" Date  "
+        android:textAlignment="viewEnd"
+        android:textColor="#696969"
+        android:textSize="16dp" />
 
 </RelativeLayout>

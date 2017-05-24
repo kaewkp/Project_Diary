@@ -8,7 +8,6 @@
     <dimen name="fab_margin">16dp</dimen>
 
 
-
     <!--For lolipin-->
     <dimen name="activity_dialog_title_size">9sp</dimen>
     <dimen name="activity_dialog_content_size">5sp</dimen>
