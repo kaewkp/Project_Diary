@@ -23,6 +23,7 @@ import com.example.kaew_pc.diary_project.R;
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentDataRepository;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by chommchome on 27/3/2560.
@@ -36,6 +37,8 @@ public class PaymentMainPageActivity extends AppCompatActivity {
     private DBHelper db;
     private ListView listpayment;
     private Boolean isResume = false;
+    public final Calendar cal = Calendar.getInstance();
+
 
     private PaymentDataRepository paymentObj;
 
@@ -69,7 +72,6 @@ public class PaymentMainPageActivity extends AppCompatActivity {
 
         sortlist = getResources().getStringArray(R.array.Sort);
     }
-
 
 
     private void initDialog(final String[] text, String head, final TextView tv) {
@@ -131,11 +133,11 @@ public class PaymentMainPageActivity extends AppCompatActivity {
                 isResume = true;
                 Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
                 intent.putExtra("id", data.get(position).getPayment_id());
+                Payment_data.setPaymentIdFromClicked(data, position);
                 startActivity(intent);
             }
         });
     }
-
 
     @Override
     protected void onResume() {

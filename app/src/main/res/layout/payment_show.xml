@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <TextView
         android:text="รายการที่ต้องชำระ"
@@ -11,50 +12,93 @@
         android:layout_marginTop="11dp"
         android:id="@+id/head"
         android:textSize="20sp"
+        android:textColor="#000000"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:text="TextView"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/Title"
+        android:layout_marginTop="19dp"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="30sp"
         android:layout_below="@+id/head"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:layout_alignStart="@+id/head" />
-
-    <TextView
-        android:text="รายละเอียด"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Title"
-        android:layout_alignStart="@+id/Title"
-        android:layout_marginTop="46dp"
-        android:id="@+id/titledetail"
-        android:textSize="20sp" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/detail"
-        android:layout_marginTop="13dp"
-        android:layout_below="@+id/titledetail"
-        android:layout_alignStart="@+id/titledetail"
         android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/titledetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="รายละเอียด"
+        android:textSize="18sp"
+        android:layout_below="@+id/title"
+        android:layout_alignStart="@+id/head" />
 
 
     <Button
-        android:text="แก้ไข"
+        android:id="@+id/alreadypay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="13dp"
+        android:background="#FF9999"
+        android:text="ชำระแล้ว"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:onClick="stopNotification"/>
+
+    <TextView
+        android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editpayment"
-        android:background="@android:color/holo_orange_dark"
+        android:text="จำนวนเงินที่ต้องชำระ"
         android:textSize="18sp"
-        android:layout_marginBottom="13dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/detail"
+        android:layout_alignStart="@+id/detail" />
+
+    <TextView
+        android:id="@+id/priceshow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="30sp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/price" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="วันสิ้นสุดการชำระ"
+        android:textSize="18sp"
+        android:layout_below="@+id/priceshow"
+        android:layout_alignStart="@+id/price"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/endDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="30sp"
+        android:layout_below="@+id/date"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/titledetail"
+        android:layout_below="@+id/titledetail"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textSize="16sp" />
 
 
 </RelativeLayout>

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Tamutami Diary</string>
-    <string name="title_activity_main">main</string>
+    <string name="title_activity_main">หน้าหลัก</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -76,5 +76,9 @@
     <string name="activity_dialog_decline">CANCEL</string>
     <string name="activity_dialog_content">Tap \'OK\' to log out, when you log back in you\'ll be able to create a new Pincode.\n\nIf you remember your Pincode, tap \'Cancel\' to go back.</string>
     <string name="activity_appcompat_message">I am a PinCompatActivity!</string>
+
+
+
+
 
 </resources>
