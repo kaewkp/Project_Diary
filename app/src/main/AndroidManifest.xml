@@ -8,6 +8,8 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="8" />
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -44,6 +46,7 @@
 
         <activity
             android:name=".Activity.Note.NoteCreatePageActivity"
+            android:windowSoftInputMode="stateHidden"
             android:label="บันทึกใหม่" />
 
         <activity
@@ -69,6 +72,16 @@
         <activity
             android:name=".Activity.PasswordManagement.PersonalCheck"
             android:label="ลืมรหัสผ่าน" />
+
+        <activity
+            android:name=".Activity.Note.ShowPicture" />
+
+        <activity
+            android:name="com.andremion.louvre.home.GalleryActivity"
+            android:theme="@style/AppTheme.Louvre.Light.DarkActionBar" />
+        <activity
+            android:name="com.andremion.louvre.preview.PreviewActivity"
+            android:theme="@style/AppTheme.Louvre.Preview" />
 
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->

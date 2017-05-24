@@ -84,7 +84,9 @@ public class BinRepository {
                 Note_data data = new Note_data(cursor.getInt(cursor.getColumnIndex(Note_data.Column.Note_id))
                         , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_title))
                         , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_desc))
-                        , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_date))
+                        , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_alertdate))
+                        , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_savedate))
+                        , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_editdate))
                         , cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id))
                         , cursor.getInt(cursor.getColumnIndex(Note_data.Column.isDelete)));
                 list.add(data);
@@ -123,7 +125,9 @@ public class BinRepository {
                 data.setNote_id(cursor.getInt(cursor.getColumnIndex(Note_data.Column.Note_id)));
                 data.setNote_title(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_title)));
                 data.setNote_desc(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_desc)));
-                data.setNote_date(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_date)));
+                data.setNote_editdate(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_editdate)));
+                data.setNote_alertdate(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_alertdate)));
+                data.setNote_savedate(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_savedate)));
                 data.setNoti_id(cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id)));
                 cursor.moveToNext();
             }

@@ -47,7 +47,7 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/date"
+        android:id="@+id/desc"
         android:text=" Date  "
         android:textColor="#696969"
         android:layout_alignBottom="@+id/title"

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.kaew_pc.diary_project.Manager.Repository.NoteImageRepository;
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentDataRepository;
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentTypeRepository;
 
@@ -54,6 +55,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(PaymentDataRepository.createTable());
         // Table Payment Type
         db.execSQL(PaymentTypeRepository.createTable());
+        // Table Note Image
+        db.execSQL(NoteImageRepository.createTable());
     }
 
     public String getPersonalID(){
@@ -145,6 +148,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //Table BinRepository
         db.execSQL(BinRepository.dropTable());
+
+        //Table Note Image
+        db.execSQL(NoteImageRepository.dropTable());
 
         Log.i(TAG, "Upgrade Database from " + oldVersion + " to " + newVersion);
 

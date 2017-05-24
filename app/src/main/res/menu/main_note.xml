@@ -13,8 +13,16 @@
         <!--app:showAsAction="never"-->
         <!--/>-->
 
-    <item android:id="@+id/action_sortNew"
-        android:title="เรียงลำดับบันทึก"
+    <item android:id="@+id/sortNew"
+        android:title="วันทีบันทึก"
+        app:showAsAction="never"
+        />
+    <item android:id="@+id/sortEdit"
+        android:title="วันที่แก้ไข"
+        app:showAsAction="never"
+        />
+    <item android:id="@+id/sortAlert"
+        android:title="วันที่แจ้งเตือน"
         app:showAsAction="never"
         />
 </menu>

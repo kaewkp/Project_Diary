@@ -18,12 +18,14 @@ public class NoteDataRepository {
 
     public static String createTable(){
         String CREATE_Note_data_TABLE = String.format("CREATE TABLE %s " +
-                        "(%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, %s TEXT, %s TEXT, %s TEXT, %s VARCHAR(3), %s INTEGER)",
+                        "(%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s VARCHAR(3), %s INTEGER)",
                 Note_data.TABLE,
                 Note_data.Column.Note_id,
                 Note_data.Column.Note_title,
                 Note_data.Column.Note_desc,
-                Note_data.Column.Note_date,
+                Note_data.Column.Note_alertdate,
+                Note_data.Column.Note_editdate,
+                Note_data.Column.Note_savedate,
                 Note_data.Column.Noti_id,
                 Note_data.Column.isDelete);
         Log.i(TAG, CREATE_Note_data_TABLE);
@@ -39,7 +41,8 @@ public class NoteDataRepository {
 //        initialValues.put(Note_data.Column.Note_id, notedata.getNote_id());
         initialValues.put(Note_data.Column.Note_title, notedata.getNote_title());
         initialValues.put(Note_data.Column.Note_desc, notedata.getNote_desc());
-        initialValues.put(Note_data.Column.Note_date, notedata.getNote_date());
+        initialValues.put(Note_data.Column.Note_savedate, notedata.getNote_savedate());
+        initialValues.put(Note_data.Column.Note_editdate, notedata.getNote_editdate());
         initialValues.put(Note_data.Column.Noti_id, notedata.getNoti_id());
         initialValues.put(Note_data.Column.isDelete, 1);
 
@@ -53,7 +56,8 @@ public class NoteDataRepository {
 //        initialValues.put(Note_data.Column.Note_id, notedata.getNote_id());
         initialValues.put(Note_data.Column.Note_title, notedata.getNote_title());
         initialValues.put(Note_data.Column.Note_desc, notedata.getNote_desc());
-        initialValues.put(Note_data.Column.Note_date, notedata.getNote_date());
+        initialValues.put(Note_data.Column.Note_savedate, notedata.getNote_savedate());
+        initialValues.put(Note_data.Column.Note_editdate, notedata.getNote_editdate());
         initialValues.put(Note_data.Column.Noti_id, notedata.getNoti_id());
         initialValues.put(Note_data.Column.isDelete, 1);
 
@@ -94,9 +98,11 @@ public class NoteDataRepository {
                 Note_data data = new Note_data(cursor.getInt(cursor.getColumnIndex(Note_data.Column.Note_id))
                         , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_title))
                         , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_desc))
-                        , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_date))
+                        , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_alertdate))
+                        , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_savedate))
+                        , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_editdate))
                         , cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id))
-                , cursor.getInt(cursor.getColumnIndex(Note_data.Column.isDelete)));
+                        , cursor.getInt(cursor.getColumnIndex(Note_data.Column.isDelete)));
                 list.add(data);
                 cursor.moveToNext();
             }
@@ -139,7 +145,9 @@ public class NoteDataRepository {
                 data.setNote_id(cursor.getInt(cursor.getColumnIndex(Note_data.Column.Note_id)));
                 data.setNote_title(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_title)));
                 data.setNote_desc(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_desc)));
-                data.setNote_date(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_date)));
+                data.setNote_alertdate(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_alertdate)));
+                data.setNote_savedate(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_savedate)));
+                data.setNote_editdate(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_editdate)));
                 data.setNoti_id(cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id)));
                 cursor.moveToNext();
             }
@@ -152,5 +160,38 @@ public class NoteDataRepository {
                 cursor.close();
         }
         return data;
+    }
+
+    public int getLatestId(SQLiteDatabase db){
+        Log.d(TAG + "Get Latest ID", "Get ID For save image");
+
+        int id = -1;
+
+        Cursor cursor = null;
+        try {
+            cursor = db.query(Note_data.TABLE,
+                    new String[] { Note_data.Column.Note_id },
+                    null,
+                    null,
+                    null, null, null); //(table, column, where, where arg, groupby, having, orderby)
+
+            if (cursor.getCount() < 1) {
+                return id;
+            }
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                id = cursor.getInt(0);
+                cursor.moveToNext();
+            }
+        }
+        catch (Exception ex){
+            Log.e(TAG + "Get Latest ID", "Exception : " + ex.toString());
+        }
+        finally {
+            if(cursor != null)
+                cursor.close();
+        }
+        Log.d(TAG + "Get Id", "Id:"+ id + " Cursor size:" +cursor.getCount());
+        return id;
     }
 }

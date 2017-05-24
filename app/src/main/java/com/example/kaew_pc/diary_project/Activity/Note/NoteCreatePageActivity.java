@@ -1,33 +1,50 @@
 package com.example.kaew_pc.diary_project.Activity.Note;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.kaew_pc.diary_project.Manager.UserPicture;
+import com.andremion.louvre.Louvre;
+import com.andremion.louvre.home.GalleryActivity;
+import com.andremion.louvre.util.ItemOffsetDecoration;
+import com.example.kaew_pc.diary_project.Manager.Adapter.PickerImageAdapter;
 import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Manager.Database.Note_data;
+import com.example.kaew_pc.diary_project.Manager.Database.Note_image;
+import com.example.kaew_pc.diary_project.Manager.Repository.NoteImageRepository;
 import com.example.kaew_pc.diary_project.R;
 import com.example.kaew_pc.diary_project.Manager.Repository.NoteDataRepository;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import android.widget.Toast;
 
@@ -40,11 +57,15 @@ public class NoteCreatePageActivity extends AppCompatActivity {
     private TextView date;
     private DBHelper db;
     private NoteDataRepository repo;
+    private NoteImageRepository imageRepo;
     private String formattedDate;
     private EditText title, desc;
     private Boolean isEdit = false;
     private Note_data data = new Note_data();
     private ImageView img;
+
+    private List<Uri> uri;
+    private ArrayList<Note_image> imagelist;
 
 
     // this is the action code we use in our intent,
@@ -55,6 +76,12 @@ public class NoteCreatePageActivity extends AppCompatActivity {
 
     public static final String IMAGE_TYPE = "image/*";
 
+
+////////////////////////////////////////////////////////////////////////
+
+    private static final int LOUVRE_REQUEST_CODE = 0;
+
+    private PickerImageAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,31 +98,51 @@ public class NoteCreatePageActivity extends AppCompatActivity {
             data = repo.getDataById(String.valueOf(id), db.getReadableDatabase());
             title.setText(data.getNote_title());
             desc.setText(data.getNote_desc());
-            date.setText(data.getNote_date());
+            date.setText(data.getNote_editdate());
+            imagelist = imageRepo.getDataById(db.getReadableDatabase(), id);
+
+            Toast.makeText(NoteCreatePageActivity.this, ""+imagelist.size(), Toast.LENGTH_SHORT).show();
             isEdit = true;
         }
 
-        ImageButton buttonIntent = (ImageButton) findViewById(R.id.picButton);
-        buttonIntent.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(Intent.createChooser(intent
-                        , "Select Picture"), SELECT_SINGLE_PICTURE);
+        //RecycleView
+        final int spacing = getResources().getDimensionPixelSize(R.dimen.gallery_item_offset);
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.addItemDecoration(new ItemOffsetDecoration(spacing));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(mAdapter = new PickerImageAdapter(NoteCreatePageActivity.this, recyclerView));
+
+        recyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                recyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+                int size = getResources().getDimensionPixelSize(R.dimen.gallery_item_size);
+                int width = recyclerView.getMeasuredWidth();
+                int columnCount = width / (size + spacing);
+                recyclerView.setLayoutManager(new GridLayoutManager(NoteCreatePageActivity.this, columnCount));
+
+                uri = mAdapter.getAllURI();
+                return false;
             }
         });
 
-//        ImageButton pic = (ImageButton)findViewById(R.id.picButton);
-//        pic.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
+        ImageButton pic = (ImageButton)findViewById(R.id.picButton);
+        pic.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 //                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 //                intent.setType("image/*");
 //                intent.setAction(Intent.ACTION_GET_CONTENT);
-//        // this line is different here !!
-//        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_MULTIPLE_PICTURE);
-//    }
-//});
+//                // this line is different here !!
+//                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+//                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_MULTIPLE_PICTURE);
+
+                Louvre l = Louvre.init(NoteCreatePageActivity.this)
+                        .setRequestCode(LOUVRE_REQUEST_CODE)
+                        .setMaxSelection(100)
+                        .setMediaTypeFilter(Louvre.IMAGE_TYPE_BMP, Louvre.IMAGE_TYPE_JPEG, Louvre.IMAGE_TYPE_PNG);
+                l.open();
+            }
+        });
 
         Button cancel = (Button) findViewById(R.id.cancelButton);
         Button save = (Button) findViewById(R.id.saveButton);
@@ -115,6 +162,15 @@ public class NoteCreatePageActivity extends AppCompatActivity {
                 confirmCancel();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == LOUVRE_REQUEST_CODE && resultCode == RESULT_OK) {
+            mAdapter.swapData(GalleryActivity.getSelection(data));
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void confirmCancel(){
@@ -144,41 +200,50 @@ public class NoteCreatePageActivity extends AppCompatActivity {
         adb.show();
     }
 
-//    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-//        @Override
-//        public void onClick(DialogInterface dialog, int which) {
-//            switch (which){
-//                case DialogInterface.BUTTON_POSITIVE:
-//                    //Yes button clicked
-//                    break;
-//
-//                case DialogInterface.BUTTON_NEGATIVE:
-//                    //No button clicked
-//                    break;
-//            }
-//        }
-//    };
-//
-//    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//    builder.setMessage("คุณยังไม่ได้ทำการบันทึก คุณแน่ใจหรือว่าต้องการละทิ้งการเปลี่ยนแปลงนี้").setPositiveButton("Yes", dialogClickListener)
-//    .setNegativeButton("No", dialogClickListener).show();
-
-
     private void saveNote() {
-        data.setNote_date(formattedDate);
         data.setNote_title(title.getText().toString());
         data.setNote_desc(desc.getText().toString());
+        int id = repo.getLatestId(db.getReadableDatabase());
 
-        if(!isEdit)
+        if(!isEdit) { //Create
+            data.setNote_savedate(formattedDate);
+            data.setNote_editdate(formattedDate);
             repo.insertData(db.getWritableDatabase(), data);
-        else
+            for(int i=0;i<uri.size();i++) {
+                imageRepo.insertData(db.getWritableDatabase(), new Note_image(id, getBytes(uri.get(i))));
+            }
+        }
+        else { //Edit
+            id = data.getNote_id();
+            data.setNote_editdate(formattedDate);
             repo.updateData(db.getWritableDatabase(), data);
+            for(int i=0;i<uri.size();i++) {
+                imageRepo.insertData(db.getWritableDatabase(), new Note_image(id, getBytes(uri.get(i))));
+            }
+        }
+    }
+
+    // convert from bitmap to byte array
+    public byte[] getBytes(Uri uri) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return stream.toByteArray();
+    }
+
+    // convert from byte array to bitmap
+    public static Bitmap getImage(byte[] image) {
+        return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 
     private void init() {
         date = (TextView) findViewById(R.id.showdate);
         title = (EditText) findViewById(R.id.title);
-        desc = (EditText) findViewById(R.id.date);
+        desc = (EditText) findViewById(R.id.desc);
         Date time = Calendar.getInstance().getTime();
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -190,28 +255,29 @@ public class NoteCreatePageActivity extends AppCompatActivity {
 
         db = DBHelper.getInstance(this);
         repo = new NoteDataRepository();
+        imageRepo = new NoteImageRepository();
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == SELECT_SINGLE_PICTURE) {
-
-                Uri selectedImageUri = data.getData();
-                try {
-                    img.setImageBitmap(new UserPicture(selectedImageUri, getContentResolver()).getBitmap());
-                } catch (Exception e) {
-                    Log.e(NoteCreatePageActivity.class.getSimpleName(), "Failed to load image", e);
-                }
-                // original code
-//                String selectedImagePath = getPath(selectedImageUri);
-//                selectedImagePreview.setImageURI(selectedImageUri);
-            }
-        } else {
-            // report failure
-            Toast.makeText(getApplicationContext(), "Fail to get intent data", Toast.LENGTH_LONG).show();
-            Log.d(NoteCreatePageActivity.class.getSimpleName(), "Failed to get intent data, result code is " + resultCode);
-        }
-    }
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (resultCode == RESULT_OK) {
+//            if (requestCode == SELECT_SINGLE_PICTURE) {
+//
+//                Uri selectedImageUri = data.getData();
+//                try {
+//                    img.setImageBitmap(new UserPicture(selectedImageUri, getContentResolver()).getBitmap());
+//                } catch (Exception e) {
+//                    Log.e(NoteCreatePageActivity.class.getSimpleName(), "Failed to load image", e);
+//                }
+//                // original code
+////                String selectedImagePath = getPath(selectedImageUri);
+////                selectedImagePreview.setImageURI(selectedImageUri);
+//            }
+//        } else {
+//            // report failure
+//            Toast.makeText(getApplicationContext(), "Fail to get intent data", Toast.LENGTH_LONG).show();
+//            Log.d(NoteCreatePageActivity.class.getSimpleName(), "Failed to get intent data, result code is " + resultCode);
+//        }
+//    }
 
     public String getPath(Uri uri) {
 
@@ -264,5 +330,13 @@ public class NoteCreatePageActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         confirmCancel();
+    }
+
+    public  void printLog(String tag, String detail){
+        Log.w(tag, detail);
+    }
+
+    public  void printLToast(String detail, int length){
+        Toast.makeText(this, detail, length).show();
     }
 }
