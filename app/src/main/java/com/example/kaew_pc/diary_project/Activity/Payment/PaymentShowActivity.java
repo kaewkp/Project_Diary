@@ -102,7 +102,6 @@ public class PaymentShowActivity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         Intent intent = new Intent(getApplicationContext(), PaymentMainPageActivity.class);
-        startActivity(intent);
         finish();
     }
 }

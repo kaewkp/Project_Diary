@@ -55,7 +55,6 @@
         <activity
             android:name=".Activity.Payment.PaymentShowActivity"
             android:label="รายการที่ต้องชำระ" />
-
         <activity
             android:name=".Activity.Note.NoteShowDataActivity"
             android:label="......" />
@@ -91,13 +90,15 @@
         <service
             android:name=".Manager.MyService"
             android:enabled="true"
-            android:exported="false"></service>
-        <intent-filter>
-            <action android:name="android.intent.action.BATTERY_LOW"/>
-            <action android:name="android.intent.action.BOOT_COMPLETE"/>
-            <action android:name="android.intent.category.DEFAULT"/>
+            android:exported="false" />
 
+        <intent-filter>
+            <action android:name="android.intent.action.BATTERY_LOW" />
+            <action android:name="android.intent.action.BOOT_COMPLETE" />
+            <action android:name="android.intent.category.DEFAULT" />
         </intent-filter>
+
+        <activity android:name=".Activity.Payment.PaymentShowDummy"></activity>
     </application>
 
 </manifest>

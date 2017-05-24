@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.support.v7.app.NotificationCompat;
 
 import com.example.kaew_pc.diary_project.Activity.Note.NoteCreatePageActivity;
+import com.example.kaew_pc.diary_project.Activity.Payment.PaymentShowDummy;
 import com.example.kaew_pc.diary_project.R;
 
 public class MyReceiver extends BroadcastReceiver {
@@ -23,7 +24,7 @@ public class MyReceiver extends BroadcastReceiver {
 
     public void createNoti(Context context,String msg, String msgText, String msgAlert ){
 
-        PendingIntent notificIntent = PendingIntent.getActivity(context,0, new Intent(context, NoteCreatePageActivity.class),0);
+        PendingIntent notificIntent = PendingIntent.getActivity(context,0, new Intent(context, PaymentShowDummy.class),0);
 
         NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(context)
                 .setSmallIcon(R.mipmap.ic_launcher)
