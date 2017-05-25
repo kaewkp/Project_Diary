@@ -111,9 +111,9 @@ public class CalendarModuleFragment extends Fragment {
         });
     }
     private void setUpCalendarAdapter(){
-        List<Date> dayValueInCells = new ArrayList<Date>();
+        ArrayList<Date> dayValueInCells = new ArrayList<Date>();
         repo = new CalendarDataRepository();
-        List<EventObjects> mEvents = repo.getAllFutureEvents(db.getReadableDatabase());
+        ArrayList<EventObjects> mEvents = repo.getAllFutureEvents(db.getReadableDatabase());
         Calendar mCal = (Calendar)cal.clone();
         mCal.set(Calendar.DAY_OF_MONTH, 1);
         int firstDayOfTheMonth = mCal.get(Calendar.DAY_OF_WEEK) - 1;
@@ -125,7 +125,7 @@ public class CalendarModuleFragment extends Fragment {
         Log.d(TAG, "Number of date " + dayValueInCells.size());
         String sDate = formatter.format(cal.getTime());
         viewHolder.tv_title_month_year.setText(sDate);
-        mAdapter = new CalendarAdapter(context, dayValueInCells, cal, mEvents);
+        mAdapter = new CalendarAdapter(context, dayValueInCells, cal, mEvents == null ? new ArrayList<EventObjects>() : mEvents);
         viewHolder.calendar_grid.setAdapter(mAdapter);
         viewHolder.calendar_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
@@ -133,4 +133,7 @@ public class CalendarModuleFragment extends Fragment {
             }
         });
     }
+
+
+
 }

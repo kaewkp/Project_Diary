@@ -23,12 +23,11 @@ public class Calendar_data {
         public static final String Calendar_id = "Calendar_id";
         public static final String Calendar_title = "Calendar_title";
         public static final String Calendar_desc = "Calendar_desc";
-        public static final String Calendar_time = "";
-        public static final String Calendar_createdTime = "";
+        public static final String Calendar_time = "Calendar_finishedTime";
+        public static final String Calendar_createdTime = "Calendar_createdTime";
         public static final String CalendarType_id = "CalendarType_id"; //FK
         public static final String Noti_id ="Noti_id"; //FK
     }
-
 
     //Default Constructor
     public Calendar_data() {

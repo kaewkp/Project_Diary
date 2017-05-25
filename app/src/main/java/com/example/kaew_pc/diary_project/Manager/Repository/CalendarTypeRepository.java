@@ -17,7 +17,7 @@ public class CalendarTypeRepository {
 
     public static String createTable(){
         String CREATE_CalendarType_TABLE = String.format("CREATE TABLE %s " +
-                        "(%s VARCHAR(3) PRIMARY KEY AUTOINCREMENT NOT NULL, %s VARCHAR(30))",
+                        "(%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, %s VARCHAR(30))",
                 Calendar_type.TABLE,
                 Calendar_type.Column.CalendarType_id,
                 Calendar_type.Column.CalendarType_name);

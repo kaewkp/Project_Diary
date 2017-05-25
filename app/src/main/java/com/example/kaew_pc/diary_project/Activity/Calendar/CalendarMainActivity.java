@@ -91,6 +91,7 @@ public class CalendarMainActivity extends AppCompatActivity{
     private void init(){
         CalendarModuleFragment.Instance().setDbHelper(this);
         db = DBHelper.getInstance(this);
+        final CalendarDataRepository cdr = new CalendarDataRepository();
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_calendar);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,33 +145,27 @@ public class CalendarMainActivity extends AppCompatActivity{
                         Log.w("DateTime",DateTime);
 
                         Calendar_data sCalendar = new Calendar_data();
-                        CalendarDataRepository sCalenRep = new CalendarDataRepository();
-
-                        fdt = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.US);
-
-                        try {
-                            dateD = fdt.parse(DateTime);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            dateS = fdt.parse(createDateTime);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
 
                         sCalendar.setCalendar_title(titleT.getText()+"");
                         sCalendar.setCalendar_desc(descT.getText()+"");
                         sCalendar.setNoti_id(spinNotic.getTextAlignment()+"");
                         sCalendar.setCalendarType_id(spinTypeEvent.getTextAlignment()+"");
-                        sCalendar.setCalendar_createdTime(dateS);
-                        sCalendar.setCalendar_time(dateD);
+                        sCalendar.setCalendar_createdTime(cdr.StringToDateConverter(createDateTime));
+                        sCalendar.setCalendar_time(cdr.StringToDateConverter(DateTime));
 
-                        CalendarDataRepository cdr = new CalendarDataRepository();
                         cdr.insertData(db.getReadableDatabase(),sCalendar);
                         dialog.cancel();
-                        Intent intent = new Intent(getApplicationContext(),CalendarMainActivity.class);
-                        startActivity(intent);
+//                        Intent intent = new Intent(getApplicationContext(),CalendarMainActivity.class);
+//                        startActivity(intent);
+
+                        Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_CALENDAR_FRAGMENT);
+                        if(fragment != null) {
+                            getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .detach(fragment)
+                                    .attach(fragment)
+                                    .commit();
+                        }
                     }
                 });
 
@@ -199,41 +194,6 @@ public class CalendarMainActivity extends AppCompatActivity{
             }
         }
     };
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.main_menu, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.menu_calendar:
-//                toggleCalendar();
-//                return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-//    private void toggleCalendar() {
-//        ArrayList<EventMonth> listEventMonth = ListMyEventView.getSampleData();
-//        CalendarFragment.setTheme(CalendarFragment.THEME_LIGHT);
-//        CalendarFragment.setBackgroundHeaderMonthCalendar(ContextCompat.getColor(CalendarMainActivity.this , R.color.colorThursday));
-//        CalendarFragment.setBackgroundHeaderDayCalendar(ContextCompat.getColor(CalendarMainActivity.this , R.color.colorAccent_second));
-//        CalendarFragment.setTextMonthColor(ContextCompat.getColor(CalendarMainActivity.this , R.color.white));
-//        CalendarFragment.setCircleTodayHighlightColor(ContextCompat.getColor(CalendarMainActivity.this , R.color.colorFriday));
-//        CalendarFragment.setTextDayHeaderColor(ContextCompat.getColor(CalendarMainActivity.this , R.color.colorAccent));
-//
-//        CalendarFragment.setOnClickDayCalendar(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(CalendarMainActivity.this,"EVENT_ID = "+v.getTag(CalendarFragment.KEY_EVENT_ID),Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        CalendarFragment.toggleCalendar(CalendarMainActivity.this , R.id.contentContainer , listEventMonth);
-//    }
 
     private void setEvent(int color){
         Event event = new Event();

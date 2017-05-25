@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +70,6 @@ public class CalendarAdapter extends ArrayAdapter {
             view = inflater.inflate(R.layout.calendar_layout_day, parent, false);
         }
 
-
         viewHolder.highlight = (ImageView) view.findViewById(R.id.img_highlight);
 
         viewHolder.small_highlight = (ImageView) view.findViewById(R.id.view_small_highlight);
@@ -79,8 +79,6 @@ public class CalendarAdapter extends ArrayAdapter {
             viewHolder.highlight.setColorFilter(ContextCompat.getColor(mContext,R.color.theme_dark_background));
             viewHolder.small_highlight.setColorFilter(ContextCompat.getColor(mContext,R.color.theme_dark_background));
         }
-
-
 
         viewHolder.tv_day = (TextView) view.findViewById(R.id.tv_day);
         viewHolder.tv_day.setText(String.valueOf(dayValue));
@@ -93,13 +91,14 @@ public class CalendarAdapter extends ArrayAdapter {
             viewHolder.highlight.setColorFilter(ContextCompat.getColor(mContext,R.color.colorAccent_second));
 
         }
+
         for(int i=0; i< allEvents.size();i++){
             eventCalendar.setTime(allEvents.get(i).getDate());
-
-            if(dayValue == eventCalendar.get(Calendar.DAY_OF_MONTH)
+            Log.d("555",eventCalendar.get(Calendar.DAY_OF_MONTH) + " + " + (eventCalendar.get(Calendar.MONTH) + 1) + " + " +eventCalendar.get(Calendar.YEAR));
+            Log.d("111", dayValue + " + " + displayMonth + " + " +displayYear);
+            if(dayValue >= eventCalendar.get(Calendar.DAY_OF_MONTH)
                 && displayMonth == eventCalendar.get(Calendar.MONTH) + 1
                 && displayYear == eventCalendar.get(Calendar.YEAR)){
-
 
                 viewHolder.small_highlight.setColorFilter(ContextCompat.getColor(mContext,R.color.colorFriday));
             }

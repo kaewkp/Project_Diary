@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.kaew_pc.diary_project.Manager.Database.Calendar_data;
+import com.example.kaew_pc.diary_project.Manager.Database.DebtTime;
 import com.example.kaew_pc.diary_project.Manager.Database.Note_data;
 import com.example.kaew_pc.diary_project.Manager.Database.Payment_data;
 import com.example.kaew_pc.diary_project.Manager.EventObjects;
@@ -17,6 +18,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static com.example.kaew_pc.diary_project.Manager.Database.DebtTime.Column.DebtTime_id;
+import static com.example.kaew_pc.diary_project.R.drawable.list;
+
 /**
  * Created by Administrater on 22/5/2560.
  */
@@ -26,7 +30,7 @@ public class CalendarDataRepository {
 
     public static String createTable(){
         String CREATE_Calendar_data_TABLE = String.format("CREATE TABLE %s " +
-                        "(%s INT PRIMARY KEY AUTOINCREMENT NOT NULL, %s VARCHAR(60), %s TEXT, %s DATETIME, %s DATETIME, %s VARCHAR(3), %s VARCHAR(3))",
+                        "(%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, %s VARCHAR(60), %s TEXT, %s DATETIME, %s DATETIME, %s VARCHAR(3), %s VARCHAR(3))",
                 Calendar_data.TABLE,
                 Calendar_data.Column.Calendar_id,
                 Calendar_data.Column.Calendar_title,
@@ -45,11 +49,11 @@ public class CalendarDataRepository {
 
     public void insertData(SQLiteDatabase db, Calendar_data calendarData){
         ContentValues initialValues = new ContentValues();
-        initialValues.put(Calendar_data.Column.Calendar_id, calendarData.getCalendar_id());
+//        initialValues.put(Calendar_data.Column.Calendar_id, calendarData.getCalendar_id());
         initialValues.put(Calendar_data.Column.Calendar_title, calendarData.getCalendar_title());
         initialValues.put(Calendar_data.Column.Calendar_desc, calendarData.getCalendar_desc());
-        initialValues.put(Calendar_data.Column.Calendar_time, String.valueOf(calendarData.getCalendar_time()));
-        initialValues.put(Calendar_data.Column.Calendar_createdTime, String.valueOf(calendarData.getCalendar_createdTime()));
+        initialValues.put(Calendar_data.Column.Calendar_time, DateToStringConverter(calendarData.getCalendar_time()));
+        initialValues.put(Calendar_data.Column.Calendar_createdTime, DateToStringConverter(calendarData.getCalendar_createdTime()));
         initialValues.put(Calendar_data.Column.CalendarType_id, calendarData.getCalendarType_id());
         initialValues.put(Calendar_data.Column.Noti_id, calendarData.getNoti_id());
 
@@ -63,8 +67,8 @@ public class CalendarDataRepository {
         initialValues.put(Calendar_data.Column.Calendar_id, calendarData.getCalendar_id());
         initialValues.put(Calendar_data.Column.Calendar_title, calendarData.getCalendar_title());
         initialValues.put(Calendar_data.Column.Calendar_desc, calendarData.getCalendar_desc());
-        initialValues.put(Calendar_data.Column.Calendar_time, String.valueOf(calendarData.getCalendar_time()));
-        initialValues.put(Calendar_data.Column.Calendar_createdTime, String.valueOf(calendarData.getCalendar_createdTime()));
+        initialValues.put(Calendar_data.Column.Calendar_time, DateToStringConverter(calendarData.getCalendar_time()));
+        initialValues.put(Calendar_data.Column.Calendar_createdTime, DateToStringConverter(calendarData.getCalendar_createdTime()));
         initialValues.put(Calendar_data.Column.CalendarType_id, calendarData.getCalendarType_id());
         initialValues.put(Calendar_data.Column.Noti_id, calendarData.getNoti_id());
 
@@ -93,14 +97,9 @@ public class CalendarDataRepository {
             while (!cursor.isAfterLast()) {
                 Log.d("Calendar_data", "Calendar_data id : " + cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_id)));
 
-
                 Date time = new Date(), createdTime = new Date();
-                try{
-                    time = getDateFormat().parse(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_time)));
-                    createdTime = getDateFormat().parse(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_createdTime)));
-                }catch (ParseException e){
-                    e.printStackTrace();
-                }
+                time = StringToDateConverter(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_time)));
+                createdTime = StringToDateConverter(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_createdTime)));
 
                 Calendar_data data = new Calendar_data(cursor.getInt(cursor.getColumnIndex(Calendar_data.Column.Calendar_id))
                         , cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_title))
@@ -142,12 +141,8 @@ public class CalendarDataRepository {
             cursor.moveToFirst();
 
             Date time = new Date(), createdTime = new Date();
-            try{
-                time = getDateFormat().parse(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_time)));
-                createdTime = getDateFormat().parse(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_createdTime)));
-            }catch (ParseException e){
-                e.printStackTrace();
-            }
+            time = StringToDateConverter(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_time)));
+            createdTime = StringToDateConverter(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_createdTime)));
 
             data = new Calendar_data();
             data.setCalendar_id(cursor.getInt(cursor.getColumnIndex(Payment_data.Column.Payment_id)));
@@ -188,12 +183,8 @@ public class CalendarDataRepository {
             cursor.moveToFirst();
 
             Date time = new Date(), createdTime = new Date();
-            try{
-                time = getDateFormat().parse(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_time)));
-                createdTime = getDateFormat().parse(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_createdTime)));
-            }catch (ParseException e){
-                e.printStackTrace();
-            }
+            time = StringToDateConverter(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_time)));
+            createdTime = StringToDateConverter(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_createdTime)));
 
             data = new Calendar_data();
             data.setCalendar_id(cursor.getInt(cursor.getColumnIndex(Payment_data.Column.Payment_id)));
@@ -216,23 +207,35 @@ public class CalendarDataRepository {
 
     private SimpleDateFormat getDateFormat() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "dd-MM-yyyy", Locale.US);
+                "dd-MM-yyyy HH:mm", Locale.US);
         return dateFormat;
     }
 
-    private Date convertStringToDate(String dateInString){
-        Date date = null;
+    public Date StringToDateConverter(String value){
+        Date date = new Date();
         try {
-            date = getDateFormat().parse(dateInString);
+            date = getDateFormat().parse(value);
         } catch (ParseException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return date;
     }
 
-    public List<EventObjects> getAllFutureEvents(SQLiteDatabase db){
+    public String DateToStringConverter(Date date){
+        String datetime = "";
+        try {
+            datetime = getDateFormat().format(date);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return datetime;
+    }
+
+    public ArrayList<EventObjects> getAllFutureEvents(SQLiteDatabase db){
         Date dateToday = new Date();
-        List<EventObjects> events = new ArrayList<>();
+        ArrayList<EventObjects> events = new ArrayList<EventObjects>();
         Log.d(TAG + "Get Data By ID", "select * from Calendar order by id where DESC");
 
         Cursor cursor = null;
@@ -253,8 +256,8 @@ public class CalendarDataRepository {
                     String message = cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_title));
                     String startDate = cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_createdTime));
                     //convert start date to date object
-                    Date reminderDate = convertStringToDate(startDate);
-                    if (reminderDate.after(dateToday) || reminderDate.equals(dateToday)) {
+                    Date reminderDate = StringToDateConverter(startDate);
+                    if (reminderDate.before(dateToday) || reminderDate.equals(dateToday)) {
                         events.add(new EventObjects(id, message, reminderDate));
                     }
                 } while (cursor.moveToNext());
