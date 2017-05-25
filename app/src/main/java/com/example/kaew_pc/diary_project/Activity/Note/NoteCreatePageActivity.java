@@ -381,7 +381,6 @@ public class NoteCreatePageActivity extends AppCompatActivity {
             case R.id.action_alert:
 
             case android.R.id.home:
-                confirmCancel();
                 finish();
                 return true;
             default:

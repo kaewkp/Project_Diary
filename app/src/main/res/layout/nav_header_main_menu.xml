@@ -14,9 +14,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:background="?android:attr/actionModePasteDrawable"
         android:layout_width="50dp"
-        android:layout_height="50dp" />
+        android:layout_height="50dp"
+        android:background="@drawable/splash_screen" />
 
     <TextView
         android:text="Tamutami Diary"

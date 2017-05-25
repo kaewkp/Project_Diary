@@ -27,7 +27,7 @@
         </activity>
         <activity
             android:name=".Activity.MainActivity"
-            android:label="@string/title_activity_main"
+            android:label="หน้าหลัก"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.PasswordManagement.SettingPasswordActivity"

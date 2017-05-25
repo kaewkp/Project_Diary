@@ -93,13 +93,13 @@ public class MainActivity extends AppCompatActivity
 
     private void exitDialog(){
         final AlertDialog.Builder exitDialog = new AlertDialog.Builder(this);
-        exitDialog.setTitle("Exit Application");
-        exitDialog.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+        exitDialog.setTitle("ออกจาก Tamutami Diary");
+        exitDialog.setPositiveButton("ยกเลิก", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
             }
         });
-        exitDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+        exitDialog.setNegativeButton("ออก", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 finish();
