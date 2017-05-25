@@ -8,29 +8,32 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/subject"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/mainlist"/>
+
+
+    <!--<ListView-->
+        <!--android:id="@+id/mainlist"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_below="@+id/subject"-->
+        <!--android:headerDividersEnabled="true"/>-->
 
     <TextView
-        android:text="  รายการทั้งหมด"
-        android:layout_width="wrap_content"
         android:id="@+id/subject"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toEndOf="@+id/imageView2"
+        android:background="@android:color/transparent"
+        android:paddingTop="8dp"
+        android:text="  รายการทั้งหมด"
         android:textColor="@android:color/black"
         android:textSize="20dp"
-        android:textStyle="bold"
-        android:layout_alignParentEnd="true"
-        android:background="@android:color/transparent"
-        android:layout_toEndOf="@+id/imageView2"
-        android:layout_alignBottom="@+id/imageView2"
-        android:layout_height="30dp"
-        android:paddingTop="8dp"
-        android:layout_marginLeft="5dp" />
+        android:textStyle="bold" />
 
     <include
         layout="@layout/app_bar_main"
