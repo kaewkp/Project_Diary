@@ -288,10 +288,10 @@ public class NoteMainPageActivity extends AppCompatActivity implements SearchVie
                 sortID = 1;
                 loadNoteList(1);
                 return true;
-            case R.id.sortAlert:
-                sortID = 2;
-                loadNoteList(2);
-                return true;
+//            case R.id.sortAlert:
+//                sortID = 2;
+//                loadNoteList(2);
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
