@@ -23,7 +23,6 @@ public class Calendar_data {
         public static final String Calendar_id = "Calendar_id";
         public static final String Calendar_title = "Calendar_title";
         public static final String Calendar_desc = "Calendar_desc";
-        public static final String Calendar_time = "Calendar_finishedTime";
         public static final String Calendar_createdTime = "Calendar_createdTime";
         public static final String CalendarType_id = "CalendarType_id"; //FK
         public static final String Noti_id ="Noti_id"; //FK
@@ -35,13 +34,12 @@ public class Calendar_data {
 
     //Constructor
     public Calendar_data(int Calendar_id, String Calendar_title
-                         , String Calendar_desc, Date Calendar_time
+                         , String Calendar_desc
                          , Date Calendar_createdTime, String CalendarType_id
                          , String Noti_id) {
         this.Calendar_id = Calendar_id;
         this.Calendar_title = Calendar_title;
         this.Calendar_desc = Calendar_desc;
-        this.Calendar_time = Calendar_time;
         this.Calendar_createdTime = Calendar_createdTime;
         this.CalendarType_id = CalendarType_id;
         this.Noti_id = Noti_id;
@@ -59,10 +57,6 @@ public class Calendar_data {
 
     public String getCalendar_desc() {
         return Calendar_desc;
-    }
-
-    public Date getCalendar_time() {
-        return Calendar_time;
     }
 
     public Date getCalendar_createdTime() {
@@ -87,10 +81,6 @@ public class Calendar_data {
 
     public void setCalendar_desc(String Calendar_desc) {
         this.Calendar_desc = Calendar_desc;
-    }
-
-    public void setCalendar_time(Date Calendar_time) {
-        this.Calendar_time = Calendar_time;
     }
 
     public void setCalendar_createdTime(Date Calendar_createdTime) {

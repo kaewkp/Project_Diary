@@ -75,9 +75,9 @@ public class CalendarAdapter extends ArrayAdapter {
         viewHolder.small_highlight = (ImageView) view.findViewById(R.id.view_small_highlight);
 
         if(!(displayMonth == currentMonth && displayYear == currentYear)){
-            view.setBackgroundColor(ContextCompat.getColor(mContext, R.color.theme_dark_background));
-            viewHolder.highlight.setColorFilter(ContextCompat.getColor(mContext,R.color.theme_dark_background));
-            viewHolder.small_highlight.setColorFilter(ContextCompat.getColor(mContext,R.color.theme_dark_background));
+            view.setBackgroundColor(Color.parseColor("#ffcdd5"));
+            viewHolder.highlight.setColorFilter(Color.parseColor("#ffcdd5"));
+            viewHolder.small_highlight.setColorFilter(Color.parseColor("#ffcdd5"));
         }
 
         viewHolder.tv_day = (TextView) view.findViewById(R.id.tv_day);

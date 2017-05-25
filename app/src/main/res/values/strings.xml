@@ -20,12 +20,11 @@
     </string-array>
 
     <string-array name="time_notic">
+        <item>ล่วงหน้า 1 วัน</item>
+        <item>ล่วงหน้า 3 วัน</item>
         <item>ล่วงหน้า 5 วัน</item>
         <item>ล่วงหน้า 1 สัปดาห์</item>
         <item>ล่วงหน้า 2 สัปดาห์</item>
-        <item>ล่วงหน้า 3 สัปดาห์</item>
-        <item>ล่วงหน้า 1 เดือน</item>
-        <item>ตามเวลานัด</item>
     </string-array>
 
     <string-array name="ประเภทค่าใช้จ่าย">

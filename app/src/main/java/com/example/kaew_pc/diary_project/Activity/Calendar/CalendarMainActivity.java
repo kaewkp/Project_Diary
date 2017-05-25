@@ -55,7 +55,7 @@ public class CalendarMainActivity extends AppCompatActivity{
     public FloatingActionButton addButton;
     private Spinner spinTypeEvent, spinNotic;
     private ImageButton doneEvent , cancelEvent ;
-    private Button startDatePicker, startTimePicker, endDatePicker, endTimePicker;
+    private Button startDatePicker, startTimePicker;
     protected int mYear, mMonth, mDay, mHour, mMinute;
     private String txtDate, txtTime;
     private String startDateTime, endDateTime;
@@ -104,8 +104,6 @@ public class CalendarMainActivity extends AppCompatActivity{
 
                 startDatePicker = (Button) dialog.findViewById(R.id.start_date);
                 startTimePicker = (Button) dialog.findViewById(R.id.start_time);
-                endDatePicker = (Button) dialog.findViewById(R.id.end_date);
-                endTimePicker = (Button) dialog.findViewById(R.id.end_time);
                 spinTypeEvent = (Spinner) dialog.findViewById(R.id.type_event);
                 spinNotic = (Spinner) dialog.findViewById(R.id.time_notic);
                 doneEvent = (ImageButton) dialog.findViewById(R.id.calendar_done);
@@ -132,17 +130,12 @@ public class CalendarMainActivity extends AppCompatActivity{
                     public void onClick(View v) {
                         Log.w("startDatePicker",startDatePicker.getText()+"");
                         Log.w("startTimePicker",startTimePicker.getText()+"");
-                        Log.w("endDatePicker",endDatePicker.getText()+"");
-                        Log.w("endTimePicker",endTimePicker.getText()+"");
                         Log.w("spinTypeEvent",spinTypeEvent.getTextAlignment()+"");
                         Log.w("spinNotic",spinNotic.getTextAlignment()+"");
                         String createDateTime = startDatePicker.getText()
                                 +" "+startTimePicker.getText();
-                        String DateTime = endDatePicker.getText()
-                                +" "+endTimePicker.getText();
 
                         Log.w("createDateTime",createDateTime);
-                        Log.w("DateTime",DateTime);
 
                         Calendar_data sCalendar = new Calendar_data();
 
@@ -151,7 +144,6 @@ public class CalendarMainActivity extends AppCompatActivity{
                         sCalendar.setNoti_id(spinNotic.getTextAlignment()+"");
                         sCalendar.setCalendarType_id(spinTypeEvent.getTextAlignment()+"");
                         sCalendar.setCalendar_createdTime(cdr.StringToDateConverter(createDateTime));
-                        sCalendar.setCalendar_time(cdr.StringToDateConverter(DateTime));
 
                         cdr.insertData(db.getReadableDatabase(),sCalendar);
                         dialog.cancel();
@@ -225,30 +217,30 @@ public class CalendarMainActivity extends AppCompatActivity{
                     }, mYear, mMonth, mDay);
             datePickerDialog.show();
         }
-        else if(view.getId() == R.id.end_date){
-            final Calendar c = Calendar.getInstance();
-            mYear = c.get(Calendar.YEAR);
-            mMonth = c.get(Calendar.MONTH);
-            mDay = c.get(Calendar.DAY_OF_MONTH);
-
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                    new DatePickerDialog.OnDateSetListener() {
-
-                        @Override
-                        public void onDateSet(DatePicker view, int year,
-                                              int monthOfYear, int dayOfMonth) {
-                            String dayS = "";
-                            String monthS = "";
-                            dayS = ((dayOfMonth>10)? ""+dayOfMonth : "0"+dayOfMonth);
-                            monthS = ((monthOfYear+1>10)? ""+(monthOfYear+1) : "0"+(monthOfYear));
-                            txtDate = dayS + "-" + monthS + "-" + year;
-                            endDatePicker.setText(txtDate);
-                        }
-                    }, mYear, mMonth, mDay);
-
-            datePickerDialog.show();
-        }
+//        else if(view.getId() == R.id.end_date){
+//            final Calendar c = Calendar.getInstance();
+//            mYear = c.get(Calendar.YEAR);
+//            mMonth = c.get(Calendar.MONTH);
+//            mDay = c.get(Calendar.DAY_OF_MONTH);
+//
+//
+//            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+//                    new DatePickerDialog.OnDateSetListener() {
+//
+//                        @Override
+//                        public void onDateSet(DatePicker view, int year,
+//                                              int monthOfYear, int dayOfMonth) {
+//                            String dayS = "";
+//                            String monthS = "";
+//                            dayS = ((dayOfMonth>10)? ""+dayOfMonth : "0"+dayOfMonth);
+//                            monthS = ((monthOfYear+1>10)? ""+(monthOfYear+1) : "0"+(monthOfYear));
+//                            txtDate = dayS + "-" + monthS + "-" + year;
+//                            endDatePicker.setText(txtDate);
+//                        }
+//                    }, mYear, mMonth, mDay);
+//
+//            datePickerDialog.show();
+//        }
 
     }
 
@@ -276,29 +268,29 @@ public class CalendarMainActivity extends AppCompatActivity{
 
             timePickerDialog.show();
         }
-        else if(view.getId() == R.id.end_time){
-            final Calendar c = Calendar.getInstance();
-            mHour = c.get(Calendar.HOUR_OF_DAY);
-            mMinute = c.get(Calendar.MINUTE);
-
-            // Launch Time Picker Dialog
-            TimePickerDialog timePickerDialog = new TimePickerDialog(this,
-                    new TimePickerDialog.OnTimeSetListener() {
-
-                        @Override
-                        public void onTimeSet(TimePicker view, int hourOfDay,
-                                              int minute) {
-                            String hourS = "";
-                            String minS = "";
-                            hourS = ((hourOfDay>10)? ""+hourOfDay : "0"+hourOfDay);
-                            minS = ((minute>10)? ""+(minute) : "0"+(minute));
-                            txtTime = hourS + ":" + minS;
-                            endTimePicker.setText(txtTime);
-                        }
-                    }, mHour, mMinute, false);
-
-            timePickerDialog.show();
-        }
+//        else if(view.getId() == R.id.end_time){
+//            final Calendar c = Calendar.getInstance();
+//            mHour = c.get(Calendar.HOUR_OF_DAY);
+//            mMinute = c.get(Calendar.MINUTE);
+//
+//            // Launch Time Picker Dialog
+//            TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+//                    new TimePickerDialog.OnTimeSetListener() {
+//
+//                        @Override
+//                        public void onTimeSet(TimePicker view, int hourOfDay,
+//                                              int minute) {
+//                            String hourS = "";
+//                            String minS = "";
+//                            hourS = ((hourOfDay>10)? ""+hourOfDay : "0"+hourOfDay);
+//                            minS = ((minute>10)? ""+(minute) : "0"+(minute));
+//                            txtTime = hourS + ":" + minS;
+//                            endTimePicker.setText(txtTime);
+//                        }
+//                    }, mHour, mMinute, false);
+//
+//            timePickerDialog.show();
+//        }
     }
 
     public void setDateTimeNow(){
@@ -316,8 +308,6 @@ public class CalendarMainActivity extends AppCompatActivity{
         txtDate = dayS + "-" + monthS + "-" + yearN;
         txtTime = hourS + ":" + minS;
         startDatePicker.setText(txtDate);
-        endDatePicker.setText(txtDate);
         startTimePicker.setText(txtTime);
-        endTimePicker.setText(txtTime);
     }
 }

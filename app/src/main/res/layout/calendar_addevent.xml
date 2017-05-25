@@ -83,37 +83,6 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:text="สิ้นสุด"
-        android:textColor="@color/colorPrimaryBackground"
-        android:layout_marginLeft="@dimen/calendar_dialog_padding"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/calendar_dialog_padding"
-        android:layout_marginRight="@dimen/calendar_dialog_padding">
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/end_date"
-            android:text="@string/pick_date"
-            android:onClick="clickDate"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:id="@+id/end_time"
-            android:text="@string/pick_time"
-            android:onClick="clickTime"/>
-
-    </LinearLayout>
-
     <Spinner
         android:id="@+id/time_notic"
         android:layout_width="match_parent"

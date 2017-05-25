@@ -30,12 +30,11 @@ public class CalendarDataRepository {
 
     public static String createTable(){
         String CREATE_Calendar_data_TABLE = String.format("CREATE TABLE %s " +
-                        "(%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, %s VARCHAR(60), %s TEXT, %s DATETIME, %s DATETIME, %s VARCHAR(3), %s VARCHAR(3))",
+                        "(%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, %s VARCHAR(60), %s TEXT, %s DATETIME, %s VARCHAR(3), %s VARCHAR(3))",
                 Calendar_data.TABLE,
                 Calendar_data.Column.Calendar_id,
                 Calendar_data.Column.Calendar_title,
                 Calendar_data.Column.Calendar_desc,
-                Calendar_data.Column.Calendar_time,
                 Calendar_data.Column.Calendar_createdTime,
                 Calendar_data.Column.CalendarType_id,
                 Calendar_data.Column.Noti_id);
@@ -52,7 +51,6 @@ public class CalendarDataRepository {
 //        initialValues.put(Calendar_data.Column.Calendar_id, calendarData.getCalendar_id());
         initialValues.put(Calendar_data.Column.Calendar_title, calendarData.getCalendar_title());
         initialValues.put(Calendar_data.Column.Calendar_desc, calendarData.getCalendar_desc());
-        initialValues.put(Calendar_data.Column.Calendar_time, DateToStringConverter(calendarData.getCalendar_time()));
         initialValues.put(Calendar_data.Column.Calendar_createdTime, DateToStringConverter(calendarData.getCalendar_createdTime()));
         initialValues.put(Calendar_data.Column.CalendarType_id, calendarData.getCalendarType_id());
         initialValues.put(Calendar_data.Column.Noti_id, calendarData.getNoti_id());
@@ -67,7 +65,6 @@ public class CalendarDataRepository {
         initialValues.put(Calendar_data.Column.Calendar_id, calendarData.getCalendar_id());
         initialValues.put(Calendar_data.Column.Calendar_title, calendarData.getCalendar_title());
         initialValues.put(Calendar_data.Column.Calendar_desc, calendarData.getCalendar_desc());
-        initialValues.put(Calendar_data.Column.Calendar_time, DateToStringConverter(calendarData.getCalendar_time()));
         initialValues.put(Calendar_data.Column.Calendar_createdTime, DateToStringConverter(calendarData.getCalendar_createdTime()));
         initialValues.put(Calendar_data.Column.CalendarType_id, calendarData.getCalendarType_id());
         initialValues.put(Calendar_data.Column.Noti_id, calendarData.getNoti_id());
@@ -98,13 +95,11 @@ public class CalendarDataRepository {
                 Log.d("Calendar_data", "Calendar_data id : " + cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_id)));
 
                 Date time = new Date(), createdTime = new Date();
-                time = StringToDateConverter(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_time)));
                 createdTime = StringToDateConverter(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_createdTime)));
 
                 Calendar_data data = new Calendar_data(cursor.getInt(cursor.getColumnIndex(Calendar_data.Column.Calendar_id))
                         , cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_title))
                         , cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_desc))
-                        , time
                         , createdTime
                         , cursor.getString(cursor.getColumnIndex(Calendar_data.Column.CalendarType_id))
                         , cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Noti_id)));
@@ -141,17 +136,15 @@ public class CalendarDataRepository {
             cursor.moveToFirst();
 
             Date time = new Date(), createdTime = new Date();
-            time = StringToDateConverter(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_time)));
             createdTime = StringToDateConverter(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_createdTime)));
 
             data = new Calendar_data();
-            data.setCalendar_id(cursor.getInt(cursor.getColumnIndex(Payment_data.Column.Payment_id)));
-            data.setCalendar_title(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_title)));
-            data.setCalendar_desc(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_desc)));
-            data.setCalendar_time(time);
+            data.setCalendar_id(cursor.getInt(cursor.getColumnIndex(Calendar_data.Column.Calendar_id)));
+            data.setCalendar_title(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_title)));
+            data.setCalendar_desc(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_desc)));
             data.setCalendar_createdTime(createdTime);
-            data.setCalendarType_id(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_endDate)));
-            data.setNoti_id(cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id)));
+            data.setCalendarType_id(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.CalendarType_id)));
+            data.setNoti_id(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Noti_id)));
         }
         catch (Exception ex){
             Log.e(TAG + "Get Data By ID", "Exception : " + ex.toString());
@@ -182,18 +175,16 @@ public class CalendarDataRepository {
             }
             cursor.moveToFirst();
 
-            Date time = new Date(), createdTime = new Date();
-            time = StringToDateConverter(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_time)));
+            Date createdTime = new Date();
             createdTime = StringToDateConverter(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_createdTime)));
 
             data = new Calendar_data();
-            data.setCalendar_id(cursor.getInt(cursor.getColumnIndex(Payment_data.Column.Payment_id)));
-            data.setCalendar_title(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_title)));
-            data.setCalendar_desc(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_desc)));
-            data.setCalendar_time(time);
+            data.setCalendar_id(cursor.getInt(cursor.getColumnIndex(Calendar_data.Column.Calendar_id)));
+            data.setCalendar_title(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_title)));
+            data.setCalendar_desc(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_desc)));
             data.setCalendar_createdTime(createdTime);
-            data.setCalendarType_id(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_endDate)));
-            data.setNoti_id(cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id)));
+            data.setCalendarType_id(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.CalendarType_id)));
+            data.setNoti_id(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Noti_id)));
         }
         catch (Exception ex){
             Log.e(TAG + "Get Data By ID", "Exception : " + ex.toString());

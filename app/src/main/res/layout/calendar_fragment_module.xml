@@ -12,7 +12,7 @@
         android:id="@+id/linearLayout_month_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#364646"
+        android:background="#FFB7C5"
         android:orientation="horizontal"
         android:paddingBottom="6dp"
         android:paddingLeft="26dp"
@@ -134,14 +134,4 @@
         android:layout_height="wrap_content"
         android:numColumns="7" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/line_shadow" />
-    <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:background="#12546464"/>-->
 </LinearLayout>
