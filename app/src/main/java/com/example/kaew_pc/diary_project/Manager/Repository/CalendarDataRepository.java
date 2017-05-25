@@ -8,11 +8,13 @@ import android.util.Log;
 import com.example.kaew_pc.diary_project.Manager.Database.Calendar_data;
 import com.example.kaew_pc.diary_project.Manager.Database.Note_data;
 import com.example.kaew_pc.diary_project.Manager.Database.Payment_data;
+import com.example.kaew_pc.diary_project.Manager.EventObjects;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -216,6 +218,55 @@ public class CalendarDataRepository {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "dd-MM-yyyy", Locale.US);
         return dateFormat;
+    }
+
+    private Date convertStringToDate(String dateInString){
+        Date date = null;
+        try {
+            date = getDateFormat().parse(dateInString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    public List<EventObjects> getAllFutureEvents(SQLiteDatabase db){
+        Date dateToday = new Date();
+        List<EventObjects> events = new ArrayList<>();
+        Log.d(TAG + "Get Data By ID", "select * from Calendar order by id where DESC");
+
+        Cursor cursor = null;
+        try {
+            cursor = db.query(Calendar_data.TABLE,   //table
+                    null,                   //column
+                    null,       //where
+                    null,       //where arg
+                    null, null, null);      //groupby, having, orderby
+
+            if (cursor.getCount() < 1) {
+                return null;
+            }
+
+            if (cursor.moveToFirst()) {
+                do {
+                    int id = cursor.getInt(0);
+                    String message = cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_title));
+                    String startDate = cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_createdTime));
+                    //convert start date to date object
+                    Date reminderDate = convertStringToDate(startDate);
+                    if (reminderDate.after(dateToday) || reminderDate.equals(dateToday)) {
+                        events.add(new EventObjects(id, message, reminderDate));
+                    }
+                } while (cursor.moveToNext());
+            }
+        }catch (Exception ex){
+            Log.e(TAG + "Get Data By ID", "Exception : " + ex.toString());
+        }
+        finally {
+            if(cursor != null)
+                cursor.close();
+        }
+        return events;
     }
 
     private void insertDateTime(){
