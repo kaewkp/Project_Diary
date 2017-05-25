@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.kaew_pc.diary_project.Manager.Database.Note_data;
 import com.example.kaew_pc.diary_project.Manager.Database.Payment_data;
 import com.example.kaew_pc.diary_project.R;
 
@@ -19,6 +20,7 @@ public class MainCustomAdapter extends ArrayAdapter<Payment_data> {
 
     private Activity mContext;
     private ArrayList<Payment_data> data;
+    private ArrayList<Note_data> datanote;
     private View row;
 
     public MainCustomAdapter(Activity mContext, ArrayList<Payment_data> data) {
@@ -41,18 +43,27 @@ public class MainCustomAdapter extends ArrayAdapter<Payment_data> {
             LayoutInflater inflator = mContext.getLayoutInflater();
             view = inflator.inflate(R.layout.listview_main, null);
             viewHolder = new PaymentCustomAdapter.ViewHolder();
+
             viewHolder.title = (TextView) view.findViewById(R.id.title);
+
             viewHolder.date = (TextView) view.findViewById(R.id.date);
+
 
             view.setTag(viewHolder);
             view.setTag(R.id.title, viewHolder.title);
             view.setTag(R.id.date, viewHolder.date);
+
+
+
         } else {
             viewHolder = (PaymentCustomAdapter.ViewHolder) view.getTag();
+
         }
 
         viewHolder.title.setText(data.get(position).getPayment_title());
         viewHolder.date.setText(data.get(position).getPayment_date());
+//        viewHolder1.title.setText(data.get(position).getNote_title());
+//        viewHolder1.date.setText(data.get(position).getNote_date());
 
         return view;
     }

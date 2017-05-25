@@ -27,26 +27,33 @@ import android.provider.MediaStore.Images.Media;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
+import com.example.kaew_pc.diary_project.Activity.Note.NoteCreatePageActivity;
 import com.example.kaew_pc.diary_project.Activity.Note.NoteMainPageActivity;
 import com.example.kaew_pc.diary_project.Activity.PasswordManagement.SettingPasswordActivity;
 import com.example.kaew_pc.diary_project.Activity.Payment.PaymentActivity;
 import com.example.kaew_pc.diary_project.Activity.Payment.PaymentMainPageActivity;
 import com.example.kaew_pc.diary_project.Manager.Adapter.MainCustomAdapter;
+import com.example.kaew_pc.diary_project.Manager.Adapter.NoteCustomAdapter;
 import com.example.kaew_pc.diary_project.Manager.Adapter.PaymentCustomAdapter;
 import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
+import com.example.kaew_pc.diary_project.Manager.Database.Note_data;
 import com.example.kaew_pc.diary_project.Manager.Database.Payment_data;
+import com.example.kaew_pc.diary_project.Manager.Repository.NoteDataRepository;
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentDataRepository;
 import com.example.kaew_pc.diary_project.R;
+
+import static android.R.attr.data;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private String[] sortlist;
     private DBHelper db;
-    private ListView list;
+    private ListView listpayment, listnote, lisycalendar;
     private Boolean isResume = false;
 
     private PaymentDataRepository paymentObj;
+    private NoteDataRepository notedataRepo;
 
     public static final int REQUEST_GALLERY = 1;
     Bitmap bitmap;
@@ -85,13 +92,15 @@ public class MainActivity extends AppCompatActivity
 
         init();
         loadPaymentList();
+        loadNotetList();
     }
 
 
     private void init() {
         db = DBHelper.getInstance(this);
         paymentObj = new PaymentDataRepository();
-        list = (ListView) findViewById(R.id.mainlist);
+        listpayment = (ListView) findViewById(R.id.listview2);
+        listnote = (ListView) findViewById(R.id.listview);
 
         sortlist = getResources().getStringArray(R.array.Sort);
     }
@@ -102,9 +111,9 @@ public class MainActivity extends AppCompatActivity
                 paymentObj.getData(db.getReadableDatabase()) :
                 new PaymentDataRepository().getData(db.getReadableDatabase());
 
-        MainCustomAdapter adapter = new MainCustomAdapter(MainActivity.this, data);
-        list.setAdapter(adapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        PaymentCustomAdapter adapter = new PaymentCustomAdapter(MainActivity.this, data);
+        listpayment.setAdapter(adapter);
+        listpayment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 isResume = true;
@@ -115,12 +124,31 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    private void loadNotetList() {
+        final ArrayList<Note_data> datanote = notedataRepo != null ?
+                notedataRepo.getData(db.getReadableDatabase()) :
+                new NoteDataRepository().getData(db.getReadableDatabase());
+
+        NoteCustomAdapter adapter = new NoteCustomAdapter(MainActivity.this, datanote);
+        listnote.setAdapter(adapter);
+        listnote.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                isResume = true;
+                Intent intent = new Intent(getApplicationContext(), NoteCreatePageActivity.class);
+                intent.putExtra("id", datanote.get(position).getNote_id());
+                startActivity(intent);
+            }
+        });
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(isResume)
+        if(isResume){
             loadPaymentList();
+            loadNotetList();
+        }
         isResume = false;
     }
 

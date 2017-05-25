@@ -1,4 +1,4 @@
-package com.example.kaew_pc.diary_project.Manager.Repository;
+package com.example.kaew_pc.diary_project.Manager;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,6 +11,8 @@ import com.example.kaew_pc.diary_project.Activity.Note.NoteCreatePageActivity;
 import com.example.kaew_pc.diary_project.Activity.Payment.PaymentShowDummy;
 import com.example.kaew_pc.diary_project.R;
 
+import java.util.Random;
+
 /**
  * Created by chommchome on 25/5/2560.
  */
@@ -22,7 +24,7 @@ public class NoteReceiver extends BroadcastReceiver {
 //        Intent i = new Intent(context, NoteCreatePageActivity.class);
 //        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //        context.startActivity(i);
-        createNoteNotify(context, "Tamutami Diary", "ค่าน้ำ", "ครบปีแล้ว เย้!!!");
+        createNoteNotify(context, "Tamutami Diary", "ไปเที่ยว", "ครบปีแล้ว เย้!!!");
 
     }
 
@@ -45,7 +47,7 @@ public class NoteReceiver extends BroadcastReceiver {
         NotificationManager mNotificationManager =
                 (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        mNotificationManager.notify(1, mBuilder.build());
+        mNotificationManager.notify(2, mBuilder.build());
 
 
     }

@@ -87,6 +87,11 @@
             android:enabled="true"
             android:exported="false" />
 
+        <receiver
+            android:name=".Manager.NoteReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
         <service
             android:name=".Manager.MyService"
             android:enabled="true"

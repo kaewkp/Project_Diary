@@ -1,5 +1,8 @@
 package com.example.kaew_pc.diary_project.Activity.Note;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,6 +21,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.kaew_pc.diary_project.Activity.Payment.PaymentActivity;
+import com.example.kaew_pc.diary_project.Manager.MyReceiver;
+import com.example.kaew_pc.diary_project.Manager.NoteReceiver;
 import com.example.kaew_pc.diary_project.Manager.UserPicture;
 import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Manager.Database.Note_data;
@@ -102,6 +108,11 @@ public class NoteCreatePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveNote();
+                Intent intent_service = new Intent(NoteCreatePageActivity.this, NoteReceiver.class);
+                PendingIntent pi = PendingIntent.getBroadcast(NoteCreatePageActivity.this, 0, intent_service, PendingIntent.FLAG_UPDATE_CURRENT);
+                AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+(10*1000), pi);
+
                 Toast.makeText(NoteCreatePageActivity.this, "บันทึกแล้ว ",
                         Toast.LENGTH_LONG).show();
                 finish();

@@ -11,6 +11,8 @@ import com.example.kaew_pc.diary_project.Activity.Note.NoteCreatePageActivity;
 import com.example.kaew_pc.diary_project.Activity.Payment.PaymentShowDummy;
 import com.example.kaew_pc.diary_project.R;
 
+import java.util.Random;
+
 public class MyReceiver extends BroadcastReceiver {
 
     @Override
