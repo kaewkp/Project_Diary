@@ -167,36 +167,39 @@
             android:layout_centerHorizontal="true" />
 
         <Button
-            android:text="เวลา"
+            android:id="@+id/timeshow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#FF9999"
-            android:textColor="@android:color/white"
-            android:id="@+id/timeshow"
             android:layout_above="@+id/button"
-            android:layout_toEndOf="@+id/calendar" />
+            android:layout_toEndOf="@+id/calendar"
+            android:background="#FF9999"
+            android:text="เวลา"
+            android:textColor="@android:color/white"
+            android:visibility="invisible" />
 
         <Button
-            android:text="ระยะเวลา"
+            android:id="@+id/showdis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#FF9999"
-            android:textColor="@android:color/white"
-            android:id="@+id/showdis"
-            android:layout_marginTop="14dp"
+            android:layout_alignEnd="@+id/remind"
             android:layout_below="@+id/textView13"
-            android:layout_alignEnd="@+id/remind" />
+            android:layout_marginTop="14dp"
+            android:background="#FF9999"
+            android:text="ระยะเวลา"
+            android:textColor="@android:color/white"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/button"
+            android:layout_below="@+id/calendar"
+            android:layout_marginTop="17dp"
             android:text="การแจ้งเตือน"
             android:textColor="#FF9999"
             android:textSize="18sp"
-            android:layout_below="@+id/calendar"
-            android:layout_alignStart="@+id/button"
-            android:layout_marginTop="17dp" />
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/timedetail"
@@ -205,16 +208,18 @@
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/calendar"
             android:layout_marginTop="16dp"
-            android:text="TextView" />
+            android:text="TextView"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/remind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/button"
+            android:layout_alignParentStart="true"
             android:text="Remind_detail"
             android:textSize="18sp"
-            android:layout_above="@+id/button"
-            android:layout_alignParentStart="true" />
+            android:visibility="invisible" />
 
 
     </RelativeLayout>

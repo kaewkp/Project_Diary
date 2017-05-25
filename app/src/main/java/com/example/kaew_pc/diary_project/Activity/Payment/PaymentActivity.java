@@ -158,6 +158,8 @@ public class PaymentActivity extends AppCompatActivity {
         descpayment = (EditText) findViewById(R.id.descpayment);
         paymentTypeSpinner = (Spinner) findViewById(R.id.typepayment);
         timesw = (TextView) findViewById(R.id.timedetail);
+
+        timesw.setVisibility(View.INVISIBLE);
         tvTimer = (TextView) findViewById(R.id.remind);
         tvTimer.setVisibility(View.INVISIBLE);
 
@@ -442,7 +444,7 @@ public class PaymentActivity extends AppCompatActivity {
                 showDialog(dialogTm);
             }
         });
-        timesw.setVisibility(View.VISIBLE);
+        timesw.setVisibility(View.INVISIBLE);
         timeButton.setVisibility(View.INVISIBLE);
 
     }
@@ -453,7 +455,7 @@ public class PaymentActivity extends AppCompatActivity {
             hh = hour;
             mm = minute;
             timeChoose = String.valueOf(hh) + " : " + String.valueOf(mm);
-            timesw.setVisibility(View.VISIBLE);
+            timesw.setVisibility(View.INVISIBLE);0y
             timesw.setText("เวลา : " + timeChoose);
 
         }
