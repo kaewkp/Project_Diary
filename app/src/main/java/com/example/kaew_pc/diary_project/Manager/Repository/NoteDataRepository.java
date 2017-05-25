@@ -76,7 +76,7 @@ public class NoteDataRepository {
     }
 
     public ArrayList<Note_data> getData(SQLiteDatabase db){
-        Log.d(TAG + "Get Data", "select * from Note_data");
+        Log.d(TAG + " Get Data", "select * from Note_data");
         ArrayList<Note_data> list = new ArrayList<Note_data>();
 
         Cursor cursor = null;
@@ -93,7 +93,7 @@ public class NoteDataRepository {
             }
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                Log.d("Search!!!!!!", "Note id : " + cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_id)));
+                Log.wtf(TAG + " Search!!!!!!", "Note id : " + cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_id)));
 
                 Note_data data = new Note_data(cursor.getInt(cursor.getColumnIndex(Note_data.Column.Note_id))
                         , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_title))
@@ -165,12 +165,12 @@ public class NoteDataRepository {
     public int getLatestId(SQLiteDatabase db){
         Log.d(TAG + "Get Latest ID", "Get ID For save image");
 
-        int id = -1;
+        int id = 0;
 
         Cursor cursor = null;
         try {
             cursor = db.query(Note_data.TABLE,
-                    new String[] { Note_data.Column.Note_id },
+                    null,
                     null,
                     null,
                     null, null, null); //(table, column, where, where arg, groupby, having, orderby)
@@ -178,7 +178,7 @@ public class NoteDataRepository {
             if (cursor.getCount() < 1) {
                 return id;
             }
-            cursor.moveToFirst();
+            cursor.moveToLast();
             while (!cursor.isAfterLast()) {
                 id = cursor.getInt(0);
                 cursor.moveToNext();
@@ -191,7 +191,7 @@ public class NoteDataRepository {
             if(cursor != null)
                 cursor.close();
         }
-        Log.d(TAG + "Get Id", "Id:"+ id + " Cursor size:" +cursor.getCount());
+        Log.e(TAG + "Latest Id", "Id : "+ id );
         return id;
     }
 }

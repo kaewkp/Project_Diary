@@ -204,15 +204,6 @@
             android:background="@drawable/attachment"
             android:visibility="invisible" />
 
-        <ImageView
-            android:id="@+id/picShow"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_alignEnd="@+id/desc"
-            android:layout_alignStart="@+id/desc"
-            android:layout_below="@+id/desc"
-            android:layout_above="@+id/saveButton" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

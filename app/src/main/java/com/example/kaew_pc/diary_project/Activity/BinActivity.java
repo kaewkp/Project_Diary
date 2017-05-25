@@ -1,6 +1,7 @@
 package com.example.kaew_pc.diary_project.Activity;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
@@ -29,6 +30,7 @@ public class BinActivity extends AppCompatActivity {
     private ListView list;
     private boolean isResume = false;
     private ArrayList<Note_data> data;
+    private SwipeRefreshLayout sw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,15 @@ public class BinActivity extends AppCompatActivity {
         db = DBHelper.getInstance(this);
         repo = new BinRepository();
         list = (ListView) findViewById(R.id.listview);
+
+        sw = (SwipeRefreshLayout) findViewById(R.id.srl);
+        sw.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadBinList();
+                sw.setRefreshing(false);
+            }
+        });
     }
 
     @Override
@@ -67,7 +78,10 @@ public class BinActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 return true;
-
+            case R.id.empty:
+                repo.deleteData(db.getWritableDatabase());
+                loadBinList();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
 
@@ -108,11 +122,12 @@ public class BinActivity extends AppCompatActivity {
 
     private void onSelectChoice(String selected, int id) {
         if(selected.equals("Delete")){
-            repo.deleteData(db.getWritableDatabase(), id);
+            repo.deleteDataById(db.getWritableDatabase(), id);
         }
         else{
             repo.restoreData(db.getWritableDatabase(), id);
         }
+        loadBinList();
     }
 
 }

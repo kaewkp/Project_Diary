@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
@@ -38,6 +39,7 @@ import com.example.kaew_pc.diary_project.Manager.Adapter.NoteCustomAdapter;
 import com.example.kaew_pc.diary_project.R;
 import com.example.kaew_pc.diary_project.Manager.Repository.NoteDataRepository;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -65,6 +67,7 @@ public class NoteMainPageActivity extends AppCompatActivity implements SearchVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notemainpage);
+        checkImageFolder();
         init();
         ActionBar action = getSupportActionBar();
         action.setDisplayHomeAsUpEnabled(true);
@@ -72,26 +75,42 @@ public class NoteMainPageActivity extends AppCompatActivity implements SearchVie
         loadNoteList(1);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isResume)
+            loadNoteList(null);
+        isResume = false;
+    }
+
+    private void checkImageFolder() {
+        File f = new File(android.os.Environment.getExternalStorageDirectory(), File.separator+"TAMUTAMI/Note");
+        if(!f.exists()) {
+            Toast.makeText(NoteMainPageActivity.this, "Not Exits", Toast.LENGTH_SHORT).show();
+            f.mkdirs();
+        }
+    }
+
     private void loadNoteList(final Integer s) {
-        Toast.makeText(NoteMainPageActivity.this, ""+s, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(NoteMainPageActivity.this, ""+s, Toast.LENGTH_SHORT).show();
         data = repo.getData(db.getReadableDatabase());
         adapter = new NoteCustomAdapter(NoteMainPageActivity.this, data);
 
         try {
-            if (data.size() > 0) {
-                adapter.sort(new Comparator<Note_data>() {
-                    @Override
-                    public int compare(Note_data d1, Note_data d2) {
-                        if(s == 0) {
-                            return d2.getNote_savedate().compareTo(d1.getNote_savedate());
-                        } else if(s == 2) {
-                            return d2.getNote_alertdate().compareTo(d1.getNote_alertdate());
-                        } else {
-                            return d2.getNote_editdate().compareTo(d1.getNote_editdate());
-                        }
-                    }
-                });
-            }
+//            if (data.size() > 0) {
+//                adapter.sort(new Comparator<Note_data>() {
+//                    @Override
+//                    public int compare(Note_data d1, Note_data d2) {
+//                        if(s == 0) {
+//                            return d2.getNote_savedate().compareTo(d1.getNote_savedate());
+//                        } else if(s == 2) {
+//                            return d2.getNote_alertdate().compareTo(d1.getNote_alertdate());
+//                        } else {
+//                            return d2.getNote_editdate().compareTo(d1.getNote_editdate());
+//                        }
+//                    }
+//                });
+//            }
         }
         catch (Exception ex){
             Toast.makeText(NoteMainPageActivity.this, "Error Naja", Toast.LENGTH_SHORT).show();
@@ -194,38 +213,10 @@ public class NoteMainPageActivity extends AppCompatActivity implements SearchVie
         sw.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new refresh_data().execute();
-            }
-        });
-    }
-
-    private class refresh_data extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            loadNoteList(1);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            if (sw.isRefreshing()) {
+                loadNoteList(null);
                 sw.setRefreshing(false);
             }
-        }
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        if(isResume)
-            loadNoteList(1);
-        isResume = false;
+        });
     }
 
     @Override
@@ -246,29 +237,6 @@ public class NoteMainPageActivity extends AppCompatActivity implements SearchVie
 
         return true;
     }
-
-//    @Override
-//    public boolean onPrepareOptionsMenu(Menu menu) {
-//        super.onPrepareOptionsMenu(menu);
-//        MenuItem item = menu.findItem(R.id.action_search);
-//        SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
-//
-//        searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                Toast.makeText(NoteMainPageActivity.this, query, Toast.LENGTH_SHORT).show();
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                Toast.makeText(NoteMainPageActivity.this, newText, Toast.LENGTH_SHORT).show();
-//                return false;
-//            }
-//        });
-//        return true;
-//    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -53,11 +53,19 @@ public class BinRepository {
         db.update(Note_data.TABLE, initialValues, "Note_id="+id, null);
     }
 
-    public void deleteData(SQLiteDatabase db, int id){
+    public void deleteData(SQLiteDatabase db){
+        String whereClause = Note_data.Column.isDelete+"=?";
+        String[] whereArgs = new String[] { String.valueOf(0) };
+
+        Log.d("Recycle", "Delete All Dsta in Recycle");
+        db.delete(Note_data.TABLE, whereClause, whereArgs);
+    }
+
+    public void deleteDataById(SQLiteDatabase db, int id){
         String whereClause = Note_data.Column.Note_id+"=?";
         String[] whereArgs = new String[] { String.valueOf(id) };
 
-        Log.d("Delete Dsta in Recycle", "id : " + id);
+        Log.d("Recycle", "Delete Dsta id : " + id);
         db.delete(Note_data.TABLE, whereClause, whereArgs);
     }
 

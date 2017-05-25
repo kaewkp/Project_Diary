@@ -24,12 +24,20 @@ import java.util.List;
 
 public class PickerImageAdapter extends RecyclerView.Adapter<PickerImageAdapter.ViewHolder> {
 
-    private final ArrayList<Uri> mData;
+    private ArrayList<Uri> mData;
     private Context context;
     private RecyclerView re;
 
-    public PickerImageAdapter(Context con, RecyclerView r) {
-        mData = new ArrayList<>();
+    public void AddData(ArrayList<Uri> data){
+        mData = data;
+    }
+
+    public PickerImageAdapter(Context con, RecyclerView r, @Nullable ArrayList<Uri> data) {
+        if(data != null)
+            mData = data;
+        else
+            mData = new ArrayList<>();
+
         context = con;
         re = r;
     }

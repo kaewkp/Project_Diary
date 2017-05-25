@@ -1,14 +1,13 @@
 package com.example.kaew_pc.diary_project.Activity.Note;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -20,11 +19,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -33,7 +30,6 @@ import com.andremion.louvre.Louvre;
 import com.andremion.louvre.home.GalleryActivity;
 import com.andremion.louvre.util.ItemOffsetDecoration;
 import com.example.kaew_pc.diary_project.Manager.Adapter.PickerImageAdapter;
-//import com.example.kaew_pc.diary_project.Activity.ChangeColor;
 import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Manager.Database.Note_data;
 import com.example.kaew_pc.diary_project.Manager.Database.Note_image;
@@ -42,6 +38,13 @@ import com.example.kaew_pc.diary_project.R;
 import com.example.kaew_pc.diary_project.Manager.Repository.NoteDataRepository;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -72,23 +75,14 @@ public class NoteCreatePageActivity extends AppCompatActivity {
     private AlertDialog.Builder builder, timealertbuilder;
     private String[] timealert;
     private List<Uri> uri;
-    private ArrayList<Note_image> imagelist;
-
-
-    // this is the action code we use in our intent,
-    // this way we know we're looking at the response from our own action
-    private static final int SELECT_SINGLE_PICTURE = 101;
-
-    private static final int SELECT_MULTIPLE_PICTURE = 201;
-
-    public static final String IMAGE_TYPE = "image/*";
-
-
-////////////////////////////////////////////////////////////////////////
+    private ArrayList<Uri> imagelist = null;
 
     private static final int LOUVRE_REQUEST_CODE = 0;
-
     private PickerImageAdapter mAdapter;
+
+    private static final String[] EXTENSIONS = new String[]{
+            "png", "bmp", "jpg" // and other formats you need
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,26 +96,24 @@ public class NoteCreatePageActivity extends AppCompatActivity {
         action.setDisplayHomeAsUpEnabled(true);
         action.setHomeButtonEnabled(true);
 
-        int id = getIntent().getIntExtra("id", 0);
-
-        if (id != 0) { //When click from listview
-            data = repo.getDataById(String.valueOf(id), db.getReadableDatabase());
-            title.setText(data.getNote_title());
-            desc.setText(data.getNote_desc());
-//            date.setText(data.getNote_editdate());
-            imagelist = imageRepo.getDataById(db.getReadableDatabase(), id);
-
-            Toast.makeText(NoteCreatePageActivity.this, ""+imagelist.size(), Toast.LENGTH_SHORT).show();
-
-            isEdit = true;
-        }
 
         //RecycleView
         final int spacing = getResources().getDimensionPixelSize(R.dimen.gallery_item_offset);
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.addItemDecoration(new ItemOffsetDecoration(spacing));
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(mAdapter = new PickerImageAdapter(NoteCreatePageActivity.this, recyclerView));
+
+        int id = getIntent().getIntExtra("id", 0);
+        if (id != 0) { //When click from listview
+            data = repo.getDataById(String.valueOf(id), db.getReadableDatabase());
+            title.setText(data.getNote_title());
+            desc.setText(data.getNote_desc());
+            isEdit = true;
+            getUriInFolder(id);
+        }
+
+        mAdapter = new PickerImageAdapter(NoteCreatePageActivity.this, recyclerView, imagelist);
+        recyclerView.setAdapter(mAdapter);
 
         recyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -140,16 +132,9 @@ public class NoteCreatePageActivity extends AppCompatActivity {
         ImageButton pic = (ImageButton)findViewById(R.id.picButton);
         pic.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//                intent.setType("image/*");
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                // this line is different here !!
-//                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-//                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_MULTIPLE_PICTURE);
-
                 Louvre l = Louvre.init(NoteCreatePageActivity.this)
                         .setRequestCode(LOUVRE_REQUEST_CODE)
-                        .setMaxSelection(100)
+                        .setMaxSelection(100) //insert only 100 pic for 1 note
                         .setMediaTypeFilter(Louvre.IMAGE_TYPE_BMP, Louvre.IMAGE_TYPE_JPEG, Louvre.IMAGE_TYPE_PNG);
                 l.open();
             }
@@ -160,16 +145,14 @@ public class NoteCreatePageActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((title != null && !title.getText().toString().equals("")) || (desc != null && !desc.getText().toString().equals(""))){
+                if ((title != null && !title.getText().toString().equals("")) && (desc != null && !desc.getText().toString().equals(""))){
                     saveNote();
-                    Toast.makeText(NoteCreatePageActivity.this, "บันทึกแล้ว ",
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NoteCreatePageActivity.this, "บันทึกแล้ว ", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
                 else {
                     Toast.makeText(NoteCreatePageActivity.this, " ใส่ชื่อบันทึกและรายละเอียด ", Toast.LENGTH_SHORT).show();
-
                 }
-                finish();
             }
         });
 
@@ -179,7 +162,29 @@ public class NoteCreatePageActivity extends AppCompatActivity {
                 confirmCancel();
             }
         });
+    }
 
+    static final FilenameFilter IMAGE_FILTER = new FilenameFilter() {
+        @Override
+        public boolean accept(final File dir, final String name) {
+            for (final String ext : EXTENSIONS) {
+                if (name.endsWith("." + ext)) {
+                    return (true);
+                }
+            }
+            return (false);
+        }
+    };
+
+    private void getUriInFolder(int id) {
+        File f = new File(android.os.Environment.getExternalStorageDirectory(), File.separator+"TAMUTAMI/Note/"+id);
+        if(f.exists()) {
+            File[] filelist = f.listFiles(IMAGE_FILTER);
+            imagelist = new ArrayList<>();
+            for(File file : filelist){
+                imagelist.add(Uri.fromFile(file));
+            }
+        }
     }
 
     @Override
@@ -221,24 +226,104 @@ public class NoteCreatePageActivity extends AppCompatActivity {
     private void saveNote() {
         data.setNote_title(title.getText().toString());
         data.setNote_desc(desc.getText().toString());
-        int id = repo.getLatestId(db.getReadableDatabase());
+        int id = repo.getLatestId(db.getReadableDatabase()) + 1;
 
         if(!isEdit) { //Create
-            data.setNote_savedate(formattedDate);
-            data.setNote_editdate(formattedDate);
+            data.setNote_savedate(dateCreate.getText().toString());
+            data.setNote_editdate(dateCreate.getText().toString());
             repo.insertData(db.getWritableDatabase(), data);
-            for(int i=0;i<uri.size();i++) {
-                imageRepo.insertData(db.getWritableDatabase(), new Note_image(id, getBytes(uri.get(i))));
-            }
         }
         else { //Edit
             id = data.getNote_id();
-            data.setNote_editdate(formattedDate);
+            data.setNote_editdate(dateCreate.getText().toString());
             repo.updateData(db.getWritableDatabase(), data);
-            for(int i=0;i<uri.size();i++) {
-                imageRepo.insertData(db.getWritableDatabase(), new Note_image(id, getBytes(uri.get(i))));
+        }
+
+        if(uri.size() > 0)
+            Log.e("ID" , ""+id);
+            saveImage(id);
+    }
+
+    private void saveImage(int id) {
+        File f = new File(android.os.Environment.getExternalStorageDirectory(), File.separator+"TAMUTAMI/Note/"+id);
+        if(!f.exists()) {
+            f.mkdirs();
+        }
+
+        try {
+            for (int i = 0; i < uri.size(); i++) {
+                f = new File(android.os.Environment.getExternalStorageDirectory(), File.separator+"TAMUTAMI/Note/" + id +"/"+ i + ".jpg");
+                copyFile(new File(getPath(uri.get(i))), f);
             }
         }
+        catch (Exception ex){ ex.printStackTrace(); }
+
+    }
+
+    private void copyFile(File sourceFile, File destFile) throws IOException {
+        if (!sourceFile.exists()) {
+            return;
+        }
+
+        FileChannel source = null;
+        FileChannel destination = null;
+        source = new FileInputStream(sourceFile).getChannel();
+        destination = new FileOutputStream(destFile).getChannel();
+        if (source != null) {
+            destination.transferFrom(source, 0, source.size());
+            source.close();
+        }
+        destination.close();
+    }
+
+    public String getPath(Uri uri) {
+        Cursor cursor = null;
+        try {
+            String[] projection = { MediaStore.Images.Media.DATA };
+//            cursor = this.getContentResolver().query(uri, projection, null, null, null);
+            uri = convertFileToContentUri(this, new File(uri.getPath()));
+            CursorLoader loader = new CursorLoader(NoteCreatePageActivity.this, uri, projection, null, null, null);
+            cursor = loader.loadInBackground();
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
+    /**
+     * Converts a file to a content uri, by inserting it into the media store.
+     * Requires this permission: <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+     */
+    protected static Uri convertFileToContentUri(Context context, File file) {
+
+        //Uri localImageUri = Uri.fromFile(localImageFile); // Not suitable as it's not a content Uri
+
+        ContentResolver cr = context.getContentResolver();
+        String imagePath = file.getAbsolutePath();
+        String imageName = null;
+        String imageDescription = null;
+        String uriString = null;
+        try {
+            uriString = MediaStore.Images.Media.insertImage(cr, imagePath, imageName, imageDescription);
+        }catch (Exception ex){}
+        return Uri.parse(uriString);
+    }
+
+    private Bitmap getBitmapFromUri(Uri uri){
+        Bitmap bitmap = null;
+        try {
+            InputStream is = getContentResolver().openInputStream(uri);
+            bitmap = BitmapFactory.decodeStream(is);
+            if(is != null)
+                is.close();
+        } catch (IOException ex){
+            ex.printStackTrace();
+        }
+        return bitmap;
     }
 
     // convert from bitmap to byte array
@@ -273,57 +358,11 @@ public class NoteCreatePageActivity extends AppCompatActivity {
         dateCreate.setText(formattedDate);
 
 
-        img = (ImageView)findViewById(R.id.picShow);
+//        img = (ImageView)findViewById(R.id.picShow);
 
         db = DBHelper.getInstance(this);
         repo = new NoteDataRepository();
         imageRepo = new NoteImageRepository();
-    }
-
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (resultCode == RESULT_OK) {
-//            if (requestCode == SELECT_SINGLE_PICTURE) {
-//
-//                Uri selectedImageUri = data.getData();
-//                try {
-//                    img.setImageBitmap(new UserPicture(selectedImageUri, getContentResolver()).getBitmap());
-//                } catch (Exception e) {
-//                    Log.e(NoteCreatePageActivity.class.getSimpleName(), "Failed to load image", e);
-//                }
-//                // original code
-////                String selectedImagePath = getPath(selectedImageUri);
-////                selectedImagePreview.setImageURI(selectedImageUri);
-//            }
-//        } else {
-//            // report failure
-//            Toast.makeText(getApplicationContext(), "Fail to get intent data", Toast.LENGTH_LONG).show();
-//            Log.d(NoteCreatePageActivity.class.getSimpleName(), "Failed to get intent data, result code is " + resultCode);
-//        }
-//    }
-
-    public String getPath(Uri uri) {
-
-        // just some safety built in
-        if( uri == null ) {
-            // perform some logging or show user feedback
-            Toast.makeText(getApplicationContext(), "Fail to get picture", Toast.LENGTH_LONG).show();
-            Log.d(NoteCreatePageActivity.class.getSimpleName(), "Failed to parse image path from image URI " + uri);
-            return null;
-        }
-
-        // try to retrieve the image from the media store first
-        // this will only work for images selected from gallery
-        String[] projection = { MediaStore.Images.Media.DATA };
-        Cursor cursor = managedQuery(uri, projection, null, null, null);
-        if( cursor != null ){
-            int column_index = cursor
-                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        }
-        // this is our fallback here, thanks to the answer from @mad indicating this is needed for
-        // working code based on images selected using other file managers
-        return uri.getPath();
     }
 
     @Override
@@ -347,11 +386,8 @@ public class NoteCreatePageActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-
         }
-
     }
-
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_notecreatepage, menu);
