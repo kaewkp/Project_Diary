@@ -232,7 +232,7 @@ public class CalendarDataRepository {
         Cursor cursor = null;
         try {
             cursor = db.query(Calendar_data.TABLE,   //table
-                    null,                   //column
+                    null,       //column
                     null,       //where
                     null,       //where arg
                     null, null, null);      //groupby, having, orderby
@@ -248,7 +248,7 @@ public class CalendarDataRepository {
                     String startDate = cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_createdTime));
                     //convert start date to date object
                     Date reminderDate = StringToDateConverter(startDate);
-                    if (reminderDate.before(dateToday) || reminderDate.equals(dateToday)) {
+                    if (reminderDate.after(dateToday) || reminderDate.equals(dateToday)) {
                         events.add(new EventObjects(id, message, reminderDate));
                     }
                 } while (cursor.moveToNext());

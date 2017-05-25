@@ -4,7 +4,7 @@
     android:id="@+id/linearLayout_calendar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/colorWhite"
     android:orientation="vertical"
     tools:context="com.example.kaew_pc.diary_project.Activity.Calendar.Fragment.CalendarModuleFragment">
 
@@ -26,7 +26,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center_vertical"
             android:padding="10dp"
-            android:src="@drawable/m_arrow_l" />
+            android:src="@mipmap/ic_keyboard_arrow_left_white_48dp" />
 
         <TextView
             android:id="@+id/tv_title_month_year"
@@ -35,7 +35,7 @@
             android:layout_weight="1"
             android:text="MONTH"
             android:layout_gravity="center_vertical"
-            android:textColor="@color/white"
+            android:textColor="@color/colorWhite"
             android:textAlignment="center"
             android:textSize="20sp" />
 
@@ -46,14 +46,14 @@
             android:layout_height="50dp"
             android:layout_gravity="center_vertical"
             android:padding="10dp"
-            android:src="@drawable/m_arrow_r" />
+            android:src="@mipmap/ic_keyboard_arrow_right_white_48dp" />
     </LinearLayout>
 
     <View
         android:id="@+id/view_header"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/white" />
+        android:background="@color/colorWhite" />
 
     <LinearLayout
         android:id="@+id/linearLayout_day_header"

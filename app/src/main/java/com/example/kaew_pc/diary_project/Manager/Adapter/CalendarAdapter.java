@@ -91,14 +91,17 @@ public class CalendarAdapter extends ArrayAdapter {
             viewHolder.highlight.setColorFilter(ContextCompat.getColor(mContext,R.color.colorAccent_second));
 
         }
-
+//        Log.d("222","===========================");
+//        Log.d("111", dayValue + " + " + displayMonth + " + " +displayYear);
+        Log.d("Even Size", allEvents.size()+"");
         for(int i=0; i< allEvents.size();i++){
             eventCalendar.setTime(allEvents.get(i).getDate());
-            Log.d("555",eventCalendar.get(Calendar.DAY_OF_MONTH) + " + " + (eventCalendar.get(Calendar.MONTH) + 1) + " + " +eventCalendar.get(Calendar.YEAR));
-            Log.d("111", dayValue + " + " + displayMonth + " + " +displayYear);
-            if(dayValue >= eventCalendar.get(Calendar.DAY_OF_MONTH)
-                && displayMonth == eventCalendar.get(Calendar.MONTH) + 1
+            Log.d("Event",eventCalendar.get(Calendar.DAY_OF_MONTH) + " + " + (eventCalendar.get(Calendar.MONTH) + 1) + " + " +eventCalendar.get(Calendar.YEAR));
+            if(dayValue == eventCalendar.get(Calendar.DAY_OF_MONTH)
+                && displayMonth == eventCalendar.get(Calendar.MONTH)+1
                 && displayYear == eventCalendar.get(Calendar.YEAR)){
+//                Log.d("555",eventCalendar.get(Calendar.DAY_OF_MONTH) + " + " + (eventCalendar.get(Calendar.MONTH) + 1) + " + " +eventCalendar.get(Calendar.YEAR));
+//                Log.d("111", dayValue + " + " + displayMonth + " + " +displayYear);
 
                 viewHolder.small_highlight.setColorFilter(ContextCompat.getColor(mContext,R.color.colorFriday));
             }
