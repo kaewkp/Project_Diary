@@ -89,14 +89,11 @@ public class CalendarAdapter extends ArrayAdapter {
                 && displayYear == eventCalendar.get(Calendar.YEAR)){
 
             viewHolder.highlight.setColorFilter(ContextCompat.getColor(mContext,R.color.colorAccent_second));
-
         }
 
         for(int i=0; i< allEvents.size();i++){
             eventCalendar.setTime(allEvents.get(i).getDate());
-            Log.d("555",eventCalendar.get(Calendar.DAY_OF_MONTH) + " + " + (eventCalendar.get(Calendar.MONTH) + 1) + " + " +eventCalendar.get(Calendar.YEAR));
-            Log.d("111", dayValue + " + " + displayMonth + " + " +displayYear);
-            if(dayValue >= eventCalendar.get(Calendar.DAY_OF_MONTH)
+            if(dayValue == eventCalendar.get(Calendar.DAY_OF_MONTH)
                 && displayMonth == eventCalendar.get(Calendar.MONTH) + 1
                 && displayYear == eventCalendar.get(Calendar.YEAR)){
 

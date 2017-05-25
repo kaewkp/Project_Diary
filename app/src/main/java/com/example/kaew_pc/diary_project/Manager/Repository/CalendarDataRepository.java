@@ -14,6 +14,7 @@ import com.example.kaew_pc.diary_project.Manager.EventObjects;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -156,7 +157,6 @@ public class CalendarDataRepository {
         return data;
     }
 
-
     public Calendar_data getDataByIdOrderByNew(SQLiteDatabase db, String id){
         Log.d(TAG + "Get Data By ID", "select * from Calendar order by id where DESC" + id);
 
@@ -196,7 +196,7 @@ public class CalendarDataRepository {
         return data;
     }
 
-    private SimpleDateFormat getDateFormat() {
+    public SimpleDateFormat getDateFormat() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "dd-MM-yyyy HH:mm", Locale.US);
         return dateFormat;
@@ -224,6 +224,48 @@ public class CalendarDataRepository {
         return datetime;
     }
 
+    public ArrayList<Calendar_data> getDataByDate(SQLiteDatabase db, String date){
+        Log.d(TAG + "Get Data By Date", "Date : " + date);
+        ArrayList<Calendar_data> list = new ArrayList<>();
+        Date createdTime = new Date();
+        Calendar_data data = null;
+        Cursor cursor = null;
+        try {
+            cursor = db.query(Calendar_data.TABLE,   //table
+                    null,                   //column
+                    Calendar_data.Column.Calendar_createdTime + " BETWEEN ? AND ? = ?",       //where
+                    new String[]{date + " 00:00",date + " 23:59"},       //where arg
+                    null, null, null);      //groupby, having, orderby
+
+            if (cursor.getCount() < 1) {
+                return list;
+            }
+            if (cursor.moveToFirst()) {
+                do {
+                    createdTime = StringToDateConverter(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_createdTime)));
+
+                    data = new Calendar_data();
+                    data.setCalendar_id(cursor.getInt(cursor.getColumnIndex(Calendar_data.Column.Calendar_id)));
+                    data.setCalendar_title(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_title)));
+                    data.setCalendar_desc(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_desc)));
+                    data.setCalendar_createdTime(createdTime);
+                    data.setCalendarType_id(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.CalendarType_id)));
+                    data.setNoti_id(cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Noti_id)));
+
+                    list.add(data);
+                } while (cursor.moveToNext());
+            }
+        }
+        catch (Exception ex){
+            Log.e(TAG + "Get Data By Date", "Exception : " + ex.toString());
+        }
+        finally {
+            if(cursor != null)
+                cursor.close();
+        }
+        return list;
+    }
+
     public ArrayList<EventObjects> getAllFutureEvents(SQLiteDatabase db){
         Date dateToday = new Date();
         ArrayList<EventObjects> events = new ArrayList<EventObjects>();
@@ -244,12 +286,13 @@ public class CalendarDataRepository {
             if (cursor.moveToFirst()) {
                 do {
                     int id = cursor.getInt(0);
-                    String message = cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_title));
+                    String title = cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_title));
+                    String message = cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_desc));
                     String startDate = cursor.getString(cursor.getColumnIndex(Calendar_data.Column.Calendar_createdTime));
                     //convert start date to date object
                     Date reminderDate = StringToDateConverter(startDate);
-                    if (reminderDate.before(dateToday) || reminderDate.equals(dateToday)) {
-                        events.add(new EventObjects(id, message, reminderDate));
+                    if (reminderDate.after(dateToday) || reminderDate.equals(dateToday)) {
+                        events.add(new EventObjects(id, message, reminderDate, title));
                     }
                 } while (cursor.moveToNext());
             }
@@ -261,14 +304,5 @@ public class CalendarDataRepository {
                 cursor.close();
         }
         return events;
-    }
-
-    private void insertDateTime(){
-
-//        ContentValues values = new ContentValues();
-//    values.put('username', 'ravitamada');
-//    values.put('created_at', getDateTime());
-//        // insert the row
-//        long id = db.insert('users', null, values);
     }
 }

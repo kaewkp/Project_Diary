@@ -2,53 +2,39 @@ package com.example.kaew_pc.diary_project.Activity.Calendar;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
-import com.benzneststudios.eventCalendarView.fragment.CalendarFragment;
 import com.benzneststudios.eventCalendarView.model.Event;
-import com.benzneststudios.eventCalendarView.model.EventMonth;
-import com.benzneststudios.eventCalendarView.view.ListMyEventView;
 import com.example.kaew_pc.diary_project.Activity.Calendar.Fragment.CalendarModuleFragment;
-import com.example.kaew_pc.diary_project.Manager.Adapter.CalendarAdapter;
 import com.example.kaew_pc.diary_project.Manager.Database.Calendar_data;
 import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Manager.Repository.CalendarDataRepository;
 import com.example.kaew_pc.diary_project.R;
 
 import java.text.DateFormatSymbols;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by Rachanon on 5/20/2017.
  */
 
-public class CalendarMainActivity extends AppCompatActivity{
+public class CalendarMainActivity extends AppCompatActivity implements CalendarModuleFragment.OnFragmentInteractionListener {
     //Aim
     private static final String TAG_CALENDAR_FRAGMENT = "tag_calendar_fragment";
     //Rachanon
@@ -177,7 +163,7 @@ public class CalendarMainActivity extends AppCompatActivity{
     private View.OnClickListener onCloseClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-             Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_CALENDAR_FRAGMENT);
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_CALENDAR_FRAGMENT);
             if(fragment != null) {
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -210,7 +196,7 @@ public class CalendarMainActivity extends AppCompatActivity{
                             String dayS = "";
                             String monthS = "";
                             dayS = ((dayOfMonth>10)? ""+dayOfMonth : "0"+dayOfMonth);
-                            monthS = ((monthOfYear+1>10)? ""+(monthOfYear+1) : "0"+(monthOfYear));
+                            monthS = ((monthOfYear+1>10)? ""+(monthOfYear+1) : "0"+(monthOfYear+1));
                             txtDate = dayS + "-" + monthS + "-" + year;
                             startDatePicker.setText(txtDate);
                         }
@@ -296,7 +282,7 @@ public class CalendarMainActivity extends AppCompatActivity{
     public void setDateTimeNow(){
         Calendar c = Calendar.getInstance();
         int dayN = c.get(Calendar.DAY_OF_MONTH);
-        int monthN = c.get(Calendar.MONTH);
+        int monthN = c.get(Calendar.MONTH) + 1;
         int yearN = c.get(Calendar.YEAR);
         int hourN = c.get(Calendar.HOUR_OF_DAY);
         int minuteN = c.get(Calendar.MINUTE);
@@ -309,5 +295,15 @@ public class CalendarMainActivity extends AppCompatActivity{
         txtTime = hourS + ":" + minS;
         startDatePicker.setText(txtDate);
         startTimePicker.setText(txtTime);
+    }
+
+    @Override
+    public void messageFromParentFragmentToActivity(String myString) {
+
+    }
+
+    @Override
+    public void onBackPressed(){
+        finish();
     }
 }
