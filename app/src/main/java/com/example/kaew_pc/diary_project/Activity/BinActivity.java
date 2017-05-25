@@ -78,8 +78,8 @@ public class BinActivity extends AppCompatActivity {
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
         if (v.getId()==R.id.listview) {
-            menu.setHeaderTitle("Choose");
-            String[] menuItems = new String[]{ "Restore", "Delete"};
+            menu.setHeaderTitle("เลือกการลบ");
+            String[] menuItems = new String[]{ "กู้คืน", "ลบถาวร"};
 //                    getResources().getStringArray(R.array.menu);
             for (int i = 0; i<menuItems.length; i++) {
                 menu.add(Menu.NONE, i, i, menuItems[i]);
