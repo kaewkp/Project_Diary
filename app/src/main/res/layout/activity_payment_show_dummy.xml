@@ -27,7 +27,7 @@
         android:textColor="#000000"
         android:textSize="30sp"
         android:layout_below="@+id/head"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignEnd="@+id/priceshow" />
 
     <TextView
         android:id="@+id/titledetail"
@@ -68,8 +68,9 @@
         android:layout_height="wrap_content"
         android:text="564.0"
         android:textSize="30sp"
+        android:layout_below="@+id/price"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/price" />
+        android:layout_marginEnd="12dp" />
 
     <TextView
         android:id="@+id/date"
@@ -85,11 +86,11 @@
         android:id="@+id/endDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="26 / 05 / 2017"
+        android:text="31 / 05 / 2017"
         android:textSize="30sp"
+        android:layout_marginTop="11dp"
         android:layout_below="@+id/date"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp" />
+        android:layout_alignEnd="@+id/priceshow" />
 
     <TextView
         android:id="@+id/detail"
