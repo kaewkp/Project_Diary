@@ -455,7 +455,7 @@ public class PaymentActivity extends AppCompatActivity {
             hh = hour;
             mm = minute;
             timeChoose = String.valueOf(hh) + " : " + String.valueOf(mm);
-            timesw.setVisibility(View.INVISIBLE);0y
+            timesw.setVisibility(View.INVISIBLE);
             timesw.setText("เวลา : " + timeChoose);
 
         }
