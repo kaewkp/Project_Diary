@@ -56,6 +56,7 @@ public class CalendarAdapter extends ArrayAdapter {
     public View getView(int position, View view, ViewGroup parent) {
         Date mDate = monthlyDates.get(position);
         Calendar dateCal = Calendar.getInstance();
+        viewHolder = new ViewHolder();
         dateCal.setTime(mDate);
 
         int dayValue = dateCal.get(Calendar.DAY_OF_MONTH);
@@ -68,21 +69,18 @@ public class CalendarAdapter extends ArrayAdapter {
             view = inflater.inflate(R.layout.calendar_layout_day, parent, false);
         }
 
-//
-//        ////////////////////////////////////////////////////////////////////
-//        if(displayMonth == currentMonth && displayYear == currentYear){
-//            view.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorFriday));
-//        }else{
-//            view.setBackgroundColor(Color.parseColor("#cccccc"));
-//        }
-//        ////////////////////////////////////////////////////////////////////
-        viewHolder = new ViewHolder();
 
         viewHolder.highlight = (ImageView) view.findViewById(R.id.img_highlight);
-//        viewHolder.highlight.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
 
         viewHolder.small_highlight = (ImageView) view.findViewById(R.id.view_small_highlight);
-//        viewHolder.small_highlight.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
+
+        if(!(displayMonth == currentMonth && displayYear == currentYear)){
+            view.setBackgroundColor(ContextCompat.getColor(mContext, R.color.theme_dark_background));
+            viewHolder.highlight.setColorFilter(ContextCompat.getColor(mContext,R.color.theme_dark_background));
+            viewHolder.small_highlight.setColorFilter(ContextCompat.getColor(mContext,R.color.theme_dark_background));
+        }
+
+
 
         viewHolder.tv_day = (TextView) view.findViewById(R.id.tv_day);
         viewHolder.tv_day.setText(String.valueOf(dayValue));

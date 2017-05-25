@@ -200,40 +200,40 @@ public class CalendarMainActivity extends AppCompatActivity{
         }
     };
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_calendar:
-                toggleCalendar();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void toggleCalendar() {
-        ArrayList<EventMonth> listEventMonth = ListMyEventView.getSampleData();
-        CalendarFragment.setTheme(CalendarFragment.THEME_LIGHT);
-        CalendarFragment.setBackgroundHeaderMonthCalendar(ContextCompat.getColor(CalendarMainActivity.this , R.color.colorThursday));
-        CalendarFragment.setBackgroundHeaderDayCalendar(ContextCompat.getColor(CalendarMainActivity.this , R.color.colorAccent_second));
-        CalendarFragment.setTextMonthColor(ContextCompat.getColor(CalendarMainActivity.this , R.color.white));
-        CalendarFragment.setCircleTodayHighlightColor(ContextCompat.getColor(CalendarMainActivity.this , R.color.colorFriday));
-        CalendarFragment.setTextDayHeaderColor(ContextCompat.getColor(CalendarMainActivity.this , R.color.colorAccent));
-
-        CalendarFragment.setOnClickDayCalendar(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(CalendarMainActivity.this,"EVENT_ID = "+v.getTag(CalendarFragment.KEY_EVENT_ID),Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        CalendarFragment.toggleCalendar(CalendarMainActivity.this , R.id.contentContainer , listEventMonth);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.main_menu, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.menu_calendar:
+//                toggleCalendar();
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+//
+//    private void toggleCalendar() {
+//        ArrayList<EventMonth> listEventMonth = ListMyEventView.getSampleData();
+//        CalendarFragment.setTheme(CalendarFragment.THEME_LIGHT);
+//        CalendarFragment.setBackgroundHeaderMonthCalendar(ContextCompat.getColor(CalendarMainActivity.this , R.color.colorThursday));
+//        CalendarFragment.setBackgroundHeaderDayCalendar(ContextCompat.getColor(CalendarMainActivity.this , R.color.colorAccent_second));
+//        CalendarFragment.setTextMonthColor(ContextCompat.getColor(CalendarMainActivity.this , R.color.white));
+//        CalendarFragment.setCircleTodayHighlightColor(ContextCompat.getColor(CalendarMainActivity.this , R.color.colorFriday));
+//        CalendarFragment.setTextDayHeaderColor(ContextCompat.getColor(CalendarMainActivity.this , R.color.colorAccent));
+//
+//        CalendarFragment.setOnClickDayCalendar(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(CalendarMainActivity.this,"EVENT_ID = "+v.getTag(CalendarFragment.KEY_EVENT_ID),Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        CalendarFragment.toggleCalendar(CalendarMainActivity.this , R.id.contentContainer , listEventMonth);
+//    }
 
     private void setEvent(int color){
         Event event = new Event();
