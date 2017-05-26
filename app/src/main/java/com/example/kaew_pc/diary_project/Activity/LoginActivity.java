@@ -95,16 +95,16 @@ public class LoginActivity extends AppCompatActivity {
                 setImage( new int[]{ R.drawable.pink_button, R.drawable.pink_button, R.drawable.pink_button, R.drawable.pink_button}, 0);
                 break;
             case 1:
-                setImage( new int[]{ R.drawable.star, R.drawable.pink_button, R.drawable.pink_button, R.drawable.pink_button}, 0);
+                setImage( new int[]{ R.drawable.starlogin, R.drawable.pink_button, R.drawable.pink_button, R.drawable.pink_button}, 0);
                 break;
             case 2:
-                setImage( new int[]{ R.drawable.star, R.drawable.pink_button, R.drawable.pink_button}, 1);
+                setImage( new int[]{ R.drawable.starlogin, R.drawable.pink_button, R.drawable.pink_button}, 1);
                 break;
             case 3:
-                setImage( new int[]{ R.drawable.star, R.drawable.pink_button }, 2);
+                setImage( new int[]{ R.drawable.starlogin, R.drawable.pink_button }, 2);
                 break;
             case 4:
-                setImage( new int[]{ R.drawable.star }, 3);
+                setImage( new int[]{ R.drawable.starlogin }, 3);
                 break;
         }
     }

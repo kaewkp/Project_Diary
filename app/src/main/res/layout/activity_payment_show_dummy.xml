@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    tools:context="com.example.kaew_pc.diary_project.Activity.Payment.PaymentShowDummy">
 
     <TextView
         android:text="รายการที่ต้องชำระ"
@@ -21,11 +23,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="19dp"
-        android:text="TextView"
+        android:text="ค่าโทรศัพท์"
         android:textColor="#000000"
         android:textSize="30sp"
         android:layout_below="@+id/head"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignEnd="@+id/priceshow" />
 
     <TextView
         android:id="@+id/titledetail"
@@ -64,10 +66,11 @@
         android:id="@+id/priceshow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="350.0"
         android:textSize="30sp"
+        android:layout_below="@+id/price"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/price" />
+        android:layout_marginEnd="12dp" />
 
     <TextView
         android:id="@+id/date"
@@ -83,11 +86,11 @@
         android:id="@+id/endDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="28 / 05 / 2017"
         android:textSize="30sp"
+        android:layout_marginTop="11dp"
         android:layout_below="@+id/date"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp" />
+        android:layout_alignEnd="@+id/priceshow" />
 
     <TextView
         android:id="@+id/detail"
@@ -97,8 +100,7 @@
         android:layout_alignStart="@+id/titledetail"
         android:layout_below="@+id/titledetail"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="เบอร์ 0842161921"
         android:textSize="16sp" />
-
 
 </RelativeLayout>

@@ -104,13 +104,13 @@ public class NoteMainPageActivity extends AppCompatActivity {
 
     private void deleteDialog(){
         final AlertDialog.Builder exitDialog = new AlertDialog.Builder(this);
-        exitDialog.setTitle("Confirm Delete");
-        exitDialog.setPositiveButton("No", new DialogInterface.OnClickListener() {
+        exitDialog.setTitle("ยืนยันการลบ");
+        exitDialog.setPositiveButton("ไม่", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
             }
         });
-        exitDialog.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+        exitDialog.setNegativeButton("ลบ", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 for ( int id : del ) {

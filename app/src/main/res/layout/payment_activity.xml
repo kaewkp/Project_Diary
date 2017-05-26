@@ -29,13 +29,14 @@
             android:text="บันทึก"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/textView"
             android:id="@+id/button"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:background="@android:color/holo_orange_dark"
-            android:textSize="18sp" />
+            android:background="#FF9999"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_below="@+id/timedetail"
+            android:layout_alignStart="@+id/remind"
+            android:layout_marginTop="83dp"
+            android:layout_alignParentEnd="true" />
 
         <Spinner android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,17 +50,15 @@
 
 
         <EditText
+            android:id="@+id/editprice"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
             android:ems="10"
-            android:id="@+id/editprice"
+            android:inputType="numberDecimal"
             android:textAlignment="textEnd"
-            android:textSize="25sp"
-            android:layout_below="@+id/textView3"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="16dp" />
+            android:textSize="20sp"
+            android:layout_below="@+id/textView2"
+            android:layout_alignParentEnd="true" />
 
 
         <TextView
@@ -67,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView4"
-            android:textColor="@android:color/holo_orange_dark"
+            android:textColor="#FF9999"
             android:textSize="18sp"
             android:layout_marginTop="17dp"
             android:layout_below="@+id/editprice"
@@ -90,31 +89,30 @@
             android:text="ยังไม่ได้เลือก"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:id="@+id/bankname"
-            android:layout_marginTop="30dp"/>
+            android:layout_marginTop="14dp"
+            android:layout_below="@+id/typepayment"
+            android:layout_toEndOf="@+id/textView" />
 
         <TextView
             android:text="ยังไม่ได้เลือก"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/bankname"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/debt" />
+            android:id="@+id/debt"
+            android:layout_alignBaseline="@+id/bankname"
+            android:layout_alignBottom="@+id/bankname"
+            android:layout_toEndOf="@+id/textView" />
 
         <TextView
-            android:text="ยังไม่ได้เลือกวันที่"
+            android:id="@+id/showdatetime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/calendar"
-            android:layout_alignParentLeft="true"
+            android:textColor="#000000"
+            android:text="ยังไม่ได้เลือกวันที่"
+            android:textSize="18sp"
+            android:layout_below="@+id/textView4"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="19dp"
-            android:textSize="22sp"
-            android:id="@+id/showdatetime" />
+            android:layout_marginTop="10dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -129,23 +127,23 @@
             android:text="รายละเอียด"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/bankname"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="14dp"
-            android:textColor="@android:color/holo_orange_dark"
+            android:textColor="#FF9999"
             android:textSize="18sp"
-            android:id="@+id/titledesc" />
+            android:id="@+id/titledesc"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/bankname" />
 
         <EditText
+            android:id="@+id/descpayment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:hint=" แตะเพื่อแก้ไข"
-            android:textColor="#000000"
-            android:ems="10"
-            android:id="@+id/descpayment"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/titledesc"
-            android:layout_alignParentStart="true" />
+            android:ems="10"
+            android:hint=" แตะเพื่อแก้ไข"
+            android:inputType="textPersonName"
+            android:textColor="#000000"
+            android:textSize="15sp" />
 
         <TextView
             android:text="จำนวนเงิน"
@@ -153,70 +151,75 @@
             android:layout_height="wrap_content"
             android:id="@+id/textView3"
             android:textSize="18sp"
-            android:textColor="@android:color/holo_orange_dark"
-            android:layout_marginTop="11dp"
+            android:textColor="#FF9999"
             android:layout_below="@+id/descpayment"
-            android:layout_toEndOf="@+id/textView" />
+            android:layout_alignEnd="@+id/bankname" />
 
         <Button
             android:text="เลือกวันที่"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_orange_dark"
+            android:background="#FF9999"
+            android:textColor="@android:color/white"
             android:id="@+id/calendar"
-            android:layout_below="@+id/switch1"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="13dp" />
+            android:layout_alignBaseline="@+id/textViewTimer"
+            android:layout_alignBottom="@+id/textViewTimer"
+            android:layout_centerHorizontal="true" />
 
-        <Switch
-            android:text=""
+        <Button
+            android:id="@+id/timeshow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/switch1"
-            android:layout_below="@+id/textView4"
-            android:layout_alignParentEnd="true" />
+            android:layout_above="@+id/button"
+            android:layout_toEndOf="@+id/calendar"
+            android:background="#FF9999"
+            android:text="เวลา"
+            android:textColor="@android:color/white"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/showdis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/remind"
+            android:layout_below="@+id/textView13"
+            android:layout_marginTop="14dp"
+            android:background="#FF9999"
+            android:text="ระยะเวลา"
+            android:textColor="@android:color/white"
+            android:visibility="invisible" />
 
         <TextView
-            android:text="TextView"
+            android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/switch1"
+            android:layout_alignStart="@+id/button"
+            android:layout_below="@+id/calendar"
+            android:layout_marginTop="17dp"
+            android:text="การแจ้งเตือน"
+            android:textColor="#FF9999"
+            android:textSize="18sp"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/timedetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/calendar"
+            android:layout_marginTop="16dp"
+            android:text="TextView"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/remind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/button"
             android:layout_alignParentStart="true"
-            android:id="@+id/textView7" />
-
-
-        <!--<TextView-->
-            <!--android:text="วันที่แจ้งเตือน : "-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignBottom="@+id/textViewTimer"-->
-            <!--android:textColor="@android:color/holo_orange_dark"-->
-            <!--android:layout_toEndOf="@+id/textViewTimer"-->
-            <!--android:textSize="18sp"-->
-            <!--android:id="@+id/alertTitle" />-->
-
-        <!--<TextView-->
-            <!--android:text="ยังไม่ได้เลือก"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignBottom="@+id/alertTitle"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:id="@+id/showalert" />-->
-
-
-        <!--<Button-->
-            <!--android:text="start"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/start"-->
-            <!--android:layout_alignBaseline="@+id/button"-->
-            <!--android:layout_alignBottom="@+id/button"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_alignParentLeft="true"-->
-            <!--android:layout_alignParentStart="true" />-->
-
-
+            android:text="Remind_detail"
+            android:textSize="18sp"
+            android:visibility="invisible" />
 
 
     </RelativeLayout>

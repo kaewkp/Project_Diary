@@ -23,6 +23,7 @@ import com.example.kaew_pc.diary_project.R;
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentDataRepository;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by chommchome on 27/3/2560.
@@ -34,8 +35,10 @@ public class PaymentMainPageActivity extends AppCompatActivity {
     private AlertDialog.Builder builder, sortdialog;
     private String[] sortlist;
     private DBHelper db;
-    private ListView list;
+    private ListView listpayment;
     private Boolean isResume = false;
+    public final Calendar cal = Calendar.getInstance();
+
 
     private PaymentDataRepository paymentObj;
 
@@ -55,7 +58,7 @@ public class PaymentMainPageActivity extends AppCompatActivity {
     private void init() {
         db = DBHelper.getInstance(this);
         paymentObj = new PaymentDataRepository();
-        list = (ListView) findViewById(R.id.paymentlist);
+        listpayment = (ListView) findViewById(R.id.paymentlist);
 
         fab = (FloatingActionButton) findViewById(R.id.fabpayment);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -67,11 +70,8 @@ public class PaymentMainPageActivity extends AppCompatActivity {
             }
         });
 
-        sortlist = getResources().getStringArray(R.array.เรียงลำดับ);
+        sortlist = getResources().getStringArray(R.array.Sort);
     }
-
-
-
 
 
     private void initDialog(final String[] text, String head, final TextView tv) {
@@ -126,19 +126,18 @@ public class PaymentMainPageActivity extends AppCompatActivity {
                         new PaymentDataRepository().getData(db.getReadableDatabase());
 
         PaymentCustomAdapter adapter = new PaymentCustomAdapter(PaymentMainPageActivity.this, data);
-        list.setAdapter(adapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listpayment.setAdapter(adapter);
+        listpayment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 isResume = true;
                 Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
                 intent.putExtra("id", data.get(position).getPayment_id());
+                Payment_data.setPaymentIdFromClicked(data, position);
                 startActivity(intent);
             }
         });
     }
-
-
 
     @Override
     protected void onResume() {

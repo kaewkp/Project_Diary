@@ -1,5 +1,9 @@
 package com.example.kaew_pc.diary_project.Manager.Database;
 
+import android.util.Log;
+
+import java.util.ArrayList;
+
 /**
  * Created by KAEW-PC on 18-Feb-17.
  */
@@ -36,6 +40,8 @@ public class Payment_data {
     private String PayStatus_id;
     private String Noti_id;
 
+    private static String paymentIdFromClicked;
+
     //Default Constructor
     public Payment_data(){
     }
@@ -58,6 +64,15 @@ public class Payment_data {
 
     public int getPayment_id(){
         return Payment_id;
+    }
+
+    public static void setPaymentIdFromClicked(ArrayList<Payment_data> data, int position){
+        paymentIdFromClicked = String.valueOf(data.get(position).getPayment_id());
+        Log.d("55555","5555");
+    }
+
+    public static String getPaymentIdFromClicked() {
+        return paymentIdFromClicked;
     }
 
     public String getPayment_title() {

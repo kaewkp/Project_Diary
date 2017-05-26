@@ -1,11 +1,13 @@
 package com.example.kaew_pc.diary_project.Manager.Repository;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.kaew_pc.diary_project.Manager.Database.BankName;
+import com.example.kaew_pc.diary_project.R;
 
 import java.util.ArrayList;
 
@@ -18,6 +20,12 @@ import static com.example.kaew_pc.diary_project.Manager.Database.BankName.Column
 
 public class BankNameRepository {
     private static final String TAG = BankNameRepository.class.getSimpleName();
+
+    Context mContext;
+     public BankNameRepository(Context context) // constructor
+     {
+        mContext = context;
+     }
 
     public static String createTable(){
         String CREATE_BankName_TABLE = String.format("CREATE TABLE %s " +
@@ -42,16 +50,10 @@ public class BankNameRepository {
     }
 
     public void createData(SQLiteDatabase db) {
-        insertData(db, "bn1","SCB (ไทยพาณิชย์)");
-        insertData(db, "bn2","KBANK (กสิกรไทย)");
-        insertData(db, "bn3","GSB (ออมสิน)");
-        insertData(db, "bn4","KTC (กรุงไทย)");
-        insertData(db, "bn5","UOB (ยูโอบี)");
-        insertData(db, "bn6","KRUNGSRI (กรุงศรี)");
-        insertData(db, "bn7","TMB (ทหารไทย)");
-        insertData(db, "bn8","AEON (อิออน)");
-        insertData(db, "bn9","BBL (บัวหลวง)");
-        insertData(db, "bn10","Citybank  (ซิตี้แบงก์)");
+        String[] BankName = mContext.getResources().getStringArray(R.array.BankName);
+        for (int i = 0; i < BankName.length; i++) {
+            insertData(db, "bn"+(i+1), BankName[i]);
+        }
     }
 
     public ArrayList<BankName> getData(SQLiteDatabase db){
@@ -96,6 +98,38 @@ public class BankNameRepository {
                     null,                                   //column
                     BankName.Column.BankName_id + "=?",       //where
                     new String[]{id},                       //where arg
+                    null, null, null);                      //groupby, having, orderby
+
+            if (cursor.getCount() < 1) {
+                return data;
+            }
+            cursor.moveToFirst();
+
+            data = new BankName();
+            data.setBankName_id(cursor.getString(cursor.getColumnIndex(BankName.Column.BankName_id)));
+            data.setBankName_name(cursor.getString(cursor.getColumnIndex(BankName.Column.BankName_name)));
+        }
+        catch (Exception ex){
+            Log.e(TAG + "Get Data By ID", "Exception : " + ex.toString());
+        }
+        finally {
+            if(cursor != null)
+                cursor.close();
+        }
+        return data;
+    }
+
+    public BankName getDataByName(SQLiteDatabase db, String name){
+        Log.d(TAG + "Get Data By Name", "Name : " + name);
+
+        BankName data = null;
+
+        Cursor cursor = null;
+        try {
+            cursor = db.query(BankName.TABLE,                //table
+                    null,                                   //column
+                    BankName.Column.BankName_name + "=?",       //where
+                    new String[]{name},                       //where arg
                     null, null, null);                      //groupby, having, orderby
 
             if (cursor.getCount() < 1) {

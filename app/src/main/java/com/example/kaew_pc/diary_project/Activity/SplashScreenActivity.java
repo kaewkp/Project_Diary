@@ -9,6 +9,8 @@ import com.example.kaew_pc.diary_project.Activity.PasswordManagement.SettingPass
 import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
 import com.example.kaew_pc.diary_project.R;
 
+import java.util.ArrayList;
+
 public class SplashScreenActivity extends AppCompatActivity {
 
     private Runnable runnable;
@@ -24,6 +26,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         dbHelper = DBHelper.getInstance(this);
+
         checkPassword();
 
 
