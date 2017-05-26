@@ -8,13 +8,22 @@
         app:actionViewClass="android.support.v7.widget.SearchView"
         android:title="Search"/>
 
-    <item android:id="@+id/action_alert"
-        android:title="สีพื้นหลัง"
-        app:showAsAction="never"
-        />
+    <!--<item android:id="@+id/action_alert"-->
+        <!--android:title="สีพื้นหลัง"-->
+        <!--app:showAsAction="never"-->
+        <!--/>-->
 
-    <item android:id="@+id/action_sortNew"
-        android:title="เรียงตาม"
-        app:showAsAction="never"
-        />
+    <!--<item android:id="@+id/sortNew"-->
+        <!--android:title="วันที่บันทึก"-->
+        <!--app:showAsAction="never"-->
+        <!--/>-->
+    <!--<item android:id="@+id/sortEdit"-->
+        <!--android:title="วันที่แก้ไข"-->
+        <!--app:showAsAction="never"-->
+        <!--/>-->
+    <!--<item android:id="@+id/sortAlert"-->
+        <!--android:title="วันที่แจ้งเตือน"-->
+        <!--app:showAsAction="never"-->
+        <!--/>-->
+
 </menu>

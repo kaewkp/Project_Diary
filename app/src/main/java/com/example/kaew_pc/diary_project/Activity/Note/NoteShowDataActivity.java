@@ -34,7 +34,7 @@ public class NoteShowDataActivity extends AppCompatActivity {
     }
 
     private void init() {
-        desc = (TextView) findViewById(R.id.date);
+        desc = (TextView) findViewById(R.id.desc);
         title = (TextView) findViewById(R.id.title);
 
         intent = getIntent();

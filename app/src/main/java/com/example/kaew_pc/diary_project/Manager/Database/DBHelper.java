@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.example.kaew_pc.diary_project.Manager.Repository.BankNameRepository;
 import com.example.kaew_pc.diary_project.Manager.Repository.DebtTimeRepository;
+import com.example.kaew_pc.diary_project.Manager.Repository.NoteImageRepository;
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentDataRepository;
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentTypeRepository;
 
@@ -67,11 +68,6 @@ public class DBHelper extends SQLiteOpenHelper {
         new PaymentTypeRepository().createData(db);
         new BankNameRepository(context).createData(db);
         new DebtTimeRepository(context).createData(db);
-
-//        //Alarm
-//        db.execSQL(Alarm.getSql());
-//        db.execSQL(AlarmTime.getSql());
-//        db.execSQL(Notification_status.getSql());
     }
 
     public String getPersonalID(){
@@ -199,7 +195,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //Table BinRepository
         db.execSQL(BinRepository.dropTable());
-
 
         db.execSQL(BankNameRepository.dropTable());
         db.execSQL(DebtTimeRepository.dropTable());

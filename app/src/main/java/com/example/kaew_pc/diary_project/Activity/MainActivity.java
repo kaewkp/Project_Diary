@@ -244,6 +244,10 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra("Setting", "Main");
             startActivity(intent);
         }
+//        else if (id == R.id.nav_setup) {
+//            Toast.makeText(getApplicationContext(), "Not Available",
+//                    Toast.LENGTH_LONG).show();
+//        }
 
 
 //        } else if (id == R.id.nav_setup) {

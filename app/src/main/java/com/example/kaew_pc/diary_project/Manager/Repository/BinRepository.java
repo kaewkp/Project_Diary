@@ -53,11 +53,19 @@ public class BinRepository {
         db.update(Note_data.TABLE, initialValues, "Note_id="+id, null);
     }
 
-    public void deleteData(SQLiteDatabase db, int id){
+    public void deleteData(SQLiteDatabase db){
+        String whereClause = Note_data.Column.isDelete+"=?";
+        String[] whereArgs = new String[] { String.valueOf(0) };
+
+        Log.d("Recycle", "Delete All Dsta in Recycle");
+        db.delete(Note_data.TABLE, whereClause, whereArgs);
+    }
+
+    public void deleteDataById(SQLiteDatabase db, int id){
         String whereClause = Note_data.Column.Note_id+"=?";
         String[] whereArgs = new String[] { String.valueOf(id) };
 
-        Log.d("Delete Dsta in Recycle", "id : " + id);
+        Log.d("Recycle", "Delete Dsta id : " + id);
         db.delete(Note_data.TABLE, whereClause, whereArgs);
     }
 
@@ -84,7 +92,9 @@ public class BinRepository {
                 Note_data data = new Note_data(cursor.getInt(cursor.getColumnIndex(Note_data.Column.Note_id))
                         , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_title))
                         , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_desc))
-                        , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_date))
+                        , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_alertdate))
+                        , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_savedate))
+                        , cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_editdate))
                         , cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id))
                         , cursor.getInt(cursor.getColumnIndex(Note_data.Column.isDelete)));
                 list.add(data);
@@ -123,7 +133,9 @@ public class BinRepository {
                 data.setNote_id(cursor.getInt(cursor.getColumnIndex(Note_data.Column.Note_id)));
                 data.setNote_title(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_title)));
                 data.setNote_desc(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_desc)));
-                data.setNote_date(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_date)));
+                data.setNote_editdate(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_editdate)));
+                data.setNote_alertdate(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_alertdate)));
+                data.setNote_savedate(cursor.getString(cursor.getColumnIndex(Note_data.Column.Note_savedate)));
                 data.setNoti_id(cursor.getString(cursor.getColumnIndex(Note_data.Column.Noti_id)));
                 cursor.moveToNext();
             }

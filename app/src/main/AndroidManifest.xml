@@ -35,7 +35,6 @@
             android:name=".Activity.PasswordManagement.SettingPasswordActivity"
             android:label="@string/title_activity_password_manager"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Activity.LoginActivity"
             android:label="@string/title_activity_main"
@@ -45,6 +44,7 @@
             android:label="บันทึกทั้งหมด" />
         <activity
             android:name=".Activity.Note.NoteCreatePageActivity"
+            android:windowSoftInputMode="stateHidden"
             android:label="บันทึกใหม่" />
         <activity
             android:name=".Activity.Payment.PaymentMainPageActivity"
@@ -66,8 +66,18 @@
             android:name=".Activity.PasswordManagement.PersonalCheck"
             android:label="ลืมรหัสผ่าน" />
 
+        <activity
+            android:name=".Activity.Note.ShowPicture" />
+
+        <activity
+            android:name="com.andremion.louvre.home.GalleryActivity"
+            android:theme="@style/AppTheme.Louvre.Light.DarkActionBar" />
+        <activity
+            android:name="com.andremion.louvre.preview.PreviewActivity"
+            android:theme="@style/AppTheme.Louvre.Preview" />
+
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
 
         <meta-data
             android:name="com.google.android.gms.version"
