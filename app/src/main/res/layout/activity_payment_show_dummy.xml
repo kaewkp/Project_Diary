@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="19dp"
-        android:text="ค่าน้ำ"
+        android:text="ค่าโทรศัพท์"
         android:textColor="#000000"
         android:textSize="30sp"
         android:layout_below="@+id/head"
@@ -66,7 +66,7 @@
         android:id="@+id/priceshow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="564.0"
+        android:text="350.0"
         android:textSize="30sp"
         android:layout_below="@+id/price"
         android:layout_alignParentEnd="true"
@@ -86,7 +86,7 @@
         android:id="@+id/endDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="31 / 05 / 2017"
+        android:text="28 / 05 / 2017"
         android:textSize="30sp"
         android:layout_marginTop="11dp"
         android:layout_below="@+id/date"
@@ -100,7 +100,7 @@
         android:layout_alignStart="@+id/titledetail"
         android:layout_below="@+id/titledetail"
         android:layout_marginTop="16dp"
-        android:text="บ้านก็ไม่ได้อยู่ ทำไมค่าน้ำแพงจัง"
+        android:text="เบอร์ 0842161921"
         android:textSize="16sp" />
 
 </RelativeLayout>

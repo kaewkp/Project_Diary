@@ -177,7 +177,7 @@ public class PaymentActivity extends AppCompatActivity {
 //                startService(intent_service);
                 PendingIntent pi = PendingIntent.getBroadcast(PaymentActivity.this, 0, intent_service, PendingIntent.FLAG_UPDATE_CURRENT);
                 AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+(10*1000), pi);
+                am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+(60*1000), pi);
 
 
                 Toast.makeText(PaymentActivity.this, "บันทึกแล้ว ",

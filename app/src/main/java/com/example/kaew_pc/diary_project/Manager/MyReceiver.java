@@ -20,7 +20,7 @@ public class MyReceiver extends BroadcastReceiver {
 //        Intent i = new Intent(context, NoteCreatePageActivity.class);
 //        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //        context.startActivity(i);
-        createNoti(context, "Tamutami Diary", "ค่าน้ำ", "รายการที่ต้องชำระ");
+        createNoti(context, "Tamutami Diary", "ค่าโทรศัพท์", "รายการที่ต้องชำระ");
 
     }
 
