@@ -80,6 +80,9 @@ public class CalendarMainActivity extends AppCompatActivity implements CalendarM
         db = DBHelper.getInstance(this);
         final CalendarDataRepository cdr = new CalendarDataRepository();
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_calendar);
+
+
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,8 +131,8 @@ public class CalendarMainActivity extends AppCompatActivity implements CalendarM
 
                         sCalendar.setCalendar_title(titleT.getText()+"");
                         sCalendar.setCalendar_desc(descT.getText()+"");
-                        sCalendar.setNoti_id(spinNotic.getTextAlignment()+"");
-                        sCalendar.setCalendarType_id(spinTypeEvent.getTextAlignment()+"");
+                        sCalendar.setNoti_id(spinNotic.getSelectedItem().toString()+"");
+                        sCalendar.setCalendarType_id(spinTypeEvent.getSelectedItem().toString()+"");
                         sCalendar.setCalendar_createdTime(cdr.StringToDateConverter(createDateTime));
 
                         cdr.insertData(db.getReadableDatabase(),sCalendar);

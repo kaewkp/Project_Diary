@@ -31,7 +31,7 @@ public class CalendarDataRepository {
 
     public static String createTable(){
         String CREATE_Calendar_data_TABLE = String.format("CREATE TABLE %s " +
-                        "(%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, %s VARCHAR(60), %s TEXT, %s DATETIME, %s VARCHAR(3), %s VARCHAR(3))",
+                        "(%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, %s VARCHAR(60), %s TEXT, %s DATETIME, %s VARCHAR(20), %s VARCHAR(20))",
                 Calendar_data.TABLE,
                 Calendar_data.Column.Calendar_id,
                 Calendar_data.Column.Calendar_title,

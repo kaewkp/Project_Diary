@@ -77,36 +77,8 @@ public class CalendarDetailActivity extends AppCompatActivity {
         timeListI = bundle.getString("4");
         noticI = bundle.getString("5");
         descI = bundle.getString("6");
-        _idNotic = Integer.parseInt(noticI);
-        _idType = Integer.parseInt(typeI);
-        switch (typeI){
-            case "1" : typeI = "วันครบรอบ";
-                        break;
-            case "2" : typeI = "ประชุม";
-                        break;
-            case "3" : typeI = "ท่องเที่ยว";
-                        break;
-            case "4" : typeI = "วันเกิด";
-                        break;
-            default : typeI = "วันครบรอบ";
-                        break;
-        }
-
-        switch (noticI){
-            case "1" : noticI = "ล่วงหน้า 1 วัน";
-                break;
-            case "2" : noticI = "ล่วงหน้า 3 วัน";
-                break;
-            case "3" : noticI = "่วงหน้า 5 วัน";
-                break;
-            case "4" : noticI = "ล่วงหน้า 1 สัปดาห";
-                break;
-            case "5" : noticI = "ล่วงหน้า 2 สัปดาห์";
-                break;
-            default : noticI = "ล่วงหน้า 1 วัน";
-                break;
-        }
-
+        Log.d("noticI",noticI+"");
+        Log.d("typeI",typeI+"");
         titleE.setText(titleI);
         Log.d("dayE",startTimeI+"");
         dayE.setText(startTimeI);
