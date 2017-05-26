@@ -46,6 +46,7 @@ public class PaymentTypeRepository {
         insertData(db, "pt3","ค่าโทรศัพท์");
         insertData(db, "pt4","ค่าบัตรเครดิต");
         insertData(db, "pt5","ค่าผ่อนชำระ");
+        insertData(db, "pt6","อื่นๆ");
     }
 
     public ArrayList<PayType> getData(SQLiteDatabase db){
