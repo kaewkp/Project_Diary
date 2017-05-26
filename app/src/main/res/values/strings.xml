@@ -8,6 +8,24 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_password_manager">passwordManager</string>
 
+    <string name="pick_date">เลือกวัน</string>
+    <string name="pick_time">เลือกเวลา</string>
+
+    <string-array name="type_event">
+        <item>วันครบรอบ</item>
+        <item>ประชุม</item>
+        <item>ท่องเที่ยว</item>
+        <item>วันเกิด</item>
+    </string-array>
+
+    <string-array name="time_notic">
+        <item>ล่วงหน้า 1 วัน</item>
+        <item>ล่วงหน้า 3 วัน</item>
+        <item>ล่วงหน้า 5 วัน</item>
+        <item>ล่วงหน้า 1 สัปดาห์</item>
+        <item>ล่วงหน้า 2 สัปดาห์</item>
+    </string-array>
+
     <string-array name="ประเภทค่าใช้จ่าย">
         <item>เลือกประเภทค่าใช้จ่าย</item>
         <item>ค่าน้ำ</item>
@@ -68,7 +86,6 @@
         <item>วันที่แจ้งเตือน</item>
     </string-array>
 
-
     <string name="activity_not_locked_text">Nothing should happen on this page, here for test purpose</string>
     <string name="activity_dialog_title">Forgot you Pincode?</string>
     <string name="activity_dialog_accept">OK</string>
@@ -76,6 +93,10 @@
     <string name="activity_dialog_content">Tap \'OK\' to log out, when you log back in you\'ll be able to create a new Pincode.\n\nIf you remember your Pincode, tap \'Cancel\' to go back.</string>
     <string name="activity_appcompat_message">I am a PinCompatActivity!</string>
     <string name="title_activity_change">Change</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

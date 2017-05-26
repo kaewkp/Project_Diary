@@ -10,6 +10,10 @@ import android.util.Log;
 import com.example.kaew_pc.diary_project.Manager.Repository.BankNameRepository;
 import com.example.kaew_pc.diary_project.Manager.Repository.DebtTimeRepository;
 import com.example.kaew_pc.diary_project.Manager.Repository.NoteImageRepository;
+
+import com.example.kaew_pc.diary_project.Manager.Repository.CalendarDataRepository;
+import com.example.kaew_pc.diary_project.Manager.Repository.CalendarTypeRepository;
+
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentDataRepository;
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentTypeRepository;
 
@@ -68,6 +72,11 @@ public class DBHelper extends SQLiteOpenHelper {
         new PaymentTypeRepository().createData(db);
         new BankNameRepository(context).createData(db);
         new DebtTimeRepository(context).createData(db);
+
+        // Table Calendar Type
+        db.execSQL(CalendarTypeRepository.createTable());
+        // Table Calendar
+        db.execSQL(CalendarDataRepository.createTable());
     }
 
     public String getPersonalID(){
@@ -203,6 +212,10 @@ public class DBHelper extends SQLiteOpenHelper {
 //        db.execSQL("DROP TABLE IF EXISTS " + Alarm.TABLE_NAME);
 //        db.execSQL("DROP TABLE IF EXISTS " + AlarmTime.TABLE_NAME);
 //        db.execSQL("DROP TABLE IF EXISTS " + Notification_status.TABLE_NAME);
+
+        db.execSQL(CalendarTypeRepository.dropTable());
+        db.execSQL(CalendarDataRepository.dropTable());
+
 
         Log.i(TAG, "Upgrade Database from " + oldVersion + " to " + newVersion);
 

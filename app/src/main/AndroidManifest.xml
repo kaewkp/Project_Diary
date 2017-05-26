@@ -53,6 +53,7 @@
             android:name=".Activity.Payment.PaymentActivity"
             android:label="รายการที่ต้องชำระใหม่"
             android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".Activity.Payment.PaymentShowActivity"
             android:label="รายการที่ต้องชำระ" />
@@ -75,6 +76,13 @@
         <activity
             android:name="com.andremion.louvre.preview.PreviewActivity"
             android:theme="@style/AppTheme.Louvre.Preview" />
+        <activity
+            android:name=".Activity.Calendar.CalendarMainActivity"
+            android:label="หน้าปฏิทินหลัก" />
+
+        <activity
+            android:name=".Activity.Calendar.CalendarDetailActivity"
+            android:label="หน้ารายละเอียดกิจกรรม" />
 
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
         App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
