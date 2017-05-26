@@ -248,14 +248,14 @@ public class NoteMainPageActivity extends AppCompatActivity implements SearchVie
             case android.R.id.home:
                 finish();
                 return true;
-            case R.id.sortNew:
-                sortID = 0;
-                loadNoteList(0);
-                return true;
-            case R.id.sortEdit:
-                sortID = 1;
-                loadNoteList(1);
-                return true;
+//            case R.id.sortNew:
+//                sortID = 0;
+//                loadNoteList(0);
+//                return true;
+//            case R.id.sortEdit:
+//                sortID = 1;
+//                loadNoteList(1);
+//                return true;
 //            case R.id.sortAlert:
 //                sortID = 2;
 //                loadNoteList(2);

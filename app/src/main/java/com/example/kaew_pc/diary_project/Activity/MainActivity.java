@@ -157,10 +157,11 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(getApplicationContext(), SettingPasswordActivity.class);
             intent.putExtra("Setting", "Main");
             startActivity(intent);
-        } else if (id == R.id.nav_setup) {
-            Toast.makeText(getApplicationContext(), "Not Available",
-                    Toast.LENGTH_LONG).show();
         }
+//        else if (id == R.id.nav_setup) {
+//            Toast.makeText(getApplicationContext(), "Not Available",
+//                    Toast.LENGTH_LONG).show();
+//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
