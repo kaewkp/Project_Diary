@@ -65,8 +65,6 @@
             android:name=".Activity.PasswordManagement.PersonalCheck"
             android:label="ลืมรหัสผ่าน" />
 
-
-
         <!--
      ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -88,7 +86,6 @@
             android:name=".Manager.MyReceiver"
             android:enabled="true"
             android:exported="false" />
-
         <receiver
             android:name=".Manager.NoteReceiver"
             android:enabled="true"
@@ -105,7 +102,7 @@
             <action android:name="android.intent.category.DEFAULT" />
         </intent-filter>
 
-        <activity android:name=".Activity.Payment.PaymentShowDummy"></activity>
+        <activity android:name=".Activity.Payment.PaymentShowDummy" />
     </application>
 
 </manifest>
