@@ -12,11 +12,10 @@
     <string name="pick_time">เลือกเวลา</string>
 
     <string-array name="type_event">
-        <item>วันเกิด</item>
         <item>วันครบรอบ</item>
-        <item>นัดหมาย</item>
+        <item>ประชุม</item>
         <item>ท่องเที่ยว</item>
-        <item>อื่นๆ</item>
+        <item>วันเกิด</item>
     </string-array>
 
     <string-array name="time_notic">

@@ -88,7 +88,7 @@ public class Calendar_data {
     }
 
     public void setCalendarType_id(String CalendarType_id) {
-        CalendarType_id = CalendarType_id;
+        this.CalendarType_id = CalendarType_id;
     }
 
     public void setNoti_id(String Noti_id) {

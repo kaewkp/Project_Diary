@@ -89,7 +89,6 @@ public class CalendarAdapter extends ArrayAdapter {
                 && displayYear == eventCalendar.get(Calendar.YEAR)){
 
             viewHolder.highlight.setColorFilter(ContextCompat.getColor(mContext,R.color.colorAccent_second));
-
         }
 //        Log.d("222","===========================");
 //        Log.d("111", dayValue + " + " + displayMonth + " + " +displayYear);
@@ -98,7 +97,7 @@ public class CalendarAdapter extends ArrayAdapter {
             eventCalendar.setTime(allEvents.get(i).getDate());
             Log.d("Event",eventCalendar.get(Calendar.DAY_OF_MONTH) + " + " + (eventCalendar.get(Calendar.MONTH) + 1) + " + " +eventCalendar.get(Calendar.YEAR));
             if(dayValue == eventCalendar.get(Calendar.DAY_OF_MONTH)
-                && displayMonth == eventCalendar.get(Calendar.MONTH)+1
+                && displayMonth == eventCalendar.get(Calendar.MONTH) + 1
                 && displayYear == eventCalendar.get(Calendar.YEAR)){
 //                Log.d("555",eventCalendar.get(Calendar.DAY_OF_MONTH) + " + " + (eventCalendar.get(Calendar.MONTH) + 1) + " + " +eventCalendar.get(Calendar.YEAR));
 //                Log.d("111", dayValue + " + " + displayMonth + " + " +displayYear);

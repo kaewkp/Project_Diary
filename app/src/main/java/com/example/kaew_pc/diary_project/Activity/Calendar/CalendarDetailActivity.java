@@ -51,6 +51,9 @@ public class CalendarDetailActivity extends AppCompatActivity {
     private Date dateS, dateD;
     private DBHelper db;
 
+    private String titleI, typeI, startTimeI, timeListI, noticI, descI;
+    private int _idType, _idNotic;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,98 +71,144 @@ public class CalendarDetailActivity extends AppCompatActivity {
         detailE = (TextView) findViewById(R.id.note);
         detailCacel = (ImageButton) findViewById(R.id.calendar_detail_cancel) ;
         bundle = getIntent().getExtras();
+        titleI = bundle.getString("1");
+        typeI = bundle.getString("2");
+        startTimeI = bundle.getString("Date");
+        timeListI = bundle.getString("4");
+        noticI = bundle.getString("5");
+        descI = bundle.getString("6");
+        _idNotic = Integer.parseInt(noticI);
+        _idType = Integer.parseInt(typeI);
+        switch (typeI){
+            case "1" : typeI = "วันครบรอบ";
+                        break;
+            case "2" : typeI = "ประชุม";
+                        break;
+            case "3" : typeI = "ท่องเที่ยว";
+                        break;
+            case "4" : typeI = "วันเกิด";
+                        break;
+            default : typeI = "วันครบรอบ";
+                        break;
+        }
+
+        switch (noticI){
+            case "1" : noticI = "ล่วงหน้า 1 วัน";
+                break;
+            case "2" : noticI = "ล่วงหน้า 3 วัน";
+                break;
+            case "3" : noticI = "่วงหน้า 5 วัน";
+                break;
+            case "4" : noticI = "ล่วงหน้า 1 สัปดาห";
+                break;
+            case "5" : noticI = "ล่วงหน้า 2 สัปดาห์";
+                break;
+            default : noticI = "ล่วงหน้า 1 วัน";
+                break;
+        }
+
+        titleE.setText(titleI);
+        Log.d("dayE",startTimeI+"");
+        dayE.setText(startTimeI);
+        timeE.setText(timeListI);
+        typeE.setText(typeI);
+        alarmE.setText(noticI);
+        detailE.setText(descI);
+
+        detailCacel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                        Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_CALENDAR_FRAGMENT);
+//                        if(fragment != null) {
+//                            getSupportFragmentManager()
+//                                    .beginTransaction()
+//                                    .detach(fragment)
+//                                    .attach(fragment)
+//                                    .commit();
+//                        }
+                        finish();
+                    }
+                });
 
         final CalendarDataRepository cdr = new CalendarDataRepository();
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_calendar);
+//        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_edit);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.w("xx", "addButton");
-                final Dialog dialog = new Dialog(CalendarDetailActivity.this);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.calendar_addevent);
-                dialog.setCancelable(true);
-
-                startDatePicker = (Button) dialog.findViewById(R.id.start_date);
-                startTimePicker = (Button) dialog.findViewById(R.id.start_time);
-                spinTypeEvent = (Spinner) dialog.findViewById(R.id.type_event);
-                spinNotic = (Spinner) dialog.findViewById(R.id.time_notic);
-                doneEvent = (ImageButton) dialog.findViewById(R.id.calendar_done);
-                cancelEvent = (ImageButton) dialog.findViewById(R.id.calendar_cancel);
-                titleT = (EditText) dialog.findViewById(R.id.txtNameofEvent);
-                descT = (EditText) dialog.findViewById(R.id.descEvent);
-
-                titleT.setText(titleE.getText());
-                descT.setText(detailE.getText());
-//                startDatePicker.setText();
-//                startTimePicker.setText();
-//                setDateTimeNow();
-
-                ArrayAdapter<CharSequence> adapterType;
-                adapterType = ArrayAdapter.createFromResource(CalendarDetailActivity.this,
-                        R.array.type_event, android.R.layout.simple_spinner_item );
-                adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinTypeEvent.setAdapter(adapterType);
-
-                ArrayAdapter<CharSequence> adapterTime;
-                adapterTime = ArrayAdapter.createFromResource(CalendarDetailActivity.this,
-                        R.array.time_notic, android.R.layout.simple_spinner_item );
-                adapterTime.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinNotic.setAdapter(adapterTime);
-
-                doneEvent.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Log.w("startDatePicker",startDatePicker.getText()+"");
-                        Log.w("startTimePicker",startTimePicker.getText()+"");
-                        Log.w("spinTypeEvent",spinTypeEvent.getTextAlignment()+"");
-                        Log.w("spinNotic",spinNotic.getTextAlignment()+"");
-                        String createDateTime = startDatePicker.getText()
-                                +" "+startTimePicker.getText();
-
-                        Log.w("createDateTime",createDateTime);
-
-                        Calendar_data sCalendar = new Calendar_data();
-
-                        sCalendar.setCalendar_title(titleT.getText()+"");
-                        sCalendar.setCalendar_desc(descT.getText()+"");
-                        sCalendar.setNoti_id(spinNotic.getTextAlignment()+"");
-                        sCalendar.setCalendarType_id(spinTypeEvent.getTextAlignment()+"");
-                        sCalendar.setCalendar_createdTime(cdr.StringToDateConverter(createDateTime));
-
-                        cdr.updateData(db.getReadableDatabase(),sCalendar);
-                        dialog.cancel();
-//                        Intent intent = new Intent(getApplicationContext(),CalendarMainActivity.class);
-//                        startActivity(intent);
-
-                    }
-                });
-
-                cancelEvent.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.cancel();
-                    }
-                });
-
-                detailCacel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_CALENDAR_FRAGMENT);
-                        if(fragment != null) {
-                            getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .detach(fragment)
-                                    .attach(fragment)
-                                    .commit();
-                        }
-                    }
-                });
-
-                dialog.show();
-            }
-        });
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.w("xx", "addButton");
+//                final Dialog dialog = new Dialog(CalendarDetailActivity.this);
+//                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                dialog.setContentView(R.layout.calendar_addevent);
+//                dialog.setCancelable(true);
+//
+//                startDatePicker = (Button) dialog.findViewById(R.id.start_date);
+//                startTimePicker = (Button) dialog.findViewById(R.id.start_time);
+//                spinTypeEvent = (Spinner) dialog.findViewById(R.id.type_event);
+//                spinNotic = (Spinner) dialog.findViewById(R.id.time_notic);
+//                doneEvent = (ImageButton) dialog.findViewById(R.id.calendar_done);
+//                cancelEvent = (ImageButton) dialog.findViewById(R.id.calendar_cancel);
+//                titleT = (EditText) dialog.findViewById(R.id.txtNameofEvent);
+//                descT = (EditText) dialog.findViewById(R.id.descEvent);
+//
+//                titleT.setText(titleE.getText());
+//                descT.setText(detailE.getText());
+////                startDatePicker.setText();
+////                startTimePicker.setText();
+////                setDateTimeNow();
+//
+//                ArrayAdapter<CharSequence> adapterType;
+//                adapterType = ArrayAdapter.createFromResource(CalendarDetailActivity.this,
+//                        R.array.type_event, android.R.layout.simple_spinner_item );
+//                adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                spinTypeEvent.setAdapter(adapterType);
+//
+//                ArrayAdapter<CharSequence> adapterTime;
+//                adapterTime = ArrayAdapter.createFromResource(CalendarDetailActivity.this,
+//                        R.array.time_notic, android.R.layout.simple_spinner_item );
+//                adapterTime.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                spinNotic.setAdapter(adapterTime);
+//
+//                doneEvent.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Log.w("startDatePicker",startDatePicker.getText()+"");
+//                        Log.w("startTimePicker",startTimePicker.getText()+"");
+//                        Log.w("spinTypeEvent",spinTypeEvent.getTextAlignment()+"");
+//                        Log.w("spinNotic",spinNotic.getTextAlignment()+"");
+//                        String createDateTime = startDatePicker.getText()
+//                                +" "+startTimePicker.getText();
+//
+//                        Log.w("createDateTime",createDateTime);
+//
+//                        Calendar_data sCalendar = new Calendar_data();
+//
+//                        sCalendar.setCalendar_title(titleT.getText()+"");
+//                        sCalendar.setCalendar_desc(descT.getText()+"");
+//                        sCalendar.setNoti_id(spinNotic.getTextAlignment()+"");
+//                        sCalendar.setCalendarType_id(spinTypeEvent.getTextAlignment()+"");
+//                        sCalendar.setCalendar_createdTime(cdr.StringToDateConverter(createDateTime));
+//
+//                        cdr.updateData(db.getReadableDatabase(),sCalendar);
+//                        dialog.cancel();
+////                        Intent intent = new Intent(getApplicationContext(),CalendarMainActivity.class);
+////                        startActivity(intent);
+//
+//                    }
+//                });
+//
+//                cancelEvent.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dialog.cancel();
+//                    }
+//                });
+//
+//
+//
+//                dialog.show();
+//            }
+//        });
 
     }
     public void clickDate(View view){
