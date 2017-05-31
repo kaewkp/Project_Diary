@@ -368,12 +368,12 @@ public class PaymentActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
-        if (item.getItemId() == R.id.action_alert) {
-//            timealertbuilder.show();
-            return true;
-        } else if (item.getItemId() == R.id.action_add) {
-            return true;
-        }
+//        if (item.getItemId() == R.id.action_alert) {
+////            timealertbuilder.show();
+//            return true;
+//        } else if (item.getItemId() == R.id.action_add) {
+//            return true;
+//        }
 
         if (item.getItemId() == android.R.id.home) {
             intent = new Intent(getApplicationContext(), PaymentMainPageActivity.class);

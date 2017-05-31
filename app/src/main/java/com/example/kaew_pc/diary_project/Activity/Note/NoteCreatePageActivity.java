@@ -386,7 +386,7 @@ public class NoteCreatePageActivity extends AppCompatActivity {
 //                startActivity(intent);
 //                finish();
 
-            case R.id.action_alert:
+//            case R.id.action_alert:
 
             case android.R.id.home:
                 finish();
