@@ -92,10 +92,10 @@ public class CalendarAdapter extends ArrayAdapter {
         }
 //        Log.d("222","===========================");
 //        Log.d("111", dayValue + " + " + displayMonth + " + " +displayYear);
-        Log.d("Even Size", allEvents.size()+"");
+//        Log.d("Even Size", allEvents.size()+"");
         for(int i=0; i< allEvents.size();i++){
             eventCalendar.setTime(allEvents.get(i).getDate());
-            Log.d("Event",eventCalendar.get(Calendar.DAY_OF_MONTH) + " + " + (eventCalendar.get(Calendar.MONTH) + 1) + " + " +eventCalendar.get(Calendar.YEAR));
+//            Log.d("Event",eventCalendar.get(Calendar.DAY_OF_MONTH) + " + " + (eventCalendar.get(Calendar.MONTH) + 1) + " + " +eventCalendar.get(Calendar.YEAR));
             if(dayValue == eventCalendar.get(Calendar.DAY_OF_MONTH)
                 && displayMonth == eventCalendar.get(Calendar.MONTH) + 1
                 && displayYear == eventCalendar.get(Calendar.YEAR)){
