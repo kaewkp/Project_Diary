@@ -122,9 +122,15 @@
             <action android:name="android.intent.category.DEFAULT" />
         </intent-filter>
 
-        <activity android:name=".Activity.Payment.PaymentShowDummy" />
+        <activity android:name=".Activity.Payment.PaymentShowDummy"
+            android:label="รายละเอียดค่าชำระ" />
+
+        <activity android:name=".Activity.Payment.PaymentHistoryActivity"
+            android:label="ประวัติค่าบริการ" />
+
+        <activity android:name=".Activity.Payment.PaymentShowHistoryActivity"
+            android:label="รายละเอียดประวัติค่าบริการ" />
+
     </application>
-
-
 
 </manifest>

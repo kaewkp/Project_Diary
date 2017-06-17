@@ -35,4 +35,12 @@ public class Payment_status {
     public String getPayStatus_name() {
         return PayStatus_name;
     }
+
+    public void setPayStatus_id(String id){
+        this.PayStatus_id = id;
+    }
+
+    public void setPayStatus_name(String name){
+        this.PayStatus_name = name;
+    }
 }
