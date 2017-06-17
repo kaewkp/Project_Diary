@@ -15,6 +15,7 @@ import com.example.kaew_pc.diary_project.Manager.Repository.CalendarDataReposito
 import com.example.kaew_pc.diary_project.Manager.Repository.CalendarTypeRepository;
 
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentDataRepository;
+import com.example.kaew_pc.diary_project.Manager.Repository.PaymentStatusRepository;
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentTypeRepository;
 
 import com.example.kaew_pc.diary_project.Manager.Repository.BinRepository;
@@ -69,7 +70,10 @@ public class DBHelper extends SQLiteOpenHelper {
         // Table Payment Type
         db.execSQL(PaymentTypeRepository.createTable());
 
+        db.execSQL(PaymentStatusRepository.createTable());
+
         new PaymentTypeRepository().createData(db);
+        new PaymentStatusRepository().createData(db);
         new BankNameRepository(context).createData(db);
         new DebtTimeRepository(context).createData(db);
 
@@ -201,6 +205,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //Table PaymentType
         db.execSQL(PaymentTypeRepository.dropTable());
+
+        db.execSQL(PaymentStatusRepository.dropTable());
 
         //Table BinRepository
         db.execSQL(BinRepository.dropTable());
