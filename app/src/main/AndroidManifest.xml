@@ -14,6 +14,14 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+
+    <permission android:name="${applicationId}.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="${applicationId}.permission.MAPS_RECEIVE" />
+
+    <provider   android:name=".your.provider"
+        android:authorities="${applicationId}.your.provider" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -122,5 +130,7 @@
 
         <activity android:name=".Activity.Payment.PaymentShowDummy" />
     </application>
+
+
 
 </manifest>

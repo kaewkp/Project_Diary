@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.support.v7.app.NotificationCompat;
 
 import com.example.kaew_pc.diary_project.Activity.Note.NoteCreatePageActivity;
+import com.example.kaew_pc.diary_project.Activity.Payment.PaymentShowActivity;
 import com.example.kaew_pc.diary_project.Activity.Payment.PaymentShowDummy;
 import com.example.kaew_pc.diary_project.R;
 
@@ -15,12 +16,15 @@ import java.util.Random;
 
 public class MyReceiver extends BroadcastReceiver {
 
+    Random random = new Random();
+    int m = random.nextInt(9999 - 1000) + 1000;
+
     @Override
     public void onReceive(Context context, Intent intent) {
 //        Intent i = new Intent(context, NoteCreatePageActivity.class);
 //        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //        context.startActivity(i);
-        createNoti(context, "Tamutami Diary", "ค่าโทรศัพท์", "รายการที่ต้องชำระ");
+        //createNoti(context, "Tamutami Diary", "ค่าโทรศัพท์", "รายการที่ต้องชำระ");
 
     }
 
@@ -43,7 +47,7 @@ public class MyReceiver extends BroadcastReceiver {
         NotificationManager mNotificationManager =
                 (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        mNotificationManager.notify(1, mBuilder.build());
+        mNotificationManager.notify(m, mBuilder.build());
 
 
     }
@@ -51,7 +55,7 @@ public class MyReceiver extends BroadcastReceiver {
 //        Intent i = new Intent(context, NoteCreatePageActivity.class);
 //        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //        context.startActivity(i);
-    }
+}
 
 
 

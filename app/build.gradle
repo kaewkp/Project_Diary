@@ -18,6 +18,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+        flavor {
+            minSdkVersion 19
+            applicationId 'com.example.kaew_pc.flavor'
+            targetSdkVersion 25
+            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+            versionCode 1
+            versionName '1.0'
+        }
+        flavor1 {
+            minSdkVersion 19
+            applicationId 'com.example.kaew_pc.flavor1'
+            targetSdkVersion 25
+            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+            versionCode 1
+            versionName '1.0'
+        }
+    }
 }
 
 dependencies {
@@ -28,16 +46,14 @@ dependencies {
     compile 'com.google.android.gms:play-services:7.5.0'
     compile 'com.android.support:appcompat-v7:25.1.1'
     compile 'com.android.support:design:25.1.1'
-
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-
     compile 'com.android.support:support-v4:25.1.1'
     compile project(':event-calendar-view')
-
     testCompile 'junit:junit:4.12'
     //External image picker libraly louvre
     compile 'com.github.andremion:louvre:1.0.1'
-
     //Photo View
     compile 'com.github.chrisbanes:PhotoView:1.3.1'
 }
+
+

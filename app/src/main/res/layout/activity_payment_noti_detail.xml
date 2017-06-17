@@ -7,6 +7,27 @@
     tools:context="com.example.kaew_pc.diary_project.Activity.Payment.PaymentShowDummy">
 
     <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/price"
+        android:layout_below="@+id/textView11"
+        android:paddingTop="5dp"
+        android:text="ยังไม่ได้เลือกวันที่"
+        android:textColor="@color/colorDrak"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/date"
+        android:layout_below="@+id/endDate"
+        android:text="วันที่ชำระ"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+    <TextView
         android:text="รายการที่ต้องชำระ"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,10 +54,11 @@
         android:id="@+id/titledetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="รายละเอียด"
-        android:textSize="18sp"
+        android:layout_alignStart="@+id/head"
         android:layout_below="@+id/title"
-        android:layout_alignStart="@+id/head" />
+        android:text="รายละเอียด"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
 
 
     <Button
@@ -56,11 +78,12 @@
         android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="จำนวนเงินที่ต้องชำระ"
-        android:textSize="18sp"
-        android:layout_marginTop="20dp"
+        android:layout_alignStart="@+id/detail"
         android:layout_below="@+id/detail"
-        android:layout_alignStart="@+id/detail" />
+        android:layout_marginTop="20dp"
+        android:text="จำนวนเงินที่ต้องชำระ"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/priceshow"
@@ -76,11 +99,12 @@
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="วันสิ้นสุดการชำระ"
-        android:textSize="18sp"
-        android:layout_below="@+id/priceshow"
         android:layout_alignStart="@+id/price"
-        android:layout_marginTop="10dp" />
+        android:layout_below="@+id/priceshow"
+        android:layout_marginTop="10dp"
+        android:text="วันสิ้นสุดการชำระ"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/endDate"

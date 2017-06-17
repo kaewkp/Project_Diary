@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -33,6 +34,7 @@ import android.widget.Toast;
 
 import com.example.kaew_pc.diary_project.Manager.Database.BankName;
 import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
+import com.example.kaew_pc.diary_project.Manager.Database.DebtTime;
 import com.example.kaew_pc.diary_project.Manager.Database.PayType;
 import com.example.kaew_pc.diary_project.Manager.Database.Payment_data;
 import com.example.kaew_pc.diary_project.Manager.MyReceiver;
@@ -91,6 +93,13 @@ public class PaymentActivity extends AppCompatActivity {
     long milliseconds;
     long endTime;
     long startTime;
+
+//kaew
+    Context context1 = this;
+    CountDownTimer cdt;
+    int i = 1;
+    //kaew
+
     private TextView tvTimer;
 
     private ArrayList<String> paymentTypeID;
@@ -100,7 +109,9 @@ public class PaymentActivity extends AppCompatActivity {
     private com.example.kaew_pc.diary_project.Manager.Database.DBHelper db;
     private PaymentDataRepository dataRepo;
     private PaymentTypeRepository spinnerRepo;
-
+    private BankNameRepository bankRepo;
+    private DebtTime deptRepo;
+    private int userChoose;
     public static final String DATE_TIME_FORMAT = "yyyy-MM-dd kk:mm:ss";
 
     SharedPreferences mpref;
@@ -177,8 +188,32 @@ public class PaymentActivity extends AppCompatActivity {
 //                startService(intent_service);
                 PendingIntent pi = PendingIntent.getBroadcast(PaymentActivity.this, 0, intent_service, PendingIntent.FLAG_UPDATE_CURRENT);
                 AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+(60*60*60*1000), pi);
+//                am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+(1), pi);
 
+                am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                        SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_DAY*30,
+                        AlarmManager.INTERVAL_DAY*30, pi);
+
+                //Kaew
+
+                if(i==1) {
+                    cdt = new CountDownTimer((diff-86400000), 1000) {   // 3 day = 259200000 , 1 day = 86400000
+                        public void onTick(long millisUntilFinished) {
+                            // Tick
+                        }
+
+                        public void onFinish() {
+
+                            MyReceiver set = new MyReceiver();
+
+                            set.createNoti(context1, "Tamutami Diary", "" + items, "รายการที่ต้องชำระ");
+                            i++;
+                            // Finish
+                        }
+                    }.start();
+                    //Kaew
+
+                }
 
                 Toast.makeText(PaymentActivity.this, "บันทึกแล้ว ",
                         Toast.LENGTH_LONG).show();
@@ -187,7 +222,6 @@ public class PaymentActivity extends AppCompatActivity {
 
             }
         });
-
 
         data = new Payment_data();
         paytypeData = new PayType();
@@ -201,7 +235,6 @@ public class PaymentActivity extends AppCompatActivity {
         formattedDate = df.format(time);
 
         db = DBHelper.getInstance(this);
-
 
         mpref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mEditor = mpref.edit();
@@ -291,6 +324,7 @@ public class PaymentActivity extends AppCompatActivity {
                 BankNameRepository bankNameRepo = new BankNameRepository(getApplicationContext());
                 BankName bankName = bankNameRepo.getDataByName(db.getReadableDatabase(), text[which]);
                 data.setBankName_id(bankName.getBankName_id());
+
             }
 
 
@@ -380,7 +414,6 @@ public class PaymentActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-
 
         return super.onOptionsItemSelected(item);
     }

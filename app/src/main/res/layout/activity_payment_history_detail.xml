@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.kaew_pc.diary_project.Activity.Payment.PaymentShowDummy">
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/price"
+        android:layout_below="@+id/textView11"
+        android:paddingTop="5dp"
+        android:text="ยังไม่ได้เลือกวันที่"
+        android:textColor="@color/colorDrak"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/date"
+        android:layout_below="@+id/endDate"
+        android:text="วันที่ชำระ"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FF9999"
+        android:text="เลือกวันที่"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="17dp"
+        android:layout_above="@+id/alreadypay"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="รายการที่ต้องชำระ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="11dp"
+        android:id="@+id/head"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:text="ค่าโทรศัพท์"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:layout_below="@+id/head"
+        android:layout_alignEnd="@+id/priceshow" />
+
+    <TextView
+        android:id="@+id/titledetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/head"
+        android:layout_below="@+id/title"
+        android:text="รายละเอียด"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+
+    <Button
+        android:id="@+id/alreadypay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="13dp"
+        android:background="#FF9999"
+        android:text="ชำระแล้ว"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:onClick="stopNotification"/>
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/detail"
+        android:layout_below="@+id/detail"
+        android:layout_marginTop="20dp"
+        android:text="จำนวนเงินที่ต้องชำระ"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/priceshow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="350.0"
+        android:textSize="30sp"
+        android:layout_below="@+id/price"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="12dp" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/price"
+        android:layout_below="@+id/priceshow"
+        android:layout_marginTop="10dp"
+        android:text="วันสิ้นสุดการชำระ"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/endDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="28 / 05 / 2017"
+        android:textSize="30sp"
+        android:layout_marginTop="11dp"
+        android:layout_below="@+id/date"
+        android:layout_alignEnd="@+id/priceshow" />
+
+    <TextView
+        android:id="@+id/detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/titledetail"
+        android:layout_below="@+id/titledetail"
+        android:layout_marginTop="16dp"
+        android:text="เบอร์ 0842161921"
+        android:textSize="16sp" />
+
+</RelativeLayout>
