@@ -9,9 +9,6 @@ import java.util.ArrayList;
  */
 
 public class Payment_data {
-
-    public static final String DATABASE_NAME = "Payment_data.db";
-    public static final int DATABASE_VERSION = 1;
     public static final String TABLE = "Payment_data";
 
     public class Column{
@@ -62,7 +59,7 @@ public class Payment_data {
         this.Noti_id = Noti_id;
     }//Getter, Setter
 
-    public int getPayment_id(){
+    public int getPayment_id() {
         return Payment_id;
     }
 

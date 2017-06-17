@@ -1,6 +1,8 @@
 package com.example.kaew_pc.diary_project.Activity;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,6 +50,8 @@ import static android.R.attr.data;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static boolean isRunning = false;
 
     private String[] sortlist;
     private DBHelper db;
@@ -94,6 +99,7 @@ public class MainActivity extends AppCompatActivity
         init();
         loadPaymentList();
         loadNotetList();
+        isRunning = true;
     }
 
 
@@ -104,6 +110,23 @@ public class MainActivity extends AppCompatActivity
         listnote = (ListView) findViewById(R.id.listview);
 
         sortlist = getResources().getStringArray(R.array.Sort);
+
+        getPName();
+    }
+
+    private void getPName(){
+        String currentProcName = "";
+        int pid = android.os.Process.myPid();
+        ActivityManager manager = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo processInfo : manager.getRunningAppProcesses())
+        {
+            if (processInfo.pid == pid)
+            {
+                currentProcName = processInfo.processName;
+                break;
+            }
+        }
+        Log.e("Process Name : ", currentProcName);
     }
 
 
@@ -149,8 +172,15 @@ public class MainActivity extends AppCompatActivity
         if(isResume){
             loadPaymentList();
             loadNotetList();
+            isRunning = true;
         }
         isResume = false;
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        isRunning = false;
     }
 
     public void onActivityResult(int requestCode, int resultCode

@@ -5,9 +5,12 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 
 import com.example.kaew_pc.diary_project.Activity.Note.NoteCreatePageActivity;
+import com.example.kaew_pc.diary_project.Activity.Payment.PaymentActivity;
 import com.example.kaew_pc.diary_project.Activity.Payment.PaymentShowActivity;
 import com.example.kaew_pc.diary_project.Activity.Payment.PaymentShowDummy;
 import com.example.kaew_pc.diary_project.R;
@@ -28,9 +31,13 @@ public class MyReceiver extends BroadcastReceiver {
 
     }
 
-    public void createNoti(Context context,String msg, String msgText, String msgAlert ){
+    public void createNoti(Context context,String msg, String msgText, String msgAlert, int id){
 
-        PendingIntent notificIntent = PendingIntent.getActivity(context,0, new Intent(context, PaymentShowDummy.class),0);
+        Intent intent = new Intent(context, PaymentShowDummy.class);
+        intent.putExtra("ID", id);
+        Log.e("ID NOTI", ""+id);
+
+        PendingIntent notificIntent = PendingIntent.getActivity(context,0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(context)
                 .setSmallIcon(R.mipmap.ic_launcher)

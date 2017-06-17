@@ -2,6 +2,7 @@ package com.example.kaew_pc.diary_project.Manager.Repository;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -124,6 +125,30 @@ public class PaymentDataRepository {
         return list;
     }
 
+    public int getPaymentID(SQLiteDatabase db){
+        int id = -1;
+        Cursor cursor = null;
+        try {
+            cursor = db.query(Payment_data.TABLE, null, null, null, null, null, null); //(table, column, where, where arg, groupby, having, orderby)
+
+            if (cursor.getCount() < 1) {
+                return id;
+            }
+            cursor.moveToLast();
+            id = cursor.getInt(cursor.getColumnIndex(Payment_data.Column.Payment_id));
+            Log.d("Payment", "Payment id : " + cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_id)));
+        }
+        catch (Exception ex){
+            Log.e(TAG + "Get Data", "Exception : " + ex.toString());
+        }
+        finally {
+            if(cursor != null)
+                cursor.close();
+        }
+        Log.e("Last", ""+id);
+        return id;
+    }
+
     public Payment_data getDataById(SQLiteDatabase db, String id){
         Log.d(TAG + "Get Data By ID", "ID : " + id);
 
@@ -142,10 +167,12 @@ public class PaymentDataRepository {
             }
             cursor.moveToFirst();
 
+            Log.e(TAG + "Get Data By ID", DatabaseUtils.dumpCursorToString(cursor));
+
             data = new Payment_data();
             data.setPayment_id(cursor.getInt(cursor.getColumnIndex(Payment_data.Column.Payment_id)));
             data.setPayment_title(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_title)));
-            data.setPayment_title(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_desc)));
+            data.setPayment_desc(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_desc)));
             data.setPayment_price(cursor.getDouble(cursor.getColumnIndex(Payment_data.Column.Payment_price)));
             data.setPayment_date(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_date)));
             data.setPayment_endDate(cursor.getString(cursor.getColumnIndex(Payment_data.Column.Payment_endDate)));

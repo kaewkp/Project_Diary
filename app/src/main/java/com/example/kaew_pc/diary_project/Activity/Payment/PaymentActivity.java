@@ -77,7 +77,7 @@ public class PaymentActivity extends AppCompatActivity {
 
     private EditText priceEdit;
     private EditText descpayment;
-    private Boolean isEdit = false;
+    private Boolean isEdit = false, isFinish = false;
 
     private String items, dateChoose, timeChoose;//type of payment
 
@@ -85,20 +85,15 @@ public class PaymentActivity extends AppCompatActivity {
     private int hh, mm;
     private Button save, distance;
 
-    Thread thread;
-
-
     //countdown
     long diff;
     long milliseconds;
     long endTime;
     long startTime;
 
-//kaew
+    //kaew
     Context context1 = this;
     CountDownTimer cdt;
-    int i = 1;
-    //kaew
 
     private TextView tvTimer;
 
@@ -141,7 +136,7 @@ public class PaymentActivity extends AppCompatActivity {
             data = new PaymentDataRepository().getDataById(db.getReadableDatabase(), String.valueOf(id));
             paymentTypeSpinner.setSelected(true);
 
-            descpayment.setText(data.getPayment_title());
+            descpayment.setText(data.getPayment_desc());
 
             priceEdit.setText(String.valueOf(data.getPayment_price()));
 
@@ -181,8 +176,10 @@ public class PaymentActivity extends AppCompatActivity {
                 savePayment();
 //                saveDate();
                 countDown();
+
+                final int id = new PaymentDataRepository().getPaymentID(db.getReadableDatabase());
                 Intent intent_service = new Intent(PaymentActivity.this, MyReceiver.class);
-//                intent_service.putExtra("Day", String.valueOf(d));
+                intent_service.putExtra("ID", id);
 //                intent_service.putExtra("Month", String.valueOf(m));
 //                intent_service.putExtra("Year", String.valueOf(m));
 //                startService(intent_service);
@@ -196,30 +193,25 @@ public class PaymentActivity extends AppCompatActivity {
 
                 //Kaew
 
-                if(i==1) {
-                    cdt = new CountDownTimer((diff-86400000), 1000) {   // 3 day = 259200000 , 1 day = 86400000
-                        public void onTick(long millisUntilFinished) {
-                            // Tick
-                        }
 
-                        public void onFinish() {
+                cdt = new CountDownTimer((diff-86400000), 1000) {   // 3 day = 259200000 , 1 day = 86400000
+                    public void onTick(long millisUntilFinished) {
+                        // Tick
+                    }
 
-                            MyReceiver set = new MyReceiver();
+                    public void onFinish() {
 
-                            set.createNoti(context1, "Tamutami Diary", "" + items, "รายการที่ต้องชำระ");
-                            i++;
-                            // Finish
-                        }
-                    }.start();
-                    //Kaew
+                        MyReceiver set = new MyReceiver();
 
+                        set.createNoti(context1, "Tamutami Diary", "" + items, "รายการที่ต้องชำระ", id);
+                        // Finish
+                    }
+                }.start();
+
+                if(isFinish) {
+                    Toast.makeText(PaymentActivity.this, "บันทึกแล้ว ", Toast.LENGTH_LONG).show();
+                    finish();
                 }
-
-                Toast.makeText(PaymentActivity.this, "บันทึกแล้ว ",
-                        Toast.LENGTH_LONG).show();
-
-                finish();
-
             }
         });
 
@@ -276,7 +268,16 @@ public class PaymentActivity extends AppCompatActivity {
         }
 
         data.setPayment_price(price);
-        data.setPayment_endDate(dateChoose);
+
+        if(dateChoose != null) {
+            data.setPayment_endDate(dateChoose);
+        } else {
+            if(!isEdit) {
+                Toast.makeText(this, "ยังไม่ได้เลือกวันที่", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        isFinish = true;
         data.setPayment_date(formattedDate);
 
 //        /*service*/

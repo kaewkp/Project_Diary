@@ -5,9 +5,6 @@ package com.example.kaew_pc.diary_project.Manager.Database;
  */
 
 public class Payment_status {
-
-    public static final String DATABASE_NAME = "Payment_data.db";
-    public static final int DATABASE_VERSION = 1;
     public static final String TABLE = "Payment_status";
 
     public class Column {
