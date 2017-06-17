@@ -23,7 +23,7 @@ import java.util.Calendar;
  * Created by chommchome on 27/5/2560.
  */
 
-public class PaymentHistory extends AppCompatActivity {
+public class PaymentHistoryActivity extends AppCompatActivity {
 
     private DBHelper db;
     private ListView listpayment;
@@ -55,7 +55,7 @@ public class PaymentHistory extends AppCompatActivity {
                 paymentObj.getData(db.getReadableDatabase()) :
                 new PaymentDataRepository().getData(db.getReadableDatabase());
 
-        PaymentCustomAdapter adapter = new PaymentCustomAdapter(PaymentHistory.this, data);
+        PaymentCustomAdapter adapter = new PaymentCustomAdapter(PaymentHistoryActivity.this, data);
         listpayment.setAdapter(adapter);
         listpayment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
