@@ -3,6 +3,7 @@ package com.example.kaew_pc.diary_project.Activity.Calendar.Fragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -53,6 +54,7 @@ public class CalendarModuleFragment extends Fragment implements View.OnClickList
     private Calendar_showRowEventAdapter rowAdapter;
     private ImageButton cancelEvent;
     private ListView listView;
+    private ArrayList<Date> dayValueInCells = new ArrayList<Date>();
 
     static class ViewHolder {
         protected ImageView img_arrow_left, img_arrow_right;
@@ -124,7 +126,6 @@ public class CalendarModuleFragment extends Fragment implements View.OnClickList
         });
     }
     private void setUpCalendarAdapter(){
-        ArrayList<Date> dayValueInCells = new ArrayList<Date>();
         repo = new CalendarDataRepository();
         final ArrayList<EventObjects> mEvents = repo.getAllFutureEvents(db.getReadableDatabase());
         Calendar mCal = (Calendar)cal.clone();
@@ -135,6 +136,7 @@ public class CalendarModuleFragment extends Fragment implements View.OnClickList
             dayValueInCells.add(mCal.getTime());
             mCal.add(Calendar.DAY_OF_MONTH, 1);
         }
+        Log.d(TAG,"OutListEvent : "+dayValueInCells.get(13)+"");
         Log.d(TAG, "Number of date " + dayValueInCells.size());
         final String sDate = formatter.format(cal.getTime());
         viewHolder.tv_title_month_year.setText(sDate);
@@ -155,8 +157,17 @@ public class CalendarModuleFragment extends Fragment implements View.OnClickList
 
                 String a = dateFormat.format(cal.getTime());
                 String x = repo.getDateFormat().format(cal.getTime());
-                final String startTime = arg2 + "-" + a;
+//                String dateTest = repo.getDateFormat().format(cal.getT);
+                Calendar dCal = Calendar.getInstance();
+                Log.d(TAG,"inListEvent : "+dayValueInCells.get(arg2)+"");
+                dCal.setTime(dayValueInCells.get(arg2));
+                int dayForEvent = dCal.get(Calendar.DAY_OF_MONTH);
 
+                Log.d(TAG,arg2+" OR "+dayForEvent);
+                Log.d(TAG,a+" is ...");
+                final String startTime;
+                if (dayForEvent<10){ startTime = "0"+dayForEvent + "-" + a;}
+                else{ startTime = dayForEvent + "-" + a;}
                 String m = "";
                 String time = "";
                 final List<String> timeList = new ArrayList<String>();
@@ -164,6 +175,7 @@ public class CalendarModuleFragment extends Fragment implements View.OnClickList
                 final List<String> desc = new ArrayList<String>();
                 final List<String> notic = new ArrayList<String>();
                 final List<String> type = new ArrayList<String>();
+                Log.d(TAG,mEvents.get(0).getDate()+"");
                 for (int i = 0; i < mEvents.size(); i++) {
                     m = repo.DateToStringConverter(mEvents.get(i).getDate());
                     if (m.contains(startTime)) {
@@ -180,20 +192,17 @@ public class CalendarModuleFragment extends Fragment implements View.OnClickList
                 View view = inflater.inflate(R.layout.calendar_show_event, null);
                 cancelEvent = (ImageButton) dialog.findViewById(R.id.calendar_cancel);
                 ListView listView_event = (ListView) dialog.findViewById(R.id.listView_event);
+                Log.d(TAG,startTime+"ModuleFragment_CreateEvent");
                 listView_event.setAdapter(new Calendar_showRowEventAdapter(
                         getActivity().getApplicationContext(), startTime, timeList, title, desc));
                 listView_event.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent intent = new Intent(getActivity().getApplicationContext(), CalendarDetailActivity.class);
-                        Log.d("type",title.get(i));
                         intent.putExtra("1", title.get(i));
-                        Log.d("type",type.get(i)+"");
                         intent.putExtra("2", type.get(i));
-                        Log.d("startTime",startTime+"");
                         intent.putExtra("Date", startTime+"");
                         intent.putExtra("4", timeList.get(i));
-                        Log.d("notic",notic.get(i)+"");
                         intent.putExtra("5", notic.get(i));
                         intent.putExtra("6", desc.get(i));
                         startActivity(intent);

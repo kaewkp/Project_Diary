@@ -2,6 +2,7 @@ package com.example.kaew_pc.diary_project.Manager.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,8 @@ public class Calendar_showRowEventAdapter extends ArrayAdapter{
             , String day, List<String> timeList
             , List<String> title, List<String> desc){
         super(mContext, R.layout.calendar_row_event);
+        Log.d(TAG,"ShowEvent");
+        Log.d(TAG,day+"ShowEvent");
         this.day = day;
         this.mContext = mContext;
         this.timeList = timeList;
