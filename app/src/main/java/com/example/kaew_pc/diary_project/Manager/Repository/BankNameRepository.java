@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.kaew_pc.diary_project.Manager.Database.BankName;
+import com.example.kaew_pc.diary_project.Manager.Database.Note_recycle;
 import com.example.kaew_pc.diary_project.R;
 
 import java.util.ArrayList;
@@ -22,16 +23,16 @@ public class BankNameRepository {
     private static final String TAG = BankNameRepository.class.getSimpleName();
 
     Context mContext;
-     public BankNameRepository(Context context) // constructor
-     {
+    public BankNameRepository(Context context) // constructor
+    {
         mContext = context;
-     }
+    }
 
     public static String createTable(){
         String CREATE_BankName_TABLE = String.format("CREATE TABLE %s " +
                         "(%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, %s TEXT)",
                 BankName.TABLE,
-                BankName_id,
+                BankName.Column.BankName_id,
                 BankName.Column.BankName_name);
         Log.i(TAG, CREATE_BankName_TABLE);
         return CREATE_BankName_TABLE;
@@ -69,7 +70,7 @@ public class BankNameRepository {
             }
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                Log.d("BankName", "PayType id : " + cursor.getString(cursor.getColumnIndex(BankName_id)));
+                Log.d("BankName", "BankName id : " + cursor.getString(cursor.getColumnIndex(BankName_id)));
 
                 BankName data = new BankName(cursor.getString(cursor.getColumnIndex(BankName_id))
                         , cursor.getString(cursor.getColumnIndex(BankName.Column.BankName_name)));

@@ -156,14 +156,11 @@ public class PaymentMainPageActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
             Intent intent;
-//            if (item.getItemId() == R.id.action_sortNew) {
-//                sortdialog.show();
-////                    paymentObj.getDataByIdOrderByNew(db.getReadableDatabase(), String.valueOf(id));
-//                    return true;
-//
-//            } else if (item.getItemId() == R.id.action_add) {
-//                return true;
-//            }
+            if (item.getItemId() == R.id.action_history) {
+                intent = new Intent(getApplicationContext(), PaymentHistoryActivity.class);
+                startActivity(intent);
+            }
+
 
             if (item.getItemId() == android.R.id.home) {
                 intent = new Intent(getApplicationContext(), MainActivity.class);

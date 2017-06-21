@@ -40,6 +40,7 @@ import com.example.kaew_pc.diary_project.Manager.Database.Payment_data;
 import com.example.kaew_pc.diary_project.Manager.MyReceiver;
 import com.example.kaew_pc.diary_project.Manager.MyService;
 import com.example.kaew_pc.diary_project.Manager.Repository.BankNameRepository;
+import com.example.kaew_pc.diary_project.Manager.Repository.DebtTimeRepository;
 import com.example.kaew_pc.diary_project.R;
 
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentDataRepository;
@@ -306,7 +307,7 @@ public class PaymentActivity extends AppCompatActivity {
             new PaymentDataRepository().updateData(db.getWritableDatabase(), data);
     }
 
-    private void initDialog(final String[] text, String head, final TextView tv) {
+    private void initDialog(final String[] text, final String head, final TextView tv) {
         builder = new AlertDialog.Builder(PaymentActivity.this);
         builder.setTitle(head);
         int choiseNumber = 0;
@@ -320,19 +321,27 @@ public class PaymentActivity extends AppCompatActivity {
                         text[which], Toast.LENGTH_SHORT).show();
                 tv.setVisibility(View.VISIBLE);
                 tv.setText(text[which]);
-
-                //Set bank name to data
-                BankNameRepository bankNameRepo = new BankNameRepository(getApplicationContext());
-                BankName bankName = bankNameRepo.getDataByName(db.getReadableDatabase(), text[which]);
-                data.setBankName_id(bankName.getBankName_id());
+                userChoose = which;
 
             }
 
 
         });
+
         builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                if (head.equalsIgnoreCase("เลือกธนาคาร")) {
+//                    Toast.makeText(PaymentActivity.this, ""+text[userChoose], Toast.LENGTH_SHORT).show();
+                    //Set bank name to data
+                    BankNameRepository bankNameRepo = new BankNameRepository(getApplicationContext());
+                    BankName bankName = bankNameRepo.getDataByName(db.getReadableDatabase(), text[userChoose]);
+                    data.setBankName_id(bankName.getBankName_id());
+                } else if (head.equalsIgnoreCase("เลือกจำนวนงวด")) {
+                    DebtTimeRepository dtRepo = new DebtTimeRepository(getApplicationContext());
+                    DebtTime dt = dtRepo.getDataByName(db.getReadableDatabase(), text[userChoose]);
+                    data.setDebtTime_id(dt.getDebtTime_id());
+                }
                 dialog.dismiss();
             }
         });

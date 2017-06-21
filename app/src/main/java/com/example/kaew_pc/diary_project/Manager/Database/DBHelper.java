@@ -15,6 +15,7 @@ import com.example.kaew_pc.diary_project.Manager.Repository.CalendarDataReposito
 import com.example.kaew_pc.diary_project.Manager.Repository.CalendarTypeRepository;
 
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentDataRepository;
+import com.example.kaew_pc.diary_project.Manager.Repository.PaymentHistoryRepository;
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentStatusRepository;
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentTypeRepository;
 
@@ -71,6 +72,12 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(PaymentTypeRepository.createTable());
 
         db.execSQL(PaymentStatusRepository.createTable());
+
+        db.execSQL(BankNameRepository.createTable());
+        //Table PaymentHistory
+        db.execSQL(PaymentHistoryRepository.createTable());
+        //Table DebtTime
+        db.execSQL(DebtTimeRepository.createTable());
 
         new PaymentTypeRepository().createData(db);
         new PaymentStatusRepository().createData(db);

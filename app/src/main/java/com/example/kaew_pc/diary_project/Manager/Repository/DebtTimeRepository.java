@@ -30,7 +30,7 @@ public class DebtTimeRepository {
         String CREATE_DebtTime_TABLE = String.format("CREATE TABLE %s " +
                         "(%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, %s TEXT)",
                 DebtTime.TABLE,
-                DebtTime_id,
+                DebtTime.Column.DebtTime_id,
                 DebtTime.Column.DebtTime_name);
         Log.i(TAG, CREATE_DebtTime_TABLE);
         return CREATE_DebtTime_TABLE;
@@ -117,4 +117,38 @@ public class DebtTimeRepository {
         }
         return data;
     }
+
+    public DebtTime getDataByName(SQLiteDatabase db, String name){
+        Log.w(TAG + "Get Data By Name", "Name : " + name);
+
+        DebtTime data = null;
+
+        Cursor cursor = null;
+        try {
+            cursor = db.query(DebtTime.TABLE,                //table
+                    null,                                   //column
+                    DebtTime.Column.DebtTime_name + "=?",       //where
+                    new String[]{name},                       //where arg
+                    null, null, null);                      //groupby, having, orderby
+
+            if (cursor.getCount() < 1) {
+                return data;
+            }
+            cursor.moveToFirst();
+
+            data = new DebtTime();
+            data.setDebtTime_id(cursor.getString(cursor.getColumnIndex(DebtTime.Column.DebtTime_id)));
+            data.setDebtTime_name(cursor.getString(cursor.getColumnIndex(DebtTime.Column.DebtTime_name)));
+        }
+        catch (Exception ex){
+            Log.e(TAG + "Get Data By ID", "Exception : " + ex.toString());
+        }
+        finally {
+            if(cursor != null)
+                cursor.close();
+        }
+        return data;
+    }
 }
+
+
