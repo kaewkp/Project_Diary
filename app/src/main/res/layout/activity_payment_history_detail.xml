@@ -7,7 +7,7 @@
     tools:context="com.example.kaew_pc.diary_project.Activity.Payment.PaymentShowDummy">
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/showdatetime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/price"
@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/head"
-        android:layout_below="@+id/textView14"
+        android:layout_below="@+id/bankordebt"
         android:text="รายละเอียด"
         android:textColor="@android:color/black"
         android:textSize="20dp" />
@@ -123,7 +123,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="false"
-        android:layout_alignStart="@+id/textView12"
+        android:layout_alignStart="@+id/showdatetime"
         android:layout_below="@+id/titledetail"
         android:layout_toEndOf="@+id/titledetail"
         android:text="เบอร์ 0842161921"
@@ -131,7 +131,7 @@
         android:textSize="20dp" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/bankordebt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/title"

@@ -79,6 +79,8 @@ public class DBHelper extends SQLiteOpenHelper {
         //Table DebtTime
         db.execSQL(DebtTimeRepository.createTable());
 
+
+
         new PaymentTypeRepository().createData(db);
         new PaymentStatusRepository().createData(db);
         new BankNameRepository(context).createData(db);

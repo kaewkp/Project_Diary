@@ -17,6 +17,7 @@ public class Payment_data {
         public static final String Payment_desc = "Payment_desc";
         public static final String Payment_price = "Payment_price";
         public static final String Payment_endDate = "Payment_endDate";
+        public static final String Payment_datePay = "Payment_datePay";
         public static final String Payment_date = "Payment_date";
         public static final String PayType_id = "PayType_id";
         public static final String BankName_id = "BankName_id";
@@ -31,6 +32,7 @@ public class Payment_data {
     private double Payment_price;
     private String Payment_date;
     private String Payment_endDate;
+    private String Payment_datePay;
     private String PayType_id;
     private String BankName_id;
     private String DebtTime_id;
@@ -45,13 +47,14 @@ public class Payment_data {
 
     //Constructor
     public Payment_data(int Payment_id, String Payment_title, String Payment_desc, double Payment_price, String Payment_date, String Payment_endDate,
-                        String PayType_id, String BankName_id, String DebtTime_id, String PayStatus_id, String Noti_id){
+                        String Payment_datePay, String PayType_id, String BankName_id, String DebtTime_id, String PayStatus_id, String Noti_id){
         this.Payment_id = Payment_id;
         this.Payment_title = Payment_title;
         this.Payment_desc = Payment_desc;
         this.Payment_price = Payment_price;
         this.Payment_date = Payment_date;
         this.Payment_endDate = Payment_endDate;
+        this.Payment_datePay = Payment_datePay;
         this.PayType_id = PayType_id;
         this.BankName_id = BankName_id;
         this.DebtTime_id = DebtTime_id;
@@ -87,6 +90,8 @@ public class Payment_data {
     public String getPayment_date(){ return Payment_date; }
 
     public String getPayment_endDate(){ return Payment_endDate; }
+
+    public String getPayment_datePay(){ return  Payment_datePay; }
 
     public String getPayType_id(){ return PayType_id; }
 
@@ -124,6 +129,10 @@ public class Payment_data {
 
     public void setPayment_endDate(String Payment_endDate) {
         this.Payment_endDate = Payment_endDate;
+    }
+
+    public void setPayment_datePay(String Payment_datePay){
+        this.Payment_datePay = Payment_datePay;
     }
 
     public void setPayType_id(String PayType_id) {
