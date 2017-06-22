@@ -22,7 +22,7 @@ public class PaymentShowHistoryActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_payment_noti_detail);
+        setContentView(R.layout.activity_payment_history_detail);
         ActionBar action = getSupportActionBar();
         action.setDisplayHomeAsUpEnabled(true);
 

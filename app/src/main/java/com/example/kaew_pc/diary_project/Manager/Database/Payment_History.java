@@ -23,6 +23,7 @@ public class Payment_History {
         public static final String History_desc = "History_desc";
         public static final String History_price = "History_price";
         public static final String History_endDate = "History_endDate";
+        public static final String History_datePay = "History_datePay";
         public static final String History_date = "History_date";
         public static final String History_finish = "History_finish";
 //        public static final String PayType_id = "PayType_id";
@@ -38,6 +39,7 @@ public class Payment_History {
     private String History_price;
     private String History_date;
     private String History_endDate;
+    private String History_datePay;
     private String History_finish;
 //    private String PayType_id;
 //    private String BankName_id;
@@ -53,13 +55,14 @@ public class Payment_History {
 
     //Constructor
     public Payment_History(int History_id, String History_title, String History_desc, String History_price, String History_date, String History_endDate,
-                           String History_finish){
+                           String History_datePay, String History_finish){
         this.History_id = History_id;
         this.History_title = History_title;
         this.History_desc = History_desc;
         this.History_price = History_price;
         this.History_date = History_date;
         this.History_endDate = History_endDate;
+        this.History_datePay = History_datePay;
         this.History_finish = History_finish;
 //        this.PayType_id = PayType_id;
 //        this.BankName_id = BankName_id;
@@ -96,6 +99,8 @@ public class Payment_History {
     public String getHistory_date(){ return History_date; }
 
     public String getHistory_endDate(){ return History_endDate; }
+
+    public String getHistory_datePay(){ return History_datePay; }
 
     public String getHistory_finish(){ return History_finish; }
 
@@ -135,6 +140,10 @@ public class Payment_History {
 
     public void setHistory_endDate(String History_endDate) {
         this.History_endDate = History_endDate;
+    }
+
+    public void setHistory_datePay(String History_datePay) {
+        this.History_datePay = History_datePay;
     }
 
     public void setHistory_finish(String History_finish) {

@@ -54,6 +54,8 @@ import java.util.Calendar;
 
 import java.util.Date;
 
+import static com.example.kaew_pc.diary_project.Activity.Payment.ListCount.listCountDown;
+
 /**
  * Created by chommchome on 28/3/2560.
  */
@@ -193,21 +195,41 @@ public class PaymentActivity extends AppCompatActivity {
                         AlarmManager.INTERVAL_DAY*30, pi);
 
                 //Kaew
+//                cdt = new CountDownTimer((15000), 1000) {   // 3 day = 259200000 , 1 day = 86400000
+//                    public void onTick(long millisUntilFinished) {
+//                        // Tick
+//                    }
+//
+//                    public void onFinish() {
+//
+//                        MyReceiver set = new MyReceiver();
+//
+//                        set.createNoti(context1, "Tamutami Diary", "" + items, "รายการที่ต้องชำระ", id);
+//                        // Finish
+//                    }
+//                }.start();
 
 
-                cdt = new CountDownTimer((diff-86400000), 1000) {   // 3 day = 259200000 , 1 day = 86400000
-                    public void onTick(long millisUntilFinished) {
-                        // Tick
+                //man
+                listCountDown.add(new ListCountDown(30000, 1000, id, context1, items));  // 3 day = 259200000 , 1 day = 86400000
+                if(isEdit){
+                    ArrayList<Integer> indRemove = new ArrayList<Integer>();
+                    for(int i=0;i<listCountDown.size();i++){
+                        if(id == listCountDown.get(i).getId()){
+                            listCountDown.get(i).cancel();
+                            indRemove.add(i);
+                        }
+
                     }
-
-                    public void onFinish() {
-
-                        MyReceiver set = new MyReceiver();
-
-                        set.createNoti(context1, "Tamutami Diary", "" + items, "รายการที่ต้องชำระ", id);
-                        // Finish
+                    if(indRemove.size()!=0) {
+                        for (int i = 0; i < indRemove.size(); i++) {
+                            listCountDown.get(indRemove.get(i)).cancel();
+                            listCountDown.remove(indRemove.get(i));
+                        }
+//                        items = "new msg";
+                        listCountDown.add(new ListCountDown(30000, 1000, id, context1, items));
                     }
-                }.start();
+                }
 
                 if(isFinish) {
                     Toast.makeText(PaymentActivity.this, "บันทึกแล้ว ", Toast.LENGTH_LONG).show();
