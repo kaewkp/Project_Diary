@@ -33,7 +33,7 @@ public class ListCountDown extends CountDownTimer {
     @Override
     public void onFinish() {
         MyReceiver set = new MyReceiver();
-        set.createNoti(context, "Tamutami Diary", "" + item, "รายการที่ต้องชำระ", id);
+//        set.createNoti(context, "Tamutami Diary", "" + item, "รายการที่ต้องชำระ", id);
 
     }
 

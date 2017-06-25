@@ -85,7 +85,7 @@ public class PaymentActivity extends AppCompatActivity {
     private String items, dateChoose, timeChoose;//type of payment
 
     private int y, d, m;
-    private int hh, mm;
+    private int hh, mm, yy;
     private Button save, distance;
 
     //countdown
@@ -177,16 +177,28 @@ public class PaymentActivity extends AppCompatActivity {
                 savePayment();
                 countDown();
 
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(y, m-1, d, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), 0);
+
                 final int id = new PaymentDataRepository().getPaymentID(db.getReadableDatabase());
                 Intent intent_service = new Intent(PaymentActivity.this, MyReceiver.class);
                 intent_service.putExtra("ID", id);
-                PendingIntent pi = PendingIntent.getBroadcast(PaymentActivity.this, 0, intent_service, PendingIntent.FLAG_UPDATE_CURRENT);
-                AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-//                am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+(1), pi);
+                intent_service.putExtra("Head", items);
+                intent_service.putExtra("Time", ""+calendar.getTime());
+                intent_service.putExtra("year", y);
+                intent_service.putExtra("month", m-1);
+                intent_service.putExtra("day", d);
+                intent_service.putExtra("hour", calendar.get(Calendar.HOUR));
+                intent_service.putExtra("minute", calendar.get(Calendar.MINUTE));
 
-                am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                        SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_DAY*30,
-                        AlarmManager.INTERVAL_DAY*30, pi);
+                PendingIntent pi = PendingIntent.getBroadcast(PaymentActivity.this, 0, intent_service, PendingIntent.FLAG_UPDATE_CURRENT);
+//                AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+////                am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+(1), pi);
+//
+//                am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+//                        SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_DAY*30,
+//                        AlarmManager.INTERVAL_DAY*30, pi);
+                alarm(calendar, pi);
 
                 //Kaew
 //                cdt = new CountDownTimer((15000), 1000) {   // 3 day = 259200000 , 1 day = 86400000
@@ -205,24 +217,24 @@ public class PaymentActivity extends AppCompatActivity {
 
 
                 //man
-                listCountDown.add(new ListCountDown(30000, 1000, id, context1, items));  // 3 day = 259200000 , 1 day = 86400000
-                if(isEdit){
-                    ArrayList<Integer> indRemove = new ArrayList<Integer>();
-                    for(int i=0;i<listCountDown.size();i++){
-                        if(id == listCountDown.get(i).getId()){
-                            listCountDown.get(i).cancel();
-                            indRemove.add(i);
-                        }
-                    }
-                    if(indRemove.size()!=0) {
-                        for (int i = 0; i < indRemove.size(); i++) {
-                            listCountDown.get(indRemove.get(i)).cancel();
-                            listCountDown.remove(indRemove.get(i));
-                        }
-//                        items = "new msg";
-                        listCountDown.add(new ListCountDown(30000, 1000, id, context1, items));
-                    }
-                }
+//                listCountDown.add(new ListCountDown(30000, 1000, id, context1, items));  // 3 day = 259200000 , 1 day = 86400000
+//                if(isEdit){
+//                    ArrayList<Integer> indRemove = new ArrayList<Integer>();
+//                    for(int i=0;i<listCountDown.size();i++){
+//                        if(id == listCountDown.get(i).getId()){
+//                            listCountDown.get(i).cancel();
+//                            indRemove.add(i);
+//                        }
+//                    }
+//                    if(indRemove.size()!=0) {
+//                        for (int i = 0; i < indRemove.size(); i++) {
+//                            listCountDown.get(indRemove.get(i)).cancel();
+//                            listCountDown.remove(indRemove.get(i));
+//                        }
+////                        items = "new msg";
+//                        listCountDown.add(new ListCountDown(30000, 1000, id, context1, items));
+//                    }
+//                }
 
                 if(isFinish) {
                     Toast.makeText(PaymentActivity.this, "บันทึกแล้ว ", Toast.LENGTH_LONG).show();
@@ -247,6 +259,14 @@ public class PaymentActivity extends AppCompatActivity {
         mpref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mEditor = mpref.edit();
 
+    }
+
+    public void alarm(Calendar calendar, PendingIntent pendingIntent){
+//        myIntent.putExtra("Time", ""+calendar.getTime());
+        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+
+        Log.e("Alarm", "Alert in : "+ calendar.getTime());
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 
     private void initSpinner() {
