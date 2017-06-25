@@ -78,6 +78,9 @@ public class PaymentShowDummy extends AppCompatActivity {
                 date.setText("วันที่เลือก : " + d);
             isEdit = true;
         }
+        else{
+            Toast.makeText(this, "Can not get data", Toast.LENGTH_SHORT).show();
+        }
 
         getPName();
 
