@@ -155,8 +155,6 @@ public class PaymentActivity extends AppCompatActivity {
 
         String x = Payment_data.getPaymentIdFromClicked();
         ArrayList<String> _paymentData = db.getPaymentData(x);
-        Log.d("555555555555", "55555555555555");
-
     }
 
     private void init() {
@@ -177,15 +175,11 @@ public class PaymentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 savePayment();
-//                saveDate();
                 countDown();
 
                 final int id = new PaymentDataRepository().getPaymentID(db.getReadableDatabase());
                 Intent intent_service = new Intent(PaymentActivity.this, MyReceiver.class);
                 intent_service.putExtra("ID", id);
-//                intent_service.putExtra("Month", String.valueOf(m));
-//                intent_service.putExtra("Year", String.valueOf(m));
-//                startService(intent_service);
                 PendingIntent pi = PendingIntent.getBroadcast(PaymentActivity.this, 0, intent_service, PendingIntent.FLAG_UPDATE_CURRENT);
                 AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 //                am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+(1), pi);
@@ -219,7 +213,6 @@ public class PaymentActivity extends AppCompatActivity {
                             listCountDown.get(i).cancel();
                             indRemove.add(i);
                         }
-
                     }
                     if(indRemove.size()!=0) {
                         for (int i = 0; i < indRemove.size(); i++) {

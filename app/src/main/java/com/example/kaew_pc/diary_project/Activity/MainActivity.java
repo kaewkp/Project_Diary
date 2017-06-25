@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity
         isRunning = true;
     }
 
-
     private void init() {
         db = DBHelper.getInstance(this);
         paymentObj = new PaymentDataRepository();
@@ -253,22 +252,23 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_note) {
+            isResume = true;
             intent = new Intent(getApplicationContext(), NoteMainPageActivity.class);
             startActivity(intent);
 //            finish();
 
         } else if (id == R.id.nav_payment) {
+            isResume = true;
             intent = new Intent(getApplicationContext(), PaymentMainPageActivity.class);
             startActivity(intent);
-//            finish();
 
         } else if (id == R.id.nav_calendar) {
-//                Toast.makeText(getApplicationContext(), "Not Available",
-//                    Toast.LENGTH_LONG).show();
+            isResume = true;
             intent = new Intent(getApplicationContext(), CalendarMainActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_bin) {
+            isResume = true;
             intent = new Intent(getApplicationContext(), BinActivity.class);
             startActivity(intent);
 
