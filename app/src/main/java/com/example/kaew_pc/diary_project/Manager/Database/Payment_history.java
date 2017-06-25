@@ -5,17 +5,11 @@ import android.util.Log;
 import java.util.ArrayList;
 
 /**
- * Created by chommchome on 8/6/2560.
+ * Created by KAEW-PC on 18-Feb-17.
  */
 
-public class Payment_History {
-    public static final String DATABASE_NAME = "Payment_data.db";
-    public static final int DATABASE_VERSION = 1;
-    public static final String TABLE = "Payment_History";
-
-    public Payment_History() {
-
-    }
+public class Payment_history {
+    public static final String TABLE = "Payment_history";
 
     public class Column{
         public static final String History_id = "History_id";
@@ -25,22 +19,15 @@ public class Payment_History {
         public static final String History_endDate = "History_endDate";
         public static final String History_datePay = "History_datePay";
         public static final String History_date = "History_date";
-        public static final String History_finish = "History_finish";
-//        public static final String PayType_id = "PayType_id";
-//        public static final String BankName_id = "BankName_id";
-//        public static final String DebtTime_id = "DebtTime_id";
-//        public static final String PayStatus_id = "PayStatus_id";
-//        public static final String Noti_id = "Noti_id";
     }
 
     private int History_id ;
     private String History_title;
     private String History_desc;
-    private String History_price;
+    private double History_price;
     private String History_date;
     private String History_endDate;
     private String History_datePay;
-    private String History_finish;
 //    private String PayType_id;
 //    private String BankName_id;
 //    private String DebtTime_id;
@@ -49,13 +36,13 @@ public class Payment_History {
 
     private static String paymentIdFromClicked;
 
-//    //Default Constructor
-//    public Payment_History(String string, String cursorString, String history_desc, String s, String history_date, String history_endDate, String history_finish){
-//    }
+    //Default Constructor
+    public Payment_history(){
+    }
 
     //Constructor
-    public Payment_History(int History_id, String History_title, String History_desc, String History_price, String History_date, String History_endDate,
-                           String History_datePay, String History_finish){
+    public Payment_history(int History_id, String History_title, String History_desc, double History_price, String History_date, String History_endDate,
+                           String History_datePay){
         this.History_id = History_id;
         this.History_title = History_title;
         this.History_desc = History_desc;
@@ -63,7 +50,6 @@ public class Payment_History {
         this.History_date = History_date;
         this.History_endDate = History_endDate;
         this.History_datePay = History_datePay;
-        this.History_finish = History_finish;
 //        this.PayType_id = PayType_id;
 //        this.BankName_id = BankName_id;
 //        this.DebtTime_id = DebtTime_id;
@@ -71,12 +57,12 @@ public class Payment_History {
 //        this.Noti_id = Noti_id;
     }//Getter, Setter
 
-    public int getHistory_id(){
+    public int getHistory_id() {
         return History_id;
     }
 
-    public static void setPaymentIdFromClicked(ArrayList<Payment_data> data, int position){
-        paymentIdFromClicked = String.valueOf(data.get(position).getPayment_id());
+    public static void setPaymentIdFromClicked(ArrayList<Payment_history> data, int position){
+        paymentIdFromClicked = String.valueOf(data.get(position).getHistory_id());
         Log.d("55555","5555");
     }
 
@@ -92,7 +78,7 @@ public class Payment_History {
         return History_desc;
     }
 
-    public String getHistory_price() {
+    public double getHistory_price() {
         return History_price;
     }
 
@@ -100,9 +86,7 @@ public class Payment_History {
 
     public String getHistory_endDate(){ return History_endDate; }
 
-    public String getHistory_datePay(){ return History_datePay; }
-
-    public String getHistory_finish(){ return History_finish; }
+    public String getHistory_datePay(){ return  History_datePay; }
 
 //    public String getPayType_id(){ return PayType_id; }
 //
@@ -130,7 +114,7 @@ public class Payment_History {
         this.History_desc = History_desc;
     }
 
-    public void setHistory_price(String History_price) {
+    public void setHistory_price(double History_price) {
         this.History_price = History_price;
     }
 
@@ -142,12 +126,8 @@ public class Payment_History {
         this.History_endDate = History_endDate;
     }
 
-    public void setHistory_datePay(String History_datePay) {
+    public void setHistory_datePay(String History_datePay){
         this.History_datePay = History_datePay;
-    }
-
-    public void setHistory_finish(String History_finish) {
-        this.History_finish = History_finish;
     }
 
 //    public void setPayType_id(String PayType_id) {

@@ -81,6 +81,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 
+
         new PaymentTypeRepository().createData(db);
         new PaymentStatusRepository().createData(db);
         new BankNameRepository(context).createData(db);
