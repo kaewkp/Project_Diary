@@ -22,12 +22,11 @@
 
         <TextView
             android:id="@+id/subject1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            android:layout_weight="0"
-            android:background="@android:color/transparent"
+            android:background="#d9d9d9"
             android:paddingBottom="4dp"
             android:paddingTop="4dp"
             android:text="  บันทึก"
@@ -44,11 +43,10 @@
 
         <TextView
             android:id="@+id/subject2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginLeft="5dp"
-            android:layout_weight="0"
-            android:background="@android:color/transparent"
+            android:background="#d9d9d9"
             android:paddingBottom="4dp"
             android:paddingTop="4dp"
             android:text="  ชำระค่าบริการ"
@@ -59,7 +57,7 @@
         <ListView
             android:id="@+id/listview2"
             android:layout_width="match_parent"
-            android:layout_height="320dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:longClickable="true" />
 
