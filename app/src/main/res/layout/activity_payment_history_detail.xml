@@ -8,9 +8,9 @@
 
     <TextView
         android:id="@+id/showdatetime"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/price"
+        android:layout_alignEnd="@+id/endDate"
         android:layout_below="@+id/textView11"
         android:paddingTop="5dp"
         android:text="ยังไม่ได้เลือกวันที่"
@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/head"
-        android:layout_below="@+id/bankordebt"
+        android:layout_below="@+id/debt"
         android:text="รายละเอียด"
         android:textColor="@android:color/black"
         android:textSize="20dp" />
@@ -69,10 +69,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="13dp"
         android:background="#FF9999"
+        android:onClick="stopNotification"
         android:text="ชำระแล้ว"
         android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:onClick="stopNotification"/>
+        android:textSize="20dp" />
 
     <TextView
         android:id="@+id/price"
@@ -119,24 +119,33 @@
 
     <TextView
         android:id="@+id/detail"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="false"
+        android:layout_alignEnd="@+id/debt"
         android:layout_alignStart="@+id/showdatetime"
         android:layout_below="@+id/titledetail"
-        android:layout_toEndOf="@+id/titledetail"
         android:text="เบอร์ 0842161921"
         android:textColor="@android:color/darker_gray"
         android:textSize="20dp" />
 
     <TextView
-        android:id="@+id/bankordebt"
+        android:id="@+id/debt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/title"
         android:layout_below="@+id/title"
-        android:text="ธนาคาร/งวด"
+        android:text="งวด"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/bank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/debt"
+        android:layout_marginRight="5dp"
+        android:layout_toStartOf="@+id/debt"
+        android:text="ิธนาคาร"
         android:textColor="@android:color/darker_gray"
         android:textSize="20dp" />
 

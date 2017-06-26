@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +14,7 @@ import com.example.kaew_pc.diary_project.Activity.MainActivity;
 import com.example.kaew_pc.diary_project.Manager.Adapter.PaymentCustomAdapter;
 import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Manager.Database.Payment_data;
+import com.example.kaew_pc.diary_project.Manager.Database.Payment_history;
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentDataRepository;
 import com.example.kaew_pc.diary_project.R;
 
@@ -60,6 +62,11 @@ public class PaymentHistoryActivity extends AppCompatActivity {
         listpayment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                isResume = true;
+//                Intent intent = new Intent(getApplicationContext(), PaymentShowHistoryActivity.class);
+//                intent.putExtra("id", data.get(position).getPayment_id());
+//                Payment_data.setPaymentIdFromClicked(data, position);
+//                startActivity(intent);
 
 //                isResume = true;
 //                Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
@@ -82,6 +89,11 @@ public class PaymentHistoryActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_bin, menu);
+        return true;
+    }
 
         @Override
         public boolean onOptionsItemSelected (MenuItem item){

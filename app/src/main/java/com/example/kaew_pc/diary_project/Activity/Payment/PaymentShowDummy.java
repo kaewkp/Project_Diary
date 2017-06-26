@@ -8,8 +8,10 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,9 +24,13 @@ import android.widget.Toast;
 
 import com.example.kaew_pc.diary_project.Activity.LoginActivity;
 import com.example.kaew_pc.diary_project.Activity.MainActivity;
+import com.example.kaew_pc.diary_project.Manager.Database.BankName;
 import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
+import com.example.kaew_pc.diary_project.Manager.Database.DebtTime;
 import com.example.kaew_pc.diary_project.Manager.Database.Payment_data;
 import com.example.kaew_pc.diary_project.Manager.MyReceiver;
+import com.example.kaew_pc.diary_project.Manager.Repository.BankNameRepository;
+import com.example.kaew_pc.diary_project.Manager.Repository.DebtTimeRepository;
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentDataRepository;
 import com.example.kaew_pc.diary_project.R;
 
@@ -39,15 +45,21 @@ public class PaymentShowDummy extends AppCompatActivity {
     private DBHelper db;
     private Intent intent;
     private Button already;
-    private TextView title, des, money, dateEnd, date, detailBD;
+    private TextView title, des, money, dateEnd, date, Bbank, Ddebt;
     private PaymentDataRepository paymentObj;
     private Payment_data data;
+    private BankName Bdata;
+    private DebtTime Ddata;
     private PaymentDataRepository repo;
+    private BankNameRepository Brepo;
+    private DebtTimeRepository Drepo;
     private int y, d, m;
     static final int dialogCa = 0;
     private Boolean isEdit = false, isFinish = false;
     private String items, dateChoose, timeChoose;
     private String formattedDate;
+    private int userChoose;
+    private AlertDialog.Builder builder, timealertbuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,16 +74,18 @@ public class PaymentShowDummy extends AppCompatActivity {
         Toast.makeText(this, "" + id, Toast.LENGTH_SHORT).show();
         if (id != -1) { //When click from NOTI
             data = repo.getDataById(db.getReadableDatabase(), String.valueOf(id));
+            Bdata = Brepo.getDataById(db.getReadableDatabase(), String.valueOf(id));
+            Ddata = Drepo.getDataById(db.getReadableDatabase(), String.valueOf(id));
             title.setText(data.getPayment_title());
 
-            detailBD.setText(data.getBankName_id());
-            detailBD.setText(data.getDebtTime_id());
+            Bbank.setText(Bdata.getBankName_id());
+            Ddebt.setText(Ddata.getDebtTime_id());
+//            detailBD.setText(data2.getDebtTime_name());
 
             des.setText(data.getPayment_desc());
             money.setText(String.valueOf(data.getPayment_price()));
             dateEnd.setText(data.getPayment_endDate());
             date.setVisibility(View.VISIBLE);
-            detailBD.setVisibility(View.VISIBLE);
 
             String d = data.getPayment_datePay();
             if (d != null)
@@ -90,12 +104,17 @@ public class PaymentShowDummy extends AppCompatActivity {
 
         title = (TextView) findViewById(R.id.title);
         des = (TextView) findViewById(R.id.detail);
-        detailBD = (TextView) findViewById(R.id.bankordebt);
+        Bbank = (TextView) findViewById(R.id.bank);
+        Ddebt = (TextView) findViewById(R.id.debt);
         money = (TextView) findViewById(R.id.priceshow);
         dateEnd = (TextView) findViewById(R.id.endDate);
         date = (TextView) findViewById(R.id.showdatetime);
         db = DBHelper.getInstance(this);
         repo = new PaymentDataRepository();
+        Brepo = new BankNameRepository(null);
+        Drepo = new DebtTimeRepository(null);
+        Bbank.setVisibility(View.INVISIBLE);
+        Ddebt.setVisibility(View.INVISIBLE);
 
         Date time = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -132,6 +151,7 @@ public class PaymentShowDummy extends AppCompatActivity {
         isFinish = true;
         data.setPayment_date(formattedDate);
     }
+
 
     private void OnOpenApp() {
         if(MainActivity.isRunning){
