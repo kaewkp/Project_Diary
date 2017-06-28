@@ -46,12 +46,12 @@ public class MainCustomAdapter extends ArrayAdapter<Payment_data> {
 
             viewHolder.title = (TextView) view.findViewById(R.id.title);
 
-            viewHolder.date = (TextView) view.findViewById(R.id.date);
+//            viewHolder.date = (TextView) view.findViewById(R.id.date);
 
 
             view.setTag(viewHolder);
             view.setTag(R.id.title, viewHolder.title);
-            view.setTag(R.id.date, viewHolder.date);
+//            view.setTag(R.id.date, viewHolder.date);
 
 
 
@@ -61,7 +61,7 @@ public class MainCustomAdapter extends ArrayAdapter<Payment_data> {
         }
 
         viewHolder.title.setText(data.get(position).getPayment_title());
-        viewHolder.date.setText(data.get(position).getPayment_date());
+//        viewHolder.date.setText(data.get(position).getPayment_date());
 //        viewHolder1.title.setText(data.get(position).getNote_title());
 //        viewHolder1.date.setText(data.get(position).getNote_date());
 

@@ -74,18 +74,22 @@ public class PaymentShowDummy extends AppCompatActivity {
         Toast.makeText(this, "" + id, Toast.LENGTH_SHORT).show();
         if (id != -1) { //When click from NOTI
             data = repo.getDataById(db.getReadableDatabase(), String.valueOf(id));
-            Bdata = Brepo.getDataById(db.getReadableDatabase(), String.valueOf(id));
-            Ddata = Drepo.getDataById(db.getReadableDatabase(), String.valueOf(id));
+            Bdata = Brepo.getDataById(db.getReadableDatabase(), String.valueOf(data.getBankName_id()));
+            Ddata = Drepo.getDataById(db.getReadableDatabase(), String.valueOf(data.getDebtTime_id()));
             title.setText(data.getPayment_title());
 
-            Bbank.setText(Bdata.getBankName_id());
-            Ddebt.setText(Ddata.getDebtTime_id());
+            Bbank.setText(Bdata.getBankName_name());
+
+            Ddebt.setText(Ddata.getDebtTime_name());
 //            detailBD.setText(data2.getDebtTime_name());
 
             des.setText(data.getPayment_desc());
             money.setText(String.valueOf(data.getPayment_price()));
             dateEnd.setText(data.getPayment_endDate());
+
             date.setVisibility(View.VISIBLE);
+            Bbank.setVisibility(View.VISIBLE);
+            Ddebt.setVisibility(View.VISIBLE);
 
             String d = data.getPayment_datePay();
             if (d != null)

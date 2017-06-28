@@ -29,7 +29,7 @@ public class PaymentCustomAdapter extends ArrayAdapter<Payment_data> {
     }
 
     static class ViewHolder {
-        protected TextView title, date;
+        protected TextView title;
 
     }
 
@@ -43,17 +43,17 @@ public class PaymentCustomAdapter extends ArrayAdapter<Payment_data> {
             view = inflator.inflate(R.layout.listview_payment, null);
             viewHolder = new ViewHolder();
             viewHolder.title = (TextView) view.findViewById(R.id.title);
-            viewHolder.date = (TextView) view.findViewById(R.id.date);
+//            viewHolder.date = (TextView) view.findViewById(R.id.date);
 
             view.setTag(viewHolder);
             view.setTag(R.id.title, viewHolder.title);
-            view.setTag(R.id.date, viewHolder.date);
+//            view.setTag(R.id.date, viewHolder.date);
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
 
         viewHolder.title.setText(data.get(position).getPayment_title());
-        viewHolder.date.setText(data.get(position).getPayment_date());
+//        viewHolder.date.setText(data.get(position).getPayment_date());
 
         return view;
     }

@@ -53,7 +53,7 @@ public class PaymentHistoryCustomAdapter extends ArrayAdapter<Payment_history> {
             }
 
             viewHolder.title.setText(data.get(position).getHistory_title());
-            viewHolder.date.setText(data.get(position).getHistory_date());
+            viewHolder.date.setText(data.get(position).getHistory_datePay());
 
             return view;
         }
