@@ -84,8 +84,13 @@ public class PaymentDataRepository {
         db.update(Payment_data.TABLE, initialValues, Payment_data.Column.Payment_id+"="+paymentdata.getPayment_id(), null);
     }
 
-    public void deleteData(SQLiteDatabase db, Payment_data paymentdata){
-        //do something
+    public void deleteData(SQLiteDatabase db, int id){
+        String whereClause = Payment_data.Column.Payment_id + "=?";
+        String[] whereArgs = new String[] { String.valueOf(id) };
+
+        Log.d("Delete Payment Data", "title : " + id);
+
+        db.delete(Payment_data.TABLE, whereClause, whereArgs);
     }
 
     public ArrayList<Payment_data> getData(SQLiteDatabase db){

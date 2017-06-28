@@ -50,4 +50,17 @@
         android:layout_height="40dp"
         android:layout_width="40dp" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabRemove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="17dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_menu_delete"
+        android:visibility="gone"/>
+
 </RelativeLayout>

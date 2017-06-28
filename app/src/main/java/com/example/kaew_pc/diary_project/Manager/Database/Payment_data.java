@@ -154,4 +154,13 @@ public class Payment_data {
     public void setNoti_id(String Noti_id){
         this.Noti_id = Noti_id;
     }
+
+    // For Manage checkbox
+    private Boolean selected = false;
+    public boolean isSelected() {
+        return selected;
+    }
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 }

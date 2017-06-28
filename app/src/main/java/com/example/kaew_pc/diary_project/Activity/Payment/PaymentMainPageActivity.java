@@ -7,16 +7,21 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kaew_pc.diary_project.Activity.MainActivity;
+import com.example.kaew_pc.diary_project.Activity.Note.NoteCreatePageActivity;
+import com.example.kaew_pc.diary_project.Manager.Adapter.NoteCustomAdapter;
 import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
+import com.example.kaew_pc.diary_project.Manager.Database.Note_data;
 import com.example.kaew_pc.diary_project.Manager.Database.Payment_data;
 import com.example.kaew_pc.diary_project.Manager.Adapter.PaymentCustomAdapter;
 import com.example.kaew_pc.diary_project.R;
@@ -24,6 +29,7 @@ import com.example.kaew_pc.diary_project.Manager.Repository.PaymentDataRepositor
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 
 /**
  * Created by chommchome on 27/3/2560.
@@ -31,14 +37,16 @@ import java.util.Calendar;
 
 public class PaymentMainPageActivity extends AppCompatActivity {
 
-    private FloatingActionButton fab;
+    private FloatingActionButton fab, fab2;
     private AlertDialog.Builder builder, sortdialog;
     private String[] sortlist;
     private DBHelper db;
     private ListView listpayment;
     private Boolean isResume = false;
     public final Calendar cal = Calendar.getInstance();
-
+    private HashSet<Integer> del = new HashSet<>();
+    private PaymentCustomAdapter adapter;
+    private ArrayList<Payment_data> data;
 
     private PaymentDataRepository paymentObj;
 
@@ -70,7 +78,36 @@ public class PaymentMainPageActivity extends AppCompatActivity {
             }
         });
 
+        fab2 = (FloatingActionButton) findViewById(R.id.fabRemove);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("Adapter", "Hash : "+ del);
+                deleteDialog();
+            }
+        });
+
         sortlist = getResources().getStringArray(R.array.Sort);
+    }
+
+    private void deleteDialog(){
+        final android.app.AlertDialog.Builder exitDialog = new android.app.AlertDialog.Builder(this);
+        exitDialog.setTitle("ยืนยันการลบ");
+        exitDialog.setPositiveButton("ไม่", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        exitDialog.setNegativeButton("ใช่", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                for ( int id : del ) {
+                    paymentObj.deleteData(db.getWritableDatabase(), id);
+                }
+                fab2.setVisibility(View.GONE);
+                loadPaymentList();
+            }
+        }).show();
     }
 
 
@@ -121,20 +158,57 @@ public class PaymentMainPageActivity extends AppCompatActivity {
 
 
     private void loadPaymentList() {
-        final ArrayList<Payment_data> data = paymentObj != null ?
-                        paymentObj.getData(db.getReadableDatabase()) :
+        data = paymentObj != null ? paymentObj.getData(db.getReadableDatabase()) :
                         new PaymentDataRepository().getData(db.getReadableDatabase());
 
-        PaymentCustomAdapter adapter = new PaymentCustomAdapter(PaymentMainPageActivity.this, data);
+        adapter = new PaymentCustomAdapter(PaymentMainPageActivity.this, data);
         listpayment.setAdapter(adapter);
+//        listpayment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                isResume = true;
+//                Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
+//                intent.putExtra("id", data.get(position).getPayment_id());
+//                Payment_data.setPaymentIdFromClicked(data, position);
+//                startActivity(intent);
+//            }
+//        });
+
         listpayment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                isResume = true;
-                Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
-                intent.putExtra("id", data.get(position).getPayment_id());
-                Payment_data.setPaymentIdFromClicked(data, position);
-                startActivity(intent);
+                if(fab2.getVisibility() == View.GONE) {
+                    isResume = true;
+                    Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
+                    intent.putExtra("id", data.get(position).getPayment_id());
+                    startActivity(intent);
+                }
+                else {
+                    CheckBox cb = (CheckBox) view.findViewById(R.id.checkbox);
+                    if (cb.isChecked()) {
+                        cb.setChecked(false);
+                        del.remove(data.get(position).getPayment_id());
+                    } else {
+                        cb.setChecked(true);
+                        del.add(data.get(position).getPayment_id());
+                    }
+                }
+            }
+        });
+
+        listpayment.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long id) {
+                if(fab2.getVisibility() == View.GONE) {
+                    fab2.setVisibility(View.VISIBLE);
+                    adapter.toggleCheckbox(true);
+                }
+                else {
+                    fab2.setVisibility(View.GONE);
+                    adapter.toggleCheckbox(false);
+                    del.clear();
+                }
+                return true;
             }
         });
     }

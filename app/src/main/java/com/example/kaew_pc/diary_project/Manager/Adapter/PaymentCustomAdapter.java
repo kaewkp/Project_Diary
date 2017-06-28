@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.example.kaew_pc.diary_project.Manager.Database.Payment_data;
@@ -20,7 +22,7 @@ public class PaymentCustomAdapter extends ArrayAdapter<Payment_data> {
 
     private Activity mContext;
     private ArrayList<Payment_data> data;
-    private View row;
+    private ArrayList<CheckBox> c = new ArrayList<>();
 
     public PaymentCustomAdapter(Activity mContext, ArrayList<Payment_data> data) {
         super(mContext, R.layout.listview_payment, data);
@@ -29,46 +31,58 @@ public class PaymentCustomAdapter extends ArrayAdapter<Payment_data> {
     }
 
     static class ViewHolder {
-        protected TextView title;
-
+        protected TextView title, date;
+        protected CheckBox checkbox;
     }
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
 
-        ViewHolder viewHolder = null;
-
+        NoteCustomAdapter.ViewHolder viewHolder = null;
         if (view == null) {
             LayoutInflater inflator = mContext.getLayoutInflater();
             view = inflator.inflate(R.layout.listview_payment, null);
-            viewHolder = new ViewHolder();
+            viewHolder = new NoteCustomAdapter.ViewHolder();
             viewHolder.title = (TextView) view.findViewById(R.id.title);
-//            viewHolder.date = (TextView) view.findViewById(R.id.date);
-
+            viewHolder.date = (TextView) view.findViewById(R.id.desc);
+            viewHolder.checkbox = (CheckBox) view.findViewById(R.id.checkbox);
+            viewHolder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    int getPosition = (Integer) buttonView.getTag();  // Here we get the position that we have set for the checkbox using setTag.
+                    data.get(getPosition).setSelected(buttonView.isChecked()); // Set the value of checkbox to maintain its state.
+                }
+            });
             view.setTag(viewHolder);
             view.setTag(R.id.title, viewHolder.title);
-//            view.setTag(R.id.date, viewHolder.date);
+            view.setTag(R.id.desc, viewHolder.date);
+            view.setTag(R.id.checkbox, viewHolder.checkbox);
         } else {
-            viewHolder = (ViewHolder) view.getTag();
+            viewHolder = (NoteCustomAdapter.ViewHolder) view.getTag();
         }
+        viewHolder.checkbox.setTag(position); // This line is important.
 
         viewHolder.title.setText(data.get(position).getPayment_title());
-//        viewHolder.date.setText(data.get(position).getPayment_date());
+        viewHolder.date.setText(data.get(position).getPayment_endDate());
+        viewHolder.checkbox.setChecked(data.get(position).isSelected());
+
+        c.add( viewHolder.checkbox );
 
         return view;
     }
 
-//            LayoutInflater mInflater = mContext.getLayoutInflater();
-//
-//            row = mInflater.inflate(R.layout.listview_payment, null, true);
-
-//            TextView textView1 = (TextView) row.findViewById(R.id.title);
-//            textView1.setText(data.get(position).getPayment_title());
-//
-//            TextView textView2 = (TextView) row.findViewById(R.id.desc);
-//            textView2.setText(data.get(position).getPayment_date());
-//
-//            return row;
-//        }
+    public void toggleCheckbox(boolean isChecked){
+        if(isChecked){
+            for(CheckBox cc : c){
+                cc.setVisibility(View.VISIBLE);
+            }
+        }
+        else{
+            for(CheckBox cc : c){
+                cc.setVisibility(View.GONE);
+                cc.setChecked(false);
+            }
+        }
     }
+}
 
