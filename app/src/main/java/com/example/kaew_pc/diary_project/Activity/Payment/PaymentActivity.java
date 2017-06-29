@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -39,7 +38,6 @@ import com.example.kaew_pc.diary_project.Manager.Database.PayType;
 import com.example.kaew_pc.diary_project.Manager.Database.Payment_data;
 import com.example.kaew_pc.diary_project.Manager.MyReceiver;
 import com.example.kaew_pc.diary_project.Manager.MyReceiver2;
-import com.example.kaew_pc.diary_project.Manager.MyService;
 import com.example.kaew_pc.diary_project.Manager.Repository.BankNameRepository;
 import com.example.kaew_pc.diary_project.Manager.Repository.DebtTimeRepository;
 import com.example.kaew_pc.diary_project.R;
@@ -53,8 +51,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import java.util.Date;
-
-import static com.example.kaew_pc.diary_project.Activity.Payment.ListCount.listCountDown;
 
 /**
  * Created by chommchome on 28/3/2560.
@@ -109,7 +105,7 @@ public class PaymentActivity extends AppCompatActivity {
     private PaymentTypeRepository spinnerRepo;
     private BankNameRepository bankRepo;
     private DebtTime deptRepo;
-    private int userChoose;
+    private int userChoose, id_s;
     public static final String DATE_TIME_FORMAT = "yyyy-MM-dd kk:mm:ss";
 
     SharedPreferences mpref;
@@ -134,9 +130,9 @@ public class PaymentActivity extends AppCompatActivity {
 //        saveDate();
 //        countDown();
 
-        int id = getIntent().getIntExtra("id", 0);
-        if (id != 0) { //When click from listview
-            data = new PaymentDataRepository().getDataById(db.getReadableDatabase(), String.valueOf(id));
+          id_s = getIntent().getIntExtra("id", 0);
+        if (id_s != 0) { //When click from listview
+            data = new PaymentDataRepository().getDataById(db.getReadableDatabase(), String.valueOf(id_s));
             paymentTypeSpinner.setSelected(true);
 
             descpayment.setText(data.getPayment_desc());
@@ -180,7 +176,9 @@ public class PaymentActivity extends AppCompatActivity {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(y, m-1, d, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), 0);
 
-                final int id = new PaymentDataRepository().getPaymentID(db.getReadableDatabase());
+                 int id = new PaymentDataRepository().getPaymentID(db.getReadableDatabase());
+                if(isEdit)
+                    id = id_s;
                 Intent intent_service = new Intent(PaymentActivity.this, MyReceiver.class);
                 intent_service.putExtra("ID", id);
                 intent_service.putExtra("Head", items);
@@ -207,7 +205,7 @@ public class PaymentActivity extends AppCompatActivity {
                 //calendar2.set(y, m-1, d, calendar2.get(Calendar.HOUR), calendar2.get(Calendar.MINUTE), 0);
                 Intent intent_service2 = new Intent(PaymentActivity.this, MyReceiver2.class);
                 intent_service2.putExtra("ID", id);
-                intent_service2.putExtra("Head", "before");
+                intent_service2.putExtra("Head", items);
                 intent_service2.putExtra("Time", ""+calendar2.getTime());
                 intent_service2.putExtra("year", calendar2.get(Calendar.YEAR));
                 int t1 = calendar2.get(Calendar.YEAR);
@@ -433,22 +431,23 @@ public class PaymentActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
 
-                debt.setVisibility(View.INVISIBLE);
-                bankname.setVisibility(View.INVISIBLE);
+//                debt.setVisibility(View.INVISIBLE);
+//                bankname.setVisibility(View.INVISIBLE);
 
                 data.setPayType_id(String.valueOf(position));
 
                 items = paymentTypeSpinner.getSelectedItem().toString();
                 Log.i("Selected item : ", items);
 
+                bankname.setText("");
                 if (items.equalsIgnoreCase("ค่าบัตรเครดิต")) {
                     initDialog(banks, "เลือกธนาคาร", bankname);
                     builder.show();
-                    bankname.setVisibility(View.VISIBLE);
+//                    bankname.setVisibility(View.VISIBLE);
                 } else if (items.equalsIgnoreCase("ค่าผ่อนชำระ")) {
-                    initDialog(debtyear, "เลือกจำนวนงวด", debt);
+                    initDialog(debtyear, "เลือกจำนวนงวด", bankname);
                     builder.show();
-                    debt.setVisibility(View.VISIBLE);
+//                    bankname.setVisibility(View.VISIBLE);
                 }
             }
 

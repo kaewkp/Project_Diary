@@ -1,14 +1,9 @@
 package com.example.kaew_pc.diary_project.Activity.Payment;
 
 import android.app.ActivityManager;
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.PendingIntent;
-import android.app.TimePickerDialog;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -28,7 +23,6 @@ import com.example.kaew_pc.diary_project.Manager.Database.BankName;
 import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
 import com.example.kaew_pc.diary_project.Manager.Database.DebtTime;
 import com.example.kaew_pc.diary_project.Manager.Database.Payment_data;
-import com.example.kaew_pc.diary_project.Manager.MyReceiver;
 import com.example.kaew_pc.diary_project.Manager.Repository.BankNameRepository;
 import com.example.kaew_pc.diary_project.Manager.Repository.DebtTimeRepository;
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentDataRepository;
@@ -38,7 +32,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public class PaymentShowDummy extends AppCompatActivity {
 
@@ -78,8 +71,13 @@ public class PaymentShowDummy extends AppCompatActivity {
             Ddata = Drepo.getDataById(db.getReadableDatabase(), String.valueOf(data.getDebtTime_id()));
             title.setText(data.getPayment_title());
 
+           if(data.getBankName_id()!= null) {
+               Ddebt.setText(Bdata.getBankName_name());
+           }else if (data.getDebtTime_id()!= null){
+               Ddebt.setText(Ddata.getDebtTime_name());
+           }
+
 //            Bbank.setText(Bdata.getBankName_name());
-//
 //            Ddebt.setText(Ddata.getDebtTime_id());
 //            detailBD.setText(data2.getDebtTime_name());
 
@@ -89,7 +87,7 @@ public class PaymentShowDummy extends AppCompatActivity {
 
             date.setVisibility(View.VISIBLE);
 //            Bbank.setVisibility(View.VISIBLE);
-//            Ddebt.setVisibility(View.VISIBLE);
+            Ddebt.setVisibility(View.VISIBLE);
 
             String d = data.getPayment_datePay();
             if (d != null)
@@ -109,7 +107,7 @@ public class PaymentShowDummy extends AppCompatActivity {
         title = (TextView) findViewById(R.id.title);
         des = (TextView) findViewById(R.id.detail);
         Bbank = (TextView) findViewById(R.id.bank);
-        Ddebt = (TextView) findViewById(R.id.debt);
+        Ddebt = (TextView) findViewById(R.id.debtttt);
         money = (TextView) findViewById(R.id.priceshow);
         dateEnd = (TextView) findViewById(R.id.endDate);
         date = (TextView) findViewById(R.id.showdatetime);
@@ -117,7 +115,7 @@ public class PaymentShowDummy extends AppCompatActivity {
         repo = new PaymentDataRepository();
         Brepo = new BankNameRepository(null);
         Drepo = new DebtTimeRepository(null);
-        Bbank.setVisibility(View.INVISIBLE);
+//        Bbank.setVisibility(View.INVISIBLE);
         Ddebt.setVisibility(View.INVISIBLE);
 
         Date time = Calendar.getInstance().getTime();

@@ -54,7 +54,7 @@ public class CalendarModuleFragment extends Fragment implements View.OnClickList
     private Calendar_showRowEventAdapter rowAdapter;
     private ImageButton cancelEvent;
     private ListView listView;
-    private ArrayList<Date> dayValueInCells = new ArrayList<Date>();
+    private ArrayList<Date> dayValueInCells2 = new ArrayList<Date>();
 
     static class ViewHolder {
         protected ImageView img_arrow_left, img_arrow_right;
@@ -126,6 +126,8 @@ public class CalendarModuleFragment extends Fragment implements View.OnClickList
         });
     }
     private void setUpCalendarAdapter(){
+        ArrayList<Date> dayValueInCells = new ArrayList<Date>();
+        dayValueInCells2.clear();
         repo = new CalendarDataRepository();
         final ArrayList<EventObjects> mEvents = repo.getAllFutureEvents(db.getReadableDatabase());
         Calendar mCal = (Calendar)cal.clone();
@@ -134,6 +136,7 @@ public class CalendarModuleFragment extends Fragment implements View.OnClickList
         mCal.add(Calendar.DAY_OF_MONTH, -firstDayOfTheMonth);
         while(dayValueInCells.size() < MAX_CALENDAR_COLUMN){
             dayValueInCells.add(mCal.getTime());
+            dayValueInCells2.add(mCal.getTime());
             mCal.add(Calendar.DAY_OF_MONTH, 1);
         }
         Log.d(TAG,"OutListEvent : "+dayValueInCells.get(13)+"");
@@ -159,8 +162,8 @@ public class CalendarModuleFragment extends Fragment implements View.OnClickList
                 String x = repo.getDateFormat().format(cal.getTime());
 //                String dateTest = repo.getDateFormat().format(cal.getT);
                 Calendar dCal = Calendar.getInstance();
-                Log.d(TAG,"inListEvent : "+dayValueInCells.get(arg2)+"");
-                dCal.setTime(dayValueInCells.get(arg2));
+                Log.d(TAG,"inListEvent : "+dayValueInCells2.get(arg2)+"");
+                dCal.setTime(dayValueInCells2.get(arg2));
                 int dayForEvent = dCal.get(Calendar.DAY_OF_MONTH);
 
                 Log.d(TAG,arg2+" OR "+dayForEvent);

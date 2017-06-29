@@ -63,7 +63,7 @@ public class PaymentCustomAdapter extends ArrayAdapter<Payment_data> {
         viewHolder.checkbox.setTag(position); // This line is important.
 
         viewHolder.title.setText(data.get(position).getPayment_title());
-        viewHolder.date.setText(data.get(position).getPayment_endDate());
+        viewHolder.date.setText(data.get(position).getPayment_datePay());
         viewHolder.checkbox.setChecked(data.get(position).isSelected());
 
         c.add( viewHolder.checkbox );

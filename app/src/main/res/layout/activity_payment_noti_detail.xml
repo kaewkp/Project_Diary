@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/head"
-        android:layout_below="@+id/debt"
+        android:layout_below="@+id/debtttt"
         android:text="รายละเอียด"
         android:textColor="@android:color/black"
         android:textSize="20dp" />
@@ -133,7 +133,7 @@
         android:id="@+id/detail"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/debt"
+        android:layout_alignEnd="@+id/debtttt"
         android:layout_alignStart="@+id/showdatetime"
         android:layout_below="@+id/titledetail"
         android:text="เบอร์ 0842161921"
@@ -141,7 +141,7 @@
         android:textSize="20dp" />
 
     <TextView
-        android:id="@+id/debt"
+        android:id="@+id/debtttt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/title"
@@ -154,9 +154,9 @@
         android:id="@+id/bank"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/debt"
+        android:layout_alignBottom="@+id/debtttt"
         android:layout_marginRight="5dp"
-        android:layout_toStartOf="@+id/debt"
+        android:layout_toStartOf="@+id/debtttt"
         android:text="ิธนาคาร"
         android:textColor="@android:color/darker_gray"
         android:textSize="20dp" />
