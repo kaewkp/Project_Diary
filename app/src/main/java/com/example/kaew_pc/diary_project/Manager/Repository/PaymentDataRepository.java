@@ -11,6 +11,8 @@ import com.example.kaew_pc.diary_project.Manager.Database.Payment_data;
 
 import java.util.ArrayList;
 
+import static com.example.kaew_pc.diary_project.Manager.Database.Password.Column.id;
+
 /**
  * Created by Ekachart-PC on 12/4/2560.
  */
@@ -84,7 +86,7 @@ public class PaymentDataRepository {
         db.update(Payment_data.TABLE, initialValues, Payment_data.Column.Payment_id+"="+paymentdata.getPayment_id(), null);
     }
 
-    public void deleteData(SQLiteDatabase db, int id){
+    public void deleteData(SQLiteDatabase db){
         String whereClause = Payment_data.Column.Payment_id + "=?";
         String[] whereArgs = new String[] { String.valueOf(id) };
 
@@ -166,10 +168,10 @@ public class PaymentDataRepository {
         Cursor cursor = null;
         try {
             cursor = db.query(Payment_data.TABLE,   //table
-                            null,                   //column
-                            "Payment_id = ?",       //where
-                            new String[]{id},       //where arg
-                            null, null, null);      //groupby, having, orderby
+                    null,                   //column
+                    "Payment_id = ?",       //where
+                    new String[]{id},       //where arg
+                    null, null, null);      //groupby, having, orderby
 
             if (cursor.getCount() < 1) {
                 return data;

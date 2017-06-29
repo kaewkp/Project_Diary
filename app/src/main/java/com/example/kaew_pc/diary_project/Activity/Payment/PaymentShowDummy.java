@@ -78,9 +78,9 @@ public class PaymentShowDummy extends AppCompatActivity {
             Ddata = Drepo.getDataById(db.getReadableDatabase(), String.valueOf(data.getDebtTime_id()));
             title.setText(data.getPayment_title());
 
-            Bbank.setText(Bdata.getBankName_name());
-
-            Ddebt.setText(Ddata.getDebtTime_name());
+//            Bbank.setText(Bdata.getBankName_name());
+//
+//            Ddebt.setText(Ddata.getDebtTime_id());
 //            detailBD.setText(data2.getDebtTime_name());
 
             des.setText(data.getPayment_desc());
@@ -88,8 +88,8 @@ public class PaymentShowDummy extends AppCompatActivity {
             dateEnd.setText(data.getPayment_endDate());
 
             date.setVisibility(View.VISIBLE);
-            Bbank.setVisibility(View.VISIBLE);
-            Ddebt.setVisibility(View.VISIBLE);
+//            Bbank.setVisibility(View.VISIBLE);
+//            Ddebt.setVisibility(View.VISIBLE);
 
             String d = data.getPayment_datePay();
             if (d != null)

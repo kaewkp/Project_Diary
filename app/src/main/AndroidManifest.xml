@@ -107,6 +107,10 @@
             android:enabled="true"
             android:exported="false" />
         <receiver
+            android:name=".Manager.MyReceiver2"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
             android:name=".Manager.NoteReceiver"
             android:enabled="true"
             android:exported="false" />

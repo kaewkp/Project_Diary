@@ -18,10 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kaew_pc.diary_project.Activity.MainActivity;
-import com.example.kaew_pc.diary_project.Activity.Note.NoteCreatePageActivity;
-import com.example.kaew_pc.diary_project.Manager.Adapter.NoteCustomAdapter;
 import com.example.kaew_pc.diary_project.Manager.Database.DBHelper;
-import com.example.kaew_pc.diary_project.Manager.Database.Note_data;
 import com.example.kaew_pc.diary_project.Manager.Database.Payment_data;
 import com.example.kaew_pc.diary_project.Manager.Adapter.PaymentCustomAdapter;
 import com.example.kaew_pc.diary_project.R;
@@ -102,7 +99,7 @@ public class PaymentMainPageActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 for ( int id : del ) {
-                    paymentObj.deleteData(db.getWritableDatabase(), id);
+                    paymentObj.deleteData(db.getWritableDatabase());
                 }
                 fab2.setVisibility(View.GONE);
                 loadPaymentList();
@@ -234,7 +231,11 @@ public class PaymentMainPageActivity extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(), PaymentHistoryActivity.class);
                 startActivity(intent);
             }
-
+        if(item.getItemId() == R.id.empty){
+            paymentObj.deleteData(db.getWritableDatabase());
+            loadPaymentList();
+            return true;
+        }
 
             if (item.getItemId() == android.R.id.home) {
                 intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -247,7 +248,14 @@ public class PaymentMainPageActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
+        if(fab2.getVisibility() == View.GONE) {
+            finish();
+        }
+        else {
+            fab2.setVisibility(View.GONE);
+            adapter.toggleCheckbox(false);
+            del.clear();
+        }
     }
 
 }

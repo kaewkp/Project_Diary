@@ -38,6 +38,7 @@ import com.example.kaew_pc.diary_project.Manager.Database.DebtTime;
 import com.example.kaew_pc.diary_project.Manager.Database.PayType;
 import com.example.kaew_pc.diary_project.Manager.Database.Payment_data;
 import com.example.kaew_pc.diary_project.Manager.MyReceiver;
+import com.example.kaew_pc.diary_project.Manager.MyReceiver2;
 import com.example.kaew_pc.diary_project.Manager.MyService;
 import com.example.kaew_pc.diary_project.Manager.Repository.BankNameRepository;
 import com.example.kaew_pc.diary_project.Manager.Repository.DebtTimeRepository;
@@ -45,7 +46,6 @@ import com.example.kaew_pc.diary_project.R;
 
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentDataRepository;
 import com.example.kaew_pc.diary_project.Manager.Repository.PaymentTypeRepository;
-
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -199,6 +199,27 @@ public class PaymentActivity extends AppCompatActivity {
 //                        SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_DAY*30,
 //                        AlarmManager.INTERVAL_DAY*30, pi);
                 alarm(calendar, pi);
+
+                long milli =  calendar.getTimeInMillis();
+                milli = milli - 259200000;
+                Calendar calendar2 = Calendar.getInstance();
+                calendar2.setTimeInMillis(milli);
+                //calendar2.set(y, m-1, d, calendar2.get(Calendar.HOUR), calendar2.get(Calendar.MINUTE), 0);
+                Intent intent_service2 = new Intent(PaymentActivity.this, MyReceiver2.class);
+                intent_service2.putExtra("ID", id);
+                intent_service2.putExtra("Head", "before");
+                intent_service2.putExtra("Time", ""+calendar2.getTime());
+                intent_service2.putExtra("year", calendar2.get(Calendar.YEAR));
+                int t1 = calendar2.get(Calendar.YEAR);
+                int tt = calendar2.get(Calendar.MONTH);
+                int tt2 = calendar2.get(Calendar.DAY_OF_MONTH);
+                intent_service2.putExtra("month", calendar2.get(Calendar.MONTH)-1);
+                intent_service2.putExtra("day", calendar2.get(Calendar.DAY_OF_MONTH));
+                intent_service2.putExtra("hour", calendar2.get(Calendar.HOUR));
+                intent_service2.putExtra("minute", calendar2.get(Calendar.MINUTE));
+                PendingIntent pi2 = PendingIntent.getBroadcast(PaymentActivity.this, 0, intent_service2, PendingIntent.FLAG_UPDATE_CURRENT);
+//                calendar2.set(calendar2.get(Calendar.YEAR),calendar2.get(Calendar.MONTH)-1, calendar2.get(Calendar.DAY_OF_MONTH), calendar2.get(Calendar.HOUR), calendar2.get(Calendar.MINUTE), 0);
+                alarm(calendar2, pi2);
 
                 //Kaew
 //                cdt = new CountDownTimer((15000), 1000) {   // 3 day = 259200000 , 1 day = 86400000
