@@ -99,7 +99,7 @@ public class PaymentMainPageActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 for ( int id : del ) {
-                    paymentObj.deleteData(db.getWritableDatabase());
+                    paymentObj.deleteData(db.getWritableDatabase(), id);
                 }
                 fab2.setVisibility(View.GONE);
                 loadPaymentList();

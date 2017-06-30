@@ -86,7 +86,7 @@ public class PaymentDataRepository {
         db.update(Payment_data.TABLE, initialValues, Payment_data.Column.Payment_id+"="+paymentdata.getPayment_id(), null);
     }
 
-    public void deleteData(SQLiteDatabase db){
+    public void deleteData(SQLiteDatabase db, int id){
         String whereClause = Payment_data.Column.Payment_id + "=?";
         String[] whereArgs = new String[] { String.valueOf(id) };
 
