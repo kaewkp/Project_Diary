@@ -106,7 +106,7 @@ public class PaymentShowDummy extends AppCompatActivity {
 
         title = (TextView) findViewById(R.id.title);
         des = (TextView) findViewById(R.id.detail);
-        Bbank = (TextView) findViewById(R.id.bank);
+//        Bbank = (TextView) findViewById(R.id.bank);
         Ddebt = (TextView) findViewById(R.id.debtttt);
         money = (TextView) findViewById(R.id.priceshow);
         dateEnd = (TextView) findViewById(R.id.endDate);

@@ -14,10 +14,10 @@
         <!--app:showAsAction="never"-->
         <!--/>-->
 
-    <item android:id="@+id/action_history"
-        android:title="ประวัติค่าบริการ"
-        app:showAsAction="never"
-        />
+    <!--<item android:id="@+id/action_history"-->
+        <!--android:title="ประวัติค่าบริการ"-->
+        <!--app:showAsAction="never"-->
+        <!--/>-->
 
 
 </menu>
